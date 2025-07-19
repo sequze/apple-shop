@@ -1,6 +1,7 @@
 from typing import TYPE_CHECKING
 
 from sqlalchemy import ForeignKey
+from sqlalchemy.sql.schema import UniqueConstraint
 
 from .base import Base
 from sqlalchemy.orm import mapped_column, Mapped, relationship
@@ -13,8 +14,9 @@ if TYPE_CHECKING:
 
 class Category(CreatedAtMixin, IntIdPkMixin, Base):
     __tablename__ = "categories"
-    name: Mapped[str]
-    products: Mapped[list["Product"]] = relationship(back_populates="category")
+    name: Mapped[str] = mapped_column()
+
+    # relationships
     parent_id: Mapped[int | None] = mapped_column(
         ForeignKey("categories.id"),
         nullable=True)
@@ -25,3 +27,9 @@ class Category(CreatedAtMixin, IntIdPkMixin, Base):
         uselist=False,
     )
     children: Mapped[list["Category"]] = relationship(back_populates="parent")
+    products: Mapped[list["Product"]] = relationship(back_populates="category")
+
+    # Unique constraints
+    __table_args__ = (
+        UniqueConstraint("name", "parent_id"),
+    )
