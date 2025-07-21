@@ -61,3 +61,18 @@ async def update_user(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="User not found"
         )
+
+
+@router.delete("/{user_id}")
+async def delete_user(
+        user_id: int,
+        user_service: user_service_dep,
+) -> UserDTO:
+    try:
+        user = await user_service.delete_user(user_id)
+        return user
+    except UserNotFoundError:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User not found"
+        )

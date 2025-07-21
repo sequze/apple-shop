@@ -58,3 +58,11 @@ class UserService:
                 raise UserNotFoundError
             res = await self.repository.update(uow.session, data.model_dump(exclude_unset=True), user)
             return UserDTO.model_validate(res)
+
+    async def delete_user(self, id: int) -> UserDTO:
+        async with self.uow as uow:
+            user = await self.repository.get_by_id(uow.session, id)
+            if user is None:
+                raise UserNotFoundError
+            await self.repository.delete(uow.session, user)
+            return UserDTO.model_validate(user)

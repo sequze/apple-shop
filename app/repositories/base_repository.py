@@ -28,3 +28,7 @@ class SQlAlchemyRepository:
             .where(self.model.id == entity_id).returning(self.model))
         await session.commit()
         return res.scalar()
+
+    async def delete(self, session: AsyncSession, entity):
+        await session.delete(entity)
+        await session.commit()
