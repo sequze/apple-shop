@@ -1,8 +1,6 @@
-from sqlalchemy import update, select, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.models import User
-from core.schemas.user import UserCreateSchema, UserUpdateSchema
 from repositories.base_repository import SQlAlchemyRepository
 
 

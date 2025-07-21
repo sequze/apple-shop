@@ -1,7 +1,7 @@
 from core.models import db_helper
-from core.services.user_service import UserService
+from services.user.service import UserService
 from repositories.uow import UnitOfWork
-from repositories.user_repository import UserRepository
+from services.user.repository import UserRepository
 
 
 def users_service() -> UserService:

@@ -13,6 +13,7 @@ async def lifespan(fastapi_app: FastAPI):
 app = FastAPI(
     lifespan=lifespan,
 )
+
 app.include_router(
     api_router,
     prefix=settings.api_prefix.prefix,

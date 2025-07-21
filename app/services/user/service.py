@@ -1,7 +1,6 @@
-from core.schemas.user import UserCreateSchema, UserUpdateSchema
+from services.user.schemas import UserCreateSchema, UserUpdateSchema, UserDTO
 from repositories.uow import UnitOfWork
-from repositories.user_repository import UserRepository
-from core.schemas.user import UserDTO
+from .repository import UserRepository
 
 
 def hash_pwd(password: str):
@@ -41,7 +40,7 @@ class UserService:
 
     async def create_user(self, data: UserCreateSchema) -> UserDTO:
         async with self.uow as uow:
-            email_user = self.repository.get_by_filters(uow.session, {"email": data.email}, True)
+            email_user = await self.repository.get_by_filters(uow.session, {"email": data.email}, True)
             if email_user: raise EmailAlreadyExists
             data_dict = data.model_dump()
             data_dict["password_hash"] = hash_pwd(data.password)

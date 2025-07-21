@@ -1,8 +1,8 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Path, HTTPException, status, Depends
-from core.schemas.user import UserDTO, UserCreateSchema, UserUpdateSchema
-from core.services.user_service import UserService, UserNotFoundError, EmailAlreadyExists
+from services.user.schemas import UserDTO, UserCreateSchema, UserUpdateSchema
+from services.user.service import UserService, UserNotFoundError, EmailAlreadyExists
 from api.dependencies import users_service
 
 router = APIRouter()

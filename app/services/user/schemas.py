@@ -1,5 +1,3 @@
-from typing import Annotated
-
 from pydantic import BaseModel, EmailStr
 from core.models.user import UserRole, User
 
