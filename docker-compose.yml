@@ -2,7 +2,7 @@ services:
   pg:
     image: postgres # Используется официальный образ PostgreSQL
     environment:
-      POSTGRES_DB: ${PG_NAME} # Создаем базу данных с именем data
+      POSTGRES_DB: ${PG_NAME} # Создаем базу данных с именем shop
       POSTGRES_USER: ${PG_USER}
       # Создаем пользователя с именем user и паролем password
       POSTGRES_PASSWORD: ${PG_PASSWORD}
