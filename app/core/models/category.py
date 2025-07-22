@@ -12,6 +12,7 @@ from .mixins.created_at import CreatedAtMixin
 if TYPE_CHECKING:
     from core.models.product import Product
 
+
 class Category(CreatedAtMixin, IntIdPkMixin, Base):
     __tablename__ = "categories"
     name: Mapped[str] = mapped_column()
@@ -21,7 +22,7 @@ class Category(CreatedAtMixin, IntIdPkMixin, Base):
         ForeignKey("categories.id"),
         nullable=True)
 
-    parent: Mapped["Category"] = relationship(
+    parent: Mapped["Category | None"] = relationship(
         back_populates="children",
         remote_side="Category.id",
         uselist=False,
