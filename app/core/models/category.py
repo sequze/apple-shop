@@ -13,7 +13,7 @@ if TYPE_CHECKING:
     from core.models.product import Product
 
 
-class Category(CreatedAtMixin, IntIdPkMixin, Base):
+class Category(IntIdPkMixin, Base):
     __tablename__ = "categories"
     name: Mapped[str] = mapped_column()
 
