@@ -8,6 +8,7 @@ from pydantic_settings import SettingsConfigDict
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 ENV_PATH = BASE_DIR / ".env"
 
+
 class RunConfig(BaseModel):
     host: str = "0.0.0.0"
     port: int = 8000
@@ -16,6 +17,7 @@ class RunConfig(BaseModel):
 class ApiPrefix(BaseModel):
     prefix: str = "/api"
     users: str = "/users"
+    categories: str = "/categories"
 
 
 class DatabaseConfig(BaseModel):
