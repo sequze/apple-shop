@@ -16,6 +16,7 @@ import product1 from './assets/products/product-1.jpeg';
 import product2 from './assets/products/product-2.jpeg';
 import product3 from './assets/products/product-3.jpeg';
 import Products from "./components/Products.jsx";
+import Footer from "./components/Footer.jsx";
 
 function App() {
 
@@ -61,6 +62,7 @@ function App() {
         <Intro photo={IntroPhoto} />
         <Cards cards={cards} labels={labels}/>
         <Products products={products} />
+        <Footer />
       </>
     )
 }
