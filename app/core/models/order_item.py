@@ -11,6 +11,7 @@ if TYPE_CHECKING:
     from .order import Order
     from .product import Product
 
+
 class OrderItem(IntIdPkMixin, Base):
     quantity: Mapped[int]
     unit_price: Mapped[Decimal] = mapped_column(Numeric(10, 2))
@@ -18,4 +19,4 @@ class OrderItem(IntIdPkMixin, Base):
     product_id: Mapped[int] = mapped_column(ForeignKey("products.id"))
 
     order: Mapped["Order"] = relationship(back_populates="items")
-    product: Mapped["Product"] = relationship()
+    product: Mapped["Product"] = relationship(lazy="selectin")

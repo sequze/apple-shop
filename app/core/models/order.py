@@ -15,7 +15,7 @@ if TYPE_CHECKING:
     from .order_item import OrderItem
 
 VALID_TRANSITIONS = {
-    "pending": {"paid", "cancelled"}, # cancelled может делать пользователь
+    "pending": {"paid", "cancelled"},  # cancelled может делать пользователь
     "paid": {"processing", "shipped", "cancelled", "refunded"},
     "processing": {"shipped", "cancelled"},
     "shipped": {"delivered", "refunded"},
@@ -24,6 +24,7 @@ VALID_TRANSITIONS = {
     "cancelled": set(),
     "refunded": set(),
 }
+
 
 class OrderStatus(str, Enum):
     pending = "pending"
@@ -34,6 +35,7 @@ class OrderStatus(str, Enum):
     completed = "completed"
     cancelled = "cancelled"
     refunded = "refunded"
+
 
 class Order(CreatedAtMixin, IntIdPkMixin, Base):
     total_amount: Mapped[Decimal] = mapped_column(Numeric(10, 2))
