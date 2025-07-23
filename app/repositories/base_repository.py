@@ -5,7 +5,7 @@ from sqlalchemy import insert, select, delete
 class SQlAlchemyRepository:
     model = None
 
-    async def create(self, session: AsyncSession, data: dict) -> int:
+    async def create(self, session: AsyncSession, data: dict):
         stmt = insert(self.model).values(**data).returning(self.model)
         result = await session.execute(stmt)
         await session.commit()
