@@ -19,6 +19,7 @@ class ApiPrefix(BaseModel):
     users: str = "/users"
     categories: str = "/categories"
     products: str = "/products"
+    discounts: str = "/discounts"
 
 
 class DatabaseConfig(BaseModel):
