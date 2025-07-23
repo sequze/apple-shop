@@ -1,16 +1,17 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import IntroPhoto from './assets/intro__photo.png'
+import SiteLogo from './assets/logo.png'
+import Header from "./components/Header.jsx";
+import Intro from "./components/Intro.jsx";
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <>
-      <h1 className="text-4xl font-bold text-blue-600">Tailwind работает</h1>
-
-    </>
+      <>
+        <Header logo={SiteLogo} />
+        <Intro photo={IntroPhoto} />
+      </>
   )
 }
 
