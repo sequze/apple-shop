@@ -5,6 +5,8 @@ from services.discount.repository import DiscountRepository
 from services.discount.service import DiscountService
 from services.order.repository import OrderRepository
 from services.order.service import OrderService
+from services.order_item.repository import OrderItemRepository
+from services.order_item.service import OrderItemService
 from services.product.repository import ProductRepository
 from services.product.service import ProductService
 from services.user.service import UserService
@@ -34,3 +36,7 @@ def discount_service() -> DiscountService:
 
 def order_service() -> OrderService:
     return OrderService(OrderRepository(), unit_of_work())
+
+
+def order_item_service() -> OrderItemService:
+    return OrderItemService(OrderItemRepository(), unit_of_work())
