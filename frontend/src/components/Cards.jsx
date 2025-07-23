@@ -24,8 +24,6 @@ const Cards = ({cards, labels}) => {
                                 <div className="relative z-10 p-4 text-[32px] text-[#fff] opacity-0 card-text">
                                     {labels[index]}
                                 </div>
-
-
                             </div>
                         ))}
                     </div>
