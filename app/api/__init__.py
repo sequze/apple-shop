@@ -5,6 +5,7 @@ from .products import router as products_router
 from core.config import settings
 from .discounts import router as discounts_router
 from .orders import router as orders_router
+from .order_items import router as order_items_router
 
 router = APIRouter()
 
@@ -36,4 +37,10 @@ router.include_router(
     orders_router,
     tags=["Orders"],
     prefix=settings.api_prefix.orders
+)
+
+router.include_router(
+    order_items_router,
+    tags=["Order Items"],
+    prefix=settings.api_prefix.order_items
 )

@@ -21,6 +21,7 @@ class ApiPrefix(BaseModel):
     products: str = "/products"
     discounts: str = "/discounts"
     orders: str = "/orders"
+    order_items: str = "/order_items"
 
 
 class DatabaseConfig(BaseModel):
