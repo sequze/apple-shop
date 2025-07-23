@@ -14,8 +14,18 @@ class OrderItemSchema(BaseModel):
 
 class OrderItemDTO(OrderItemSchema):
     id: PositiveInt
-    created_at: datetime
     product: ProductDTO
 
     class Config:
         from_attributes = True
+
+
+class OrderItemUpdateSchema(BaseModel):
+    quantity: PositiveInt | None = None
+    unit_price: PositiveFloat | None = None
+    order_id: PositiveInt | None = None
+    product_id: PositiveInt | None = None
+
+
+class OrderItemCreateSchema(OrderItemSchema):
+    pass
