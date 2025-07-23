@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, PositiveInt
 from core.models.user import UserRole
 from datetime import datetime
 
@@ -10,7 +10,7 @@ class UserBaseSchema(BaseModel):
 
 
 class UserDTO(UserBaseSchema):
-    id: int
+    id: PositiveInt
     created_at: datetime
 
     class Config:

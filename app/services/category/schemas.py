@@ -1,13 +1,13 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, PositiveInt
 
 
 class CategoryBaseSchema(BaseModel):
     name: str
-    parent_id: int | None = None
+    parent_id: PositiveInt | None = None
 
 
 class CategoryDTO(CategoryBaseSchema):
-    id: int
+    id: PositiveInt
 
     class Config:
         from_attributes = True
