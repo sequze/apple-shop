@@ -18,6 +18,7 @@ class ApiPrefix(BaseModel):
     prefix: str = "/api"
     users: str = "/users"
     categories: str = "/categories"
+    products: str = "/products"
 
 
 class DatabaseConfig(BaseModel):
