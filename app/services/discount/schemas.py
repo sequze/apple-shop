@@ -16,5 +16,20 @@ class DiscountBaseSchema(BaseModel):
         return self
 
 
+class DiscountCreateSchema(DiscountBaseSchema):
+    pass
+
+
 class DiscountDTO(DiscountBaseSchema):
     id: PositiveInt
+
+    class Config:
+        from_attributes = True
+
+
+class DiscountUpdateSchema(BaseModel):
+    percent: PositiveFloat | None = None
+    start_date: datetime | None = None
+    end_date: datetime | None = None
+    description: str | None = None
+    is_active: bool | None = None
