@@ -19,7 +19,7 @@ class SQlAlchemyRepository:
         stmt = select(self.model).filter_by(**filters)
         res = await session.execute(stmt)
         if one:
-            return res.one_or_none()
+            return res.scalar_one_or_none()
         return res.scalars().all()
 
     async def delete_by_id(self, session: AsyncSession, entity_id: int):
