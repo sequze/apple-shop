@@ -2,7 +2,7 @@ import React from 'react';
 
 const Header = (props) => {
     return (
-        <header className="fixed w-full bg-[#fff] z-[100]">
+        <header className="fixed w-full bg-[#fff] z-[100] shadow">
             <div className="mx-auto max-w-[1500px] w-full">
                 <div className="flex justify-between w-full h-[75px] truncate items-center">
                     <div>
