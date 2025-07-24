@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio.session import AsyncSession
 
 from core.models import OrderItem
-from repositories.base_repository import SQlAlchemyRepository
+from core.repositories.base_repository import SQlAlchemyRepository
 from sqlalchemy import inspect
 
 

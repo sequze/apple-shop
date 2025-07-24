@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio.session import AsyncSession
 
 from core.models import CartItem
-from repositories.uow import UnitOfWork
+from core.repositories.uow import UnitOfWork
 from services.cart_item.repository import CartItemRepository
 from services.cart_item.schemas import CartItemDTO, CartItemCreateSchema, CartItemUpdateSchema
 

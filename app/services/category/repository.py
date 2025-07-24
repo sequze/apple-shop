@@ -3,7 +3,7 @@ from sqlalchemy import select
 from sqlalchemy.inspection import inspect
 from sqlalchemy.orm import joinedload
 from core.models import Category
-from repositories.base_repository import SQlAlchemyRepository
+from core.repositories.base_repository import SQlAlchemyRepository
 
 
 class CategoryRepository(SQlAlchemyRepository):

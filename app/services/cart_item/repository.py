@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio.session import AsyncSession
 from sqlalchemy import inspect, select
 from core.models import CartItem
-from repositories.base_repository import SQlAlchemyRepository
+from core.repositories.base_repository import SQlAlchemyRepository
 
 
 class CartItemRepository(SQlAlchemyRepository):

@@ -12,7 +12,7 @@ from services.order_item.service import OrderItemService
 from services.product.repository import ProductRepository
 from services.product.service import ProductService
 from services.user.service import UserService
-from repositories.uow import UnitOfWork
+from core.repositories.uow import UnitOfWork
 from services.user.repository import UserRepository
 
 

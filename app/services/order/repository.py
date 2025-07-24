@@ -4,7 +4,7 @@ from sqlalchemy import select, insert
 from sqlalchemy.orm import joinedload
 
 from core.models import Order
-from repositories.base_repository import SQlAlchemyRepository
+from core.repositories.base_repository import SQlAlchemyRepository
 
 
 class OrderRepository(SQlAlchemyRepository):

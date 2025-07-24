@@ -1,4 +1,4 @@
-from repositories.uow import UnitOfWork
+from core.repositories.uow import UnitOfWork
 from .repository import CategoryRepository
 from .schemas import CategoryCreateSchema, CategoryDTO, CategoryUpdateSchema
 

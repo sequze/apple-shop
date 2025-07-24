@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio.session import AsyncSession
 
 from core.models import Order
-from repositories.uow import UnitOfWork
+from core.repositories.uow import UnitOfWork
 from services.order.repository import OrderRepository
 from services.order.schemas import OrderDTO, OrderCreateSchema, OrderUpdateSchema, OrderDetailedDTO
 

@@ -3,7 +3,7 @@ from sqlalchemy.inspection import inspect
 from sqlalchemy import insert
 from datetime import timezone
 from core.models import Discount
-from repositories.base_repository import SQlAlchemyRepository
+from core.repositories.base_repository import SQlAlchemyRepository
 
 
 class DiscountRepository(SQlAlchemyRepository):

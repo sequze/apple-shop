@@ -1,5 +1,5 @@
 from services.user.schemas import UserCreateSchema, UserUpdateSchema, UserDTO
-from repositories.uow import UnitOfWork
+from core.repositories.uow import UnitOfWork
 from .repository import UserRepository
 
 

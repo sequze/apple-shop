@@ -1,4 +1,4 @@
-from repositories.uow import UnitOfWork
+from core.repositories.uow import UnitOfWork
 from services.product.repository import ProductRepository
 from services.product.schemas import ProductCreateSchema, ProductDTO, ProductUpdateSchema
 

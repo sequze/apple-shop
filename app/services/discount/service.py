@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio.session import AsyncSession
 
 from core.models import Discount
-from repositories.uow import UnitOfWork
+from core.repositories.uow import UnitOfWork
 from .repository import DiscountRepository
 from .schemas import DiscountCreateSchema, DiscountDTO, DiscountUpdateSchema
 
