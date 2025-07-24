@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import './App.css'
-import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import IntroPhoto from './assets/intro__photo.png'
 import SiteLogo from './assets/logo.png'
@@ -9,14 +8,12 @@ import card2 from "./assets/categories/card-2.jpeg"
 import card3 from "./assets/categories/card-3.jpeg"
 import card4 from "./assets/categories/card-4.jpeg"
 import card5 from "./assets/categories/card-5.jpeg"
-import Header from "./components/Header.jsx";
-import Intro from "./components/Intro.jsx";
-import Cards from "./components/Cards.jsx";
 import product1 from './assets/products/product-1.jpeg';
 import product2 from './assets/products/product-2.jpeg';
 import product3 from './assets/products/product-3.jpeg';
-import Products from "./components/Products.jsx";
-import Footer from "./components/Footer.jsx";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import Home from "./pages/Home.jsx";
+import Category from "./pages/Category.jsx";
 
 function App() {
 
@@ -57,13 +54,12 @@ function App() {
     ]
 
     return (
-      <>
-        <Header logo={SiteLogo} />
-        <Intro photo={IntroPhoto} />
-        <Cards cards={cards} labels={labels}/>
-        <Products products={products} />
-        <Footer />
-      </>
+      <BrowserRouter>
+        <Routes>
+            <Route path="/" element={<Home products={products} cards={cards} labels={labels} intro={IntroPhoto} logo={SiteLogo} />} />
+            <Route path="/category" element={<Category logo={SiteLogo} />} />
+        </Routes>
+      </BrowserRouter>
     )
 }
 

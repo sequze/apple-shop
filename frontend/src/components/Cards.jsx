@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {Link} from "react-router-dom";
 
 const Cards = ({cards, labels}) => {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -9,8 +10,8 @@ const Cards = ({cards, labels}) => {
                 <div className="mx-auto max-w-[1500px] w-full">
                     <h2 className="text-[36px] inter-400 mt-[100px]">Категории</h2>
                     <div className="flex justify-around mt-[60px]">
-                        {cards.map((img, index) => (
-                            <div
+                        {cards.map((img, index) => {
+                            const cardContent = <div
                                 key={index}
                                 onClick={() => setActiveIndex(index)}
                                 className={
@@ -25,7 +26,15 @@ const Cards = ({cards, labels}) => {
                                     {labels[index]}
                                 </div>
                             </div>
-                        ))}
+
+                            return index === activeIndex ? (
+                                <Link to="/category" key={index}>
+                                    {cardContent}
+                                </Link>
+                            ) : (
+                                <div key={index}>{cardContent}</div>
+                            )
+                        })}
                     </div>
                 </div>
             </div>
