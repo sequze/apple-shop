@@ -1,4 +1,6 @@
 from core.models import db_helper
+from services.cart_item.repository import CartItemRepository
+from services.cart_item.service import CartItemService
 from services.category.repository import CategoryRepository
 from services.category.service import CategoryService
 from services.discount.repository import DiscountRepository
@@ -40,3 +42,7 @@ def order_service() -> OrderService:
 
 def order_item_service() -> OrderItemService:
     return OrderItemService(OrderItemRepository(), unit_of_work())
+
+
+def cart_item_service() -> CartItemService:
+    return CartItemService(CartItemRepository(), unit_of_work())
