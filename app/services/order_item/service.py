@@ -35,14 +35,7 @@ class OrderItemService:
             data: OrderItemCreateSchema,
     ) -> OrderItemDTO:
         async with self.uow as uow:
-            item = await self.repository.get_by_filters(
-                uow.session,
-                {
-                    "order_id": data.order_id,
-                    "product_id": data.product_id
-                },
-                True,
-            )
+            item = await self.repository.get_by_order_and_product(uow.session, data.order_id, data.product_id)
             if item is not None: raise OrderItemAlreadyExistsError
             item = await self.repository.create(uow.session, data.model_dump())
 

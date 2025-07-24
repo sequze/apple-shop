@@ -23,3 +23,10 @@ class OrderItemRepository(SQlAlchemyRepository):
 
     async def get_by_id(self, session: AsyncSession, id: int) -> OrderItem | None:
         return await session.get(OrderItem, id)
+
+    async def get_by_order_and_product(self, session: AsyncSession, order_id: int, product_id: int) -> OrderItem | None:
+        return await self.get_by_filters(
+            session,
+            {"order_id": order_id, "product_id": product_id},
+            one=True
+        )
