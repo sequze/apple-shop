@@ -10,9 +10,10 @@ if TYPE_CHECKING:
     from .user import User
     from .product import Product
 
-class CartItem(IntIdPkMixin, CreatedAtMixin, Base):
+
+class CartItem(IntIdPkMixin, Base):
     quantity: Mapped[int]
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     product_id: Mapped[int] = mapped_column(ForeignKey("products.id"))
     user: Mapped["User"] = relationship(back_populates="cart_items")
-    product: Mapped["Product"] = relationship()
+    product: Mapped["Product"] = relationship(lazy="selectin")
