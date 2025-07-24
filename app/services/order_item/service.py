@@ -10,6 +10,10 @@ class OrderItemNotFoundError(Exception):
     pass
 
 
+class OrderItemAlreadyExistsError(Exception):
+    pass
+
+
 class OrderItemService:
     # create update delete get_all get_by_id
     def __init__(
@@ -31,7 +35,17 @@ class OrderItemService:
             data: OrderItemCreateSchema,
     ) -> OrderItemDTO:
         async with self.uow as uow:
+            item = await self.repository.get_by_filters(
+                uow.session,
+                {
+                    "order_id": data.order_id,
+                    "product_id": data.product_id
+                },
+                True,
+            )
+            if item is not None: raise OrderItemAlreadyExistsError
             item = await self.repository.create(uow.session, data.model_dump())
+
             return OrderItemDTO.model_validate(item)
 
     async def update(self, data: OrderItemUpdateSchema, id: int) -> OrderItemDTO:

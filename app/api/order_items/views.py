@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 
 from api.dependencies import order_item_service
 from services.order_item.schemas import OrderItemDTO, OrderItemCreateSchema, OrderItemUpdateSchema
-from services.order_item.service import OrderItemService, OrderItemNotFoundError
+from services.order_item.service import OrderItemService, OrderItemNotFoundError, OrderItemAlreadyExistsError
 
 router = APIRouter()
 
@@ -37,7 +37,13 @@ async def create_order_item(
         order_item_service: order_item_service_dep,
         data: OrderItemCreateSchema,
 ) -> OrderItemDTO:
-    return await order_item_service.create(data)
+    try:
+        return await order_item_service.create(data)
+    except OrderItemAlreadyExistsError:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Order Item already exists",
+        )
 
 
 @router.patch("/{order_item_id}")
