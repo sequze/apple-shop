@@ -15,7 +15,6 @@ class OrderItemAlreadyExistsError(Exception):
 
 
 class OrderItemService:
-    # create update delete get_all get_by_id
     def __init__(
             self,
             repository: OrderItemRepository,
@@ -30,13 +29,16 @@ class OrderItemService:
             raise OrderItemNotFoundError
         return item
 
+    async def __validate_order_and_product(self, session: AsyncSession, order_id: int, product_id: int) -> None:
+        item = await self.repository.get_by_order_and_product(session, order_id, product_id)
+        if item: raise OrderItemAlreadyExistsError
+
     async def create(
             self,
             data: OrderItemCreateSchema,
     ) -> OrderItemDTO:
         async with self.uow as uow:
-            item = await self.repository.get_by_order_and_product(uow.session, data.order_id, data.product_id)
-            if item is not None: raise OrderItemAlreadyExistsError
+            await self.__validate_order_and_product(uow.session, data.order_id, data.product_id)
             item = await self.repository.create(uow.session, data.model_dump())
 
             return OrderItemDTO.model_validate(item)
