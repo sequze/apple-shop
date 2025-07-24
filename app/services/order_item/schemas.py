@@ -23,8 +23,6 @@ class OrderItemDTO(OrderItemSchema):
 class OrderItemUpdateSchema(BaseModel):
     quantity: PositiveInt | None = None
     unit_price: PositiveFloat | None = None
-    order_id: PositiveInt | None = None
-    product_id: PositiveInt | None = None
 
 
 class OrderItemCreateSchema(OrderItemSchema):
