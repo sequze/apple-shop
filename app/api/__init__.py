@@ -7,6 +7,7 @@ from .discounts import router as discounts_router
 from .orders import router as orders_router
 from .order_items import router as order_items_router
 from .cart_items import router as cart_items_router
+from .product_image import router as product_image_router
 
 router = APIRouter()
 
@@ -50,4 +51,10 @@ router.include_router(
     cart_items_router,
     tags=["Cart"],
     prefix=settings.api_prefix.cart_items
+)
+
+router.include_router(
+    product_image_router,
+    tags=["Product Images"],
+    prefix=settings.api_prefix.product_images
 )
