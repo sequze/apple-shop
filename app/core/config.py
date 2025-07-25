@@ -23,6 +23,15 @@ class ApiPrefix(BaseModel):
     orders: str = "/orders"
     order_items: str = "/order_items"
     cart_items: str = "/cart_items"
+    product_images: str = "/product_images"
+
+
+class ObjectStorageConfig(BaseModel):
+    access_key: str
+    secret_key: str
+    endpoint_url: str
+    bucket_name: str
+    domain: str
 
 
 class DatabaseConfig(BaseModel):
@@ -50,6 +59,7 @@ class Settings(BaseSettings):
     run: RunConfig = RunConfig()
     api_prefix: ApiPrefix = ApiPrefix()
     db: DatabaseConfig
+    s3: ObjectStorageConfig
 
 
 settings = Settings()
