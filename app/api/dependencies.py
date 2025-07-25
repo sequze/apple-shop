@@ -11,6 +11,8 @@ from services.order_item.repository import OrderItemRepository
 from services.order_item.service import OrderItemService
 from services.product.repository import ProductRepository
 from services.product.service import ProductService
+from services.product_image.repository import ProductImageRepository
+from services.product_image.service import ProductImageService
 from services.user.service import UserService
 from core.repositories.uow import UnitOfWork
 from services.user.repository import UserRepository
@@ -46,3 +48,7 @@ def order_item_service() -> OrderItemService:
 
 def cart_item_service() -> CartItemService:
     return CartItemService(CartItemRepository(), unit_of_work())
+
+
+def product_image_service() -> ProductImageService:
+    return ProductImageService(ProductImageRepository(), unit_of_work())
