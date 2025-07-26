@@ -34,6 +34,12 @@ class ObjectStorageConfig(BaseModel):
     domain: str
 
 
+class AuthJWTConfig(BaseModel):
+    private_key_path: Path = BASE_DIR / "app" / "certs" / "jwt-private.pem"
+    public_key_path: Path = BASE_DIR / "app" / "certs" / "jwt-public.pem"
+    algorithm: str = "RS256"
+
+
 class DatabaseConfig(BaseModel):
     url: PostgresDsn
     echo: bool = False
@@ -58,6 +64,7 @@ class Settings(BaseSettings):
     )
     run: RunConfig = RunConfig()
     api_prefix: ApiPrefix = ApiPrefix()
+    auth_jwt: AuthJWTConfig = AuthJWTConfig()
     db: DatabaseConfig
     s3: ObjectStorageConfig
 
