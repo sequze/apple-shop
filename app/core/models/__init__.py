@@ -1,4 +1,5 @@
 from .base import Base
+
 __all__ = [
     "Base",
     "User",
@@ -11,8 +12,10 @@ __all__ = [
     "product_discount_association_table",
     "ProductImage",
     "db_helper",
+    "RefreshSession",
 ]
 
+from .refresh_session import RefreshSession
 from .cart_item import CartItem
 from .product_discount_association_table import product_discount_association_table
 from .category import Category
