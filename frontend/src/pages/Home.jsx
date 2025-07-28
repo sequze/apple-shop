@@ -5,12 +5,12 @@ import Cards from "../components/Cards.jsx";
 import Products from "../components/Products.jsx";
 import Footer from "../components/Footer.jsx";
 
-const Home = ({products, cards, labels, logo, intro}) => {
+const Home = ({products, categories, logo, intro}) => {
     return (
         <div>
             <Header logo={logo} />
             <Intro photo={intro} />
-            <Cards cards={cards} labels={labels}/>
+            <Cards categories={categories}/>
             <Products products={products} />
             <Footer />
         </div>

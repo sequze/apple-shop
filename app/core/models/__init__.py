@@ -2,7 +2,7 @@ from .base import Base
 __all__ = [
     "Base",
     "User",
-    "Category",
+    "Products",
     "CartItem",
     "Discount",
     "Order",
@@ -15,7 +15,7 @@ __all__ = [
 
 from .cart_item import CartItem
 from .product_discount_association_table import product_discount_association_table
-from .category import Category
+from .category import Products
 from .discount import Discount
 from .order import Order
 from .order_item import OrderItem

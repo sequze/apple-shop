@@ -4,7 +4,7 @@ from .schemas import CategoryCreateSchema, CategoryDTO, CategoryUpdateSchema
 
 
 class CategoryNotFoundError(Exception):
-    """Category not found"""
+    """Products not found"""
     pass
 
 

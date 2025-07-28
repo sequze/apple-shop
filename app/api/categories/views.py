@@ -29,7 +29,7 @@ async def get_children(
     except CategoryNotFoundError:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Category not found"
+            detail="Products not found"
         )
     return res
 
@@ -44,7 +44,7 @@ async def get_category_by_id(
     except CategoryNotFoundError:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Category not found"
+            detail="Products not found"
         )
     return res
 
@@ -70,7 +70,7 @@ async def update_category(
     except CategoryNotFoundError:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Category not found"
+            detail="Products not found"
         )
 
 
@@ -85,5 +85,5 @@ async def delete_category(
     except CategoryNotFoundError:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Category not found"
+            detail="Products not found"
         )
