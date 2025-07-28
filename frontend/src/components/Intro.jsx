@@ -11,7 +11,7 @@ const Intro = (props) => {
                             <h1 className="montserrat-600 text-[82px] font-bold slide-up slide-up-delay-1">Ваш стиль.</h1>
                             <h1 className="montserrat-600 text-[82px] font-bold slide-up slide-up-delay-2">Ваша Apple.</h1>
                         </div>
-                        <p className="opacity-70 text-gray-700 mt-[45px] text-[18px]/[1.4]">
+                        <p className="inter-300 opacity-70 text-gray-700 mt-[45px] text-[18px]/[1.4]">
                             iStore — магазин, где Apple начинается с доверия. <br/>
                             Доставим за 24 часа. Только оригинал.</p>
                     </div>

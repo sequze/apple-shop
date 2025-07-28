@@ -5,7 +5,7 @@ const Products = ({products}) => {
     return (
         <div className="bg-[#D9D9D9] h-[100vh]">
             <div className="mx-auto max-w-[1500px] w-full">
-                <h2 className="text-[36px] inter-400 pt-[100px]">Популярные продукты</h2>
+                <h2 className="text-[36px] inter-300 pt-[100px]">Популярные продукты</h2>
                 <Swiper className="mt-[60px]" spaceBetween={50} slidesPerView={3}>
                     {products.map((product, index) => (
                         <SwiperSlide key={index}>

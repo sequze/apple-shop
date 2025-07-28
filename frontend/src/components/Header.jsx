@@ -10,7 +10,7 @@ const Header = (props) => {
                         <img className="w-full max-w-[150px]" src={props.logo} alt="Логотип"/>
                     </Link>
                     <nav>
-                        <ul className="flex gap-[50px] list-none inter-400">
+                        <ul className="flex gap-[50px] list-none inter-300">
                             <li className="cursor-pointer transition delay-150 duration-200 ease-in-out hover:opacity-50">
                                 <Link to="/">Главная</Link>
                             </li>

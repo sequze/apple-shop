@@ -8,7 +8,7 @@ const Cards = ({categories}) => {
         <div>
             <div className="h-[100vh]">
                 <div className="mx-auto max-w-[1500px] w-full">
-                    <h2 className="text-[36px] inter-400 mt-[100px]">Категории</h2>
+                    <h2 className="text-[36px] inter-300 mt-[100px]">Категории</h2>
                     <div className="flex justify-around mt-[60px]">
                         {categories.map((category, index) => {
                             const cardContent = <div

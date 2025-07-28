@@ -3,6 +3,11 @@
     font-weight: 400;
 }
 
+.inter-300 {
+    font-family: "Inter", sans-serif;
+    font-weight: 300;
+}
+
 .montserrat-800 {
     font-family: "Montserrat", sans-serif;
     font-weight: 800;
