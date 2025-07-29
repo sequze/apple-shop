@@ -1,10 +1,7 @@
 from services.user.schemas import UserCreateSchema, UserUpdateSchema, UserDTO
 from core.repositories.uow import UnitOfWork
 from .repository import UserRepository
-
-
-def hash_pwd(password: str):
-    return password
+from core.auth.utils import get_password_hash
 
 
 class UserNotFoundError(Exception):
@@ -25,6 +22,13 @@ class UserService:
         self.repository = repository
         self.uow = uow
 
+    async def get_by_email(self, email: str):
+        async with self.uow as uow:
+            user = await self.repository.get_by_filters(uow.session, {"email": email})
+            if user is None:
+                raise UserNotFoundError
+            return UserDTO.model_validate(user)
+
     async def get_by_id(self, id: int):
         async with self.uow as uow:
             user = await self.repository.get_by_id(uow.session, id)
@@ -43,7 +47,7 @@ class UserService:
             email_user = await self.repository.get_by_filters(uow.session, {"email": data.email}, True)
             if email_user: raise EmailAlreadyExists
             data_dict = data.model_dump()
-            data_dict["password_hash"] = hash_pwd(data.password)
+            data_dict["password_hash"] = get_password_hash(data.password)
             data_dict.pop('password')
             user = await self.repository.create(
                 uow.session,

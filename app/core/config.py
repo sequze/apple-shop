@@ -24,6 +24,7 @@ class ApiPrefix(BaseModel):
     order_items: str = "/order_items"
     cart_items: str = "/cart_items"
     product_images: str = "/product_images"
+    auth: str = "/auth"
 
 
 class ObjectStorageConfig(BaseModel):
@@ -32,6 +33,14 @@ class ObjectStorageConfig(BaseModel):
     endpoint_url: str
     bucket_name: str
     domain: str
+
+
+class AuthJWTConfig(BaseModel):
+    private_key_path: Path = BASE_DIR / "app" / "certs" / "jwt-private.pem"
+    public_key_path: Path = BASE_DIR / "app" / "certs" / "jwt-public.pem"
+    algorithm: str = "RS256"
+    refresh_token_expire_days: int = 30
+    access_token_expire_minutes: int = 15
 
 
 class DatabaseConfig(BaseModel):
@@ -58,6 +67,7 @@ class Settings(BaseSettings):
     )
     run: RunConfig = RunConfig()
     api_prefix: ApiPrefix = ApiPrefix()
+    auth_jwt: AuthJWTConfig = AuthJWTConfig()
     db: DatabaseConfig
     s3: ObjectStorageConfig
 

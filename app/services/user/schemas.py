@@ -1,12 +1,13 @@
 from pydantic import BaseModel, EmailStr, PositiveInt
-from core.models.user import UserRole
 from datetime import datetime
 
 
 class UserBaseSchema(BaseModel):
     email: EmailStr
     full_name: str
-    role: UserRole
+    is_verified: bool = False
+    is_superuser: bool = False
+    is_active: bool = True
 
 
 class UserDTO(UserBaseSchema):
@@ -24,4 +25,6 @@ class UserCreateSchema(UserBaseSchema):
 class UserUpdateSchema(BaseModel):
     email: EmailStr | None = None
     full_name: str | None = None
-    role: UserRole | None = None
+    is_verified: bool | None = None
+    is_superuser: bool | None = None
+    is_active: bool | None = None
