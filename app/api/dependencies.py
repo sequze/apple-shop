@@ -1,4 +1,6 @@
 from core.models import db_helper
+from services.auth.repository import AuthRepository
+from services.auth.service import AuthService
 from services.cart_item.repository import CartItemRepository
 from services.cart_item.service import CartItemService
 from services.category.repository import CategoryRepository
@@ -13,9 +15,15 @@ from services.product.repository import ProductRepository
 from services.product.service import ProductService
 from services.product_image.repository import ProductImageRepository
 from services.product_image.service import ProductImageService
-from services.user.service import UserService
+from services.user import UserDTO
+from services.user.service import UserService, UserNotFoundError
 from core.repositories.uow import UnitOfWork
 from services.user.repository import UserRepository
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi import Depends, HTTPException, status, Request
+from core.auth.utils import decode_jwt
+from jwt import InvalidTokenError
+from services.auth.service import TOKEN_TYPE_FIELD, ACCESS_TOKEN_FIELD
 
 
 def unit_of_work() -> UnitOfWork:
@@ -52,3 +60,86 @@ def cart_item_service() -> CartItemService:
 
 def product_image_service() -> ProductImageService:
     return ProductImageService(ProductImageRepository(), unit_of_work())
+
+
+def auth_service() -> AuthService:
+    return AuthService(UserRepository(), AuthRepository(), unit_of_work())
+
+
+# auth dependencies
+
+
+http_bearer = HTTPBearer()
+
+
+def get_current_token_payload(
+        credentials: HTTPAuthorizationCredentials = Depends(http_bearer)
+) -> dict:
+    token = credentials.credentials
+    try:
+        payload = decode_jwt(token)
+    except InvalidTokenError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid token"
+        )
+    return payload
+
+
+async def get_token_for_refresh(
+        request: Request,
+) -> str:
+    token = request.cookies.get("refresh_token")
+    if token:
+        return token
+    raise HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="No token",
+    )
+
+
+async def get_current_user(
+        payload: dict = Depends(get_current_token_payload),
+        user_service=Depends(users_service),
+) -> UserDTO:
+    token_type = payload.get(TOKEN_TYPE_FIELD)
+    if token_type != ACCESS_TOKEN_FIELD:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid token type"
+        )
+    email = payload.get("sub")
+    if not email:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid token",
+        )
+    try:
+        user = await user_service.get_by_email(email)
+        return user
+    except UserNotFoundError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid token",
+        )
+
+
+async def get_current_active_user(
+        user: UserDTO = Depends(get_current_user),
+) -> UserDTO:
+    if not user.is_active:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="User inactive",
+        )
+    return user
+
+
+async def get_current_superuser(
+        user: UserDTO = Depends(get_current_active_user),
+) -> UserDTO:
+    if not user.is_superuser:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="User not a superuser",
+        )
