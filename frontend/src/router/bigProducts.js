@@ -3,6 +3,10 @@ import product4 from "../assets/products/product-4.png";
 import product5 from "../assets/products/product-5.png";
 import product6 from "../assets/products/product-6.jpeg";
 import product7 from "../assets/products/product-7.png";
+import feature1 from "../assets/features/feature-1.png";
+import feature2 from "../assets/features/feature-2.png";
+import feature3 from "../assets/features/feature-3.png";
+import feature4 from "../assets/features/feature-4.png";
 
 export const bigProducts = [
   {
@@ -10,16 +14,31 @@ export const bigProducts = [
     "img": product1,
     "type": "iphone",
     "description": "iPhone Accessory #1",
-    "price": "$72.00",
-    "colors": [
-      "#0000FF",
-      "#FF0000",
-      "#00FF00"
-    ],
+    "price": "$34.00",
     "features": [
-      "water-resistant",
-      "shockproof",
-      "MagSafe compatible"
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 2635,
+    "title": "iPhone Accessory",
+    "colors": [
+      "#FF0000",
+      "#0000FF",
+      "#00FF00"
     ]
   },
   {
@@ -27,15 +46,35 @@ export const bigProducts = [
     "img": product4,
     "type": "macbook",
     "description": "Macbook Accessory #2",
-    "price": "$70.00",
+    "price": "$66.00",
+    "features": [
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 3332,
+    "title": "Macbook Accessory",
     "diagonals": [
       "16",
-      "14"
+      "13"
     ],
-    "features": [
-      "water-resistant",
-      "MagSafe compatible",
-      "shockproof"
+    "colors": [
+      "#000000",
+      "#C0C0C0",
+      "#808080"
     ]
   },
   {
@@ -43,16 +82,31 @@ export const bigProducts = [
     "img": product5,
     "type": "watch",
     "description": "Watch Band #3",
-    "price": "$55.00",
+    "price": "$93.00",
+    "features": [
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 1498,
+    "title": "Watch Band",
     "colors": [
       "#FFFFFF",
-      "#0000FF",
-      "#000000"
-    ],
-    "features": [
-      "MagSafe compatible",
-      "water-resistant",
-      "wireless charging"
+      "#00FF00",
+      "#FF0000"
     ]
   },
   {
@@ -60,28 +114,58 @@ export const bigProducts = [
     "img": product6,
     "type": "mini",
     "description": "Mac Mini Accessory #4",
-    "price": "$47.00",
+    "price": "$63.00",
     "features": [
-      "shockproof",
-      "water-resistant",
-      "wireless charging"
-    ]
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 2640,
+    "title": "Mac Mini Accessory"
   },
   {
     "id": 5,
     "img": product7,
     "type": "airpods",
     "description": "AirPods Accessory #5",
-    "price": "$38.00",
-    "colors": [
-      "#FF0000",
-      "#FFFFFF",
-      "#000000"
-    ],
+    "price": "$54.00",
     "features": [
-      "water-resistant",
-      "wireless charging",
-      "MagSafe compatible"
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 3148,
+    "title": "AirPods Accessory",
+    "colors": [
+      "#00FF00",
+      "#0000FF",
+      "#FFFFFF"
     ]
   },
   {
@@ -89,16 +173,31 @@ export const bigProducts = [
     "img": product1,
     "type": "iphone",
     "description": "iPhone Accessory #6",
-    "price": "$87.00",
-    "colors": [
-      "#000000",
-      "#FF0000",
-      "#00FF00"
-    ],
+    "price": "$55.00",
     "features": [
-      "wireless charging",
-      "MagSafe compatible",
-      "shockproof"
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 2191,
+    "title": "iPhone Accessory",
+    "colors": [
+      "#FFFFFF",
+      "#0000FF",
+      "#FF0000"
     ]
   },
   {
@@ -106,15 +205,35 @@ export const bigProducts = [
     "img": product4,
     "type": "macbook",
     "description": "Macbook Accessory #7",
-    "price": "$64.00",
+    "price": "$24.00",
+    "features": [
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 3880,
+    "title": "Macbook Accessory",
     "diagonals": [
       "14",
       "16"
     ],
-    "features": [
-      "wireless charging",
-      "MagSafe compatible",
-      "shockproof"
+    "colors": [
+      "#000000",
+      "#C0C0C0",
+      "#808080"
     ]
   },
   {
@@ -122,16 +241,31 @@ export const bigProducts = [
     "img": product5,
     "type": "watch",
     "description": "Watch Band #8",
-    "price": "$60.00",
-    "colors": [
-      "#00FF00",
-      "#000000",
-      "#0000FF"
-    ],
+    "price": "$62.00",
     "features": [
-      "shockproof",
-      "water-resistant",
-      "MagSafe compatible"
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 3864,
+    "title": "Watch Band",
+    "colors": [
+      "#FF0000",
+      "#000000",
+      "#FFFFFF"
     ]
   },
   {
@@ -139,28 +273,58 @@ export const bigProducts = [
     "img": product6,
     "type": "mini",
     "description": "Mac Mini Accessory #9",
-    "price": "$91.00",
+    "price": "$38.00",
     "features": [
-      "MagSafe compatible",
-      "water-resistant",
-      "shockproof"
-    ]
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 2853,
+    "title": "Mac Mini Accessory"
   },
   {
     "id": 10,
     "img": product7,
     "type": "airpods",
     "description": "AirPods Accessory #10",
-    "price": "$35.00",
-    "colors": [
-      "#0000FF",
-      "#FF0000",
-      "#00FF00"
-    ],
+    "price": "$61.00",
     "features": [
-      "MagSafe compatible",
-      "water-resistant",
-      "shockproof"
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 3126,
+    "title": "AirPods Accessory",
+    "colors": [
+      "#000000",
+      "#FFFFFF",
+      "#FF0000"
     ]
   },
   {
@@ -168,16 +332,31 @@ export const bigProducts = [
     "img": product1,
     "type": "iphone",
     "description": "iPhone Accessory #11",
-    "price": "$28.00",
-    "colors": [
-      "#FF0000",
-      "#0000FF",
-      "#00FF00"
-    ],
+    "price": "$72.00",
     "features": [
-      "shockproof",
-      "water-resistant",
-      "MagSafe compatible"
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 4910,
+    "title": "iPhone Accessory",
+    "colors": [
+      "#FFFFFF",
+      "#000000",
+      "#0000FF"
     ]
   },
   {
@@ -185,15 +364,35 @@ export const bigProducts = [
     "img": product4,
     "type": "macbook",
     "description": "Macbook Accessory #12",
-    "price": "$26.00",
+    "price": "$28.00",
+    "features": [
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 3061,
+    "title": "Macbook Accessory",
     "diagonals": [
       "16",
       "13"
     ],
-    "features": [
-      "wireless charging",
-      "water-resistant",
-      "shockproof"
+    "colors": [
+      "#000000",
+      "#C0C0C0",
+      "#808080"
     ]
   },
   {
@@ -201,16 +400,31 @@ export const bigProducts = [
     "img": product5,
     "type": "watch",
     "description": "Watch Band #13",
-    "price": "$28.00",
-    "colors": [
-      "#0000FF",
-      "#000000",
-      "#FFFFFF"
-    ],
+    "price": "$21.00",
     "features": [
-      "wireless charging",
-      "shockproof",
-      "MagSafe compatible"
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 1486,
+    "title": "Watch Band",
+    "colors": [
+      "#00FF00",
+      "#0000FF",
+      "#FFFFFF"
     ]
   },
   {
@@ -218,28 +432,58 @@ export const bigProducts = [
     "img": product6,
     "type": "mini",
     "description": "Mac Mini Accessory #14",
-    "price": "$36.00",
+    "price": "$32.00",
     "features": [
-      "water-resistant",
-      "MagSafe compatible",
-      "wireless charging"
-    ]
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 2137,
+    "title": "Mac Mini Accessory"
   },
   {
     "id": 15,
     "img": product7,
     "type": "airpods",
     "description": "AirPods Accessory #15",
-    "price": "$94.00",
+    "price": "$64.00",
+    "features": [
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 3957,
+    "title": "AirPods Accessory",
     "colors": [
-      "#000000",
+      "#0000FF",
       "#FF0000",
       "#00FF00"
-    ],
-    "features": [
-      "shockproof",
-      "wireless charging",
-      "MagSafe compatible"
     ]
   },
   {
@@ -247,16 +491,31 @@ export const bigProducts = [
     "img": product1,
     "type": "iphone",
     "description": "iPhone Accessory #16",
-    "price": "$51.00",
-    "colors": [
-      "#FF0000",
-      "#000000",
-      "#00FF00"
-    ],
+    "price": "$54.00",
     "features": [
-      "wireless charging",
-      "water-resistant",
-      "MagSafe compatible"
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 4226,
+    "title": "iPhone Accessory",
+    "colors": [
+      "#FFFFFF",
+      "#00FF00",
+      "#0000FF"
     ]
   },
   {
@@ -264,15 +523,35 @@ export const bigProducts = [
     "img": product4,
     "type": "macbook",
     "description": "Macbook Accessory #17",
-    "price": "$46.00",
+    "price": "$48.00",
+    "features": [
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 4162,
+    "title": "Macbook Accessory",
     "diagonals": [
       "16",
-      "14"
+      "13"
     ],
-    "features": [
-      "MagSafe compatible",
-      "shockproof",
-      "wireless charging"
+    "colors": [
+      "#000000",
+      "#C0C0C0",
+      "#808080"
     ]
   },
   {
@@ -280,16 +559,31 @@ export const bigProducts = [
     "img": product5,
     "type": "watch",
     "description": "Watch Band #18",
-    "price": "$44.00",
-    "colors": [
-      "#0000FF",
-      "#FF0000",
-      "#00FF00"
-    ],
+    "price": "$92.00",
     "features": [
-      "MagSafe compatible",
-      "water-resistant",
-      "shockproof"
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 2003,
+    "title": "Watch Band",
+    "colors": [
+      "#FF0000",
+      "#00FF00",
+      "#FFFFFF"
     ]
   },
   {
@@ -297,28 +591,58 @@ export const bigProducts = [
     "img": product6,
     "type": "mini",
     "description": "Mac Mini Accessory #19",
-    "price": "$48.00",
+    "price": "$74.00",
     "features": [
-      "water-resistant",
-      "MagSafe compatible",
-      "wireless charging"
-    ]
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 1567,
+    "title": "Mac Mini Accessory"
   },
   {
     "id": 20,
     "img": product7,
     "type": "airpods",
     "description": "AirPods Accessory #20",
-    "price": "$61.00",
-    "colors": [
-      "#0000FF",
-      "#FFFFFF",
-      "#000000"
-    ],
+    "price": "$63.00",
     "features": [
-      "wireless charging",
-      "water-resistant",
-      "shockproof"
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 3026,
+    "title": "AirPods Accessory",
+    "colors": [
+      "#FFFFFF",
+      "#00FF00",
+      "#FF0000"
     ]
   },
   {
@@ -326,16 +650,31 @@ export const bigProducts = [
     "img": product1,
     "type": "iphone",
     "description": "iPhone Accessory #21",
-    "price": "$53.00",
-    "colors": [
-      "#00FF00",
-      "#0000FF",
-      "#000000"
-    ],
+    "price": "$66.00",
     "features": [
-      "shockproof",
-      "wireless charging",
-      "water-resistant"
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 1442,
+    "title": "iPhone Accessory",
+    "colors": [
+      "#000000",
+      "#FFFFFF",
+      "#00FF00"
     ]
   },
   {
@@ -343,15 +682,35 @@ export const bigProducts = [
     "img": product4,
     "type": "macbook",
     "description": "Macbook Accessory #22",
-    "price": "$21.00",
+    "price": "$86.00",
+    "features": [
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 485,
+    "title": "Macbook Accessory",
     "diagonals": [
-      "13",
+      "14",
       "16"
     ],
-    "features": [
-      "shockproof",
-      "wireless charging",
-      "water-resistant"
+    "colors": [
+      "#000000",
+      "#C0C0C0",
+      "#808080"
     ]
   },
   {
@@ -359,16 +718,31 @@ export const bigProducts = [
     "img": product5,
     "type": "watch",
     "description": "Watch Band #23",
-    "price": "$51.00",
+    "price": "$29.00",
+    "features": [
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 4196,
+    "title": "Watch Band",
     "colors": [
-      "#00FF00",
+      "#FF0000",
       "#FFFFFF",
       "#000000"
-    ],
-    "features": [
-      "water-resistant",
-      "wireless charging",
-      "MagSafe compatible"
     ]
   },
   {
@@ -376,28 +750,58 @@ export const bigProducts = [
     "img": product6,
     "type": "mini",
     "description": "Mac Mini Accessory #24",
-    "price": "$46.00",
+    "price": "$84.00",
     "features": [
-      "shockproof",
-      "water-resistant",
-      "MagSafe compatible"
-    ]
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 3041,
+    "title": "Mac Mini Accessory"
   },
   {
     "id": 25,
     "img": product7,
     "type": "airpods",
     "description": "AirPods Accessory #25",
-    "price": "$93.00",
+    "price": "$63.00",
+    "features": [
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 4388,
+    "title": "AirPods Accessory",
     "colors": [
       "#FF0000",
-      "#FFFFFF",
-      "#000000"
-    ],
-    "features": [
-      "MagSafe compatible",
-      "wireless charging",
-      "shockproof"
+      "#000000",
+      "#00FF00"
     ]
   },
   {
@@ -405,16 +809,31 @@ export const bigProducts = [
     "img": product1,
     "type": "iphone",
     "description": "iPhone Accessory #26",
-    "price": "$32.00",
-    "colors": [
-      "#FFFFFF",
-      "#000000",
-      "#FF0000"
-    ],
+    "price": "$38.00",
     "features": [
-      "shockproof",
-      "water-resistant",
-      "MagSafe compatible"
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 4735,
+    "title": "iPhone Accessory",
+    "colors": [
+      "#00FF00",
+      "#FFFFFF",
+      "#FF0000"
     ]
   },
   {
@@ -422,15 +841,35 @@ export const bigProducts = [
     "img": product4,
     "type": "macbook",
     "description": "Macbook Accessory #27",
-    "price": "$88.00",
-    "diagonals": [
-      "16",
-      "15"
-    ],
+    "price": "$25.00",
     "features": [
-      "shockproof",
-      "MagSafe compatible",
-      "water-resistant"
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 4299,
+    "title": "Macbook Accessory",
+    "diagonals": [
+      "15",
+      "13"
+    ],
+    "colors": [
+      "#000000",
+      "#C0C0C0",
+      "#808080"
     ]
   },
   {
@@ -438,16 +877,31 @@ export const bigProducts = [
     "img": product5,
     "type": "watch",
     "description": "Watch Band #28",
-    "price": "$47.00",
-    "colors": [
-      "#000000",
-      "#0000FF",
-      "#FFFFFF"
-    ],
+    "price": "$91.00",
     "features": [
-      "shockproof",
-      "wireless charging",
-      "MagSafe compatible"
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 3871,
+    "title": "Watch Band",
+    "colors": [
+      "#00FF00",
+      "#FFFFFF",
+      "#0000FF"
     ]
   },
   {
@@ -455,28 +909,58 @@ export const bigProducts = [
     "img": product6,
     "type": "mini",
     "description": "Mac Mini Accessory #29",
-    "price": "$81.00",
+    "price": "$58.00",
     "features": [
-      "wireless charging",
-      "MagSafe compatible",
-      "shockproof"
-    ]
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 1415,
+    "title": "Mac Mini Accessory"
   },
   {
     "id": 30,
     "img": product7,
     "type": "airpods",
     "description": "AirPods Accessory #30",
-    "price": "$67.00",
-    "colors": [
-      "#0000FF",
-      "#FFFFFF",
-      "#000000"
-    ],
+    "price": "$75.00",
     "features": [
-      "MagSafe compatible",
-      "shockproof",
-      "wireless charging"
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 373,
+    "title": "AirPods Accessory",
+    "colors": [
+      "#00FF00",
+      "#000000",
+      "#0000FF"
     ]
   },
   {
@@ -484,16 +968,31 @@ export const bigProducts = [
     "img": product1,
     "type": "iphone",
     "description": "iPhone Accessory #31",
-    "price": "$62.00",
+    "price": "$43.00",
+    "features": [
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 3376,
+    "title": "iPhone Accessory",
     "colors": [
       "#00FF00",
       "#FFFFFF",
       "#FF0000"
-    ],
-    "features": [
-      "MagSafe compatible",
-      "water-resistant",
-      "shockproof"
     ]
   },
   {
@@ -501,15 +1000,35 @@ export const bigProducts = [
     "img": product4,
     "type": "macbook",
     "description": "Macbook Accessory #32",
-    "price": "$24.00",
-    "diagonals": [
-      "16",
-      "13"
-    ],
+    "price": "$26.00",
     "features": [
-      "water-resistant",
-      "shockproof",
-      "MagSafe compatible"
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 1662,
+    "title": "Macbook Accessory",
+    "diagonals": [
+      "14",
+      "16"
+    ],
+    "colors": [
+      "#000000",
+      "#C0C0C0",
+      "#808080"
     ]
   },
   {
@@ -517,16 +1036,31 @@ export const bigProducts = [
     "img": product5,
     "type": "watch",
     "description": "Watch Band #33",
-    "price": "$37.00",
-    "colors": [
-      "#00FF00",
-      "#000000",
-      "#FF0000"
-    ],
+    "price": "$38.00",
     "features": [
-      "wireless charging",
-      "shockproof",
-      "water-resistant"
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 4982,
+    "title": "Watch Band",
+    "colors": [
+      "#FFFFFF",
+      "#000000",
+      "#00FF00"
     ]
   },
   {
@@ -534,28 +1068,58 @@ export const bigProducts = [
     "img": product6,
     "type": "mini",
     "description": "Mac Mini Accessory #34",
-    "price": "$66.00",
+    "price": "$87.00",
     "features": [
-      "wireless charging",
-      "MagSafe compatible",
-      "shockproof"
-    ]
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 4836,
+    "title": "Mac Mini Accessory"
   },
   {
     "id": 35,
     "img": product7,
     "type": "airpods",
     "description": "AirPods Accessory #35",
-    "price": "$53.00",
+    "price": "$77.00",
+    "features": [
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 1991,
+    "title": "AirPods Accessory",
     "colors": [
       "#00FF00",
-      "#FF0000",
-      "#FFFFFF"
-    ],
-    "features": [
-      "water-resistant",
-      "MagSafe compatible",
-      "wireless charging"
+      "#000000",
+      "#0000FF"
     ]
   },
   {
@@ -563,16 +1127,31 @@ export const bigProducts = [
     "img": product1,
     "type": "iphone",
     "description": "iPhone Accessory #36",
-    "price": "$49.00",
-    "colors": [
-      "#00FF00",
-      "#FF0000",
-      "#FFFFFF"
-    ],
+    "price": "$28.00",
     "features": [
-      "shockproof",
-      "wireless charging",
-      "water-resistant"
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 3425,
+    "title": "iPhone Accessory",
+    "colors": [
+      "#FFFFFF",
+      "#0000FF",
+      "#000000"
     ]
   },
   {
@@ -580,15 +1159,35 @@ export const bigProducts = [
     "img": product4,
     "type": "macbook",
     "description": "Macbook Accessory #37",
-    "price": "$39.00",
-    "diagonals": [
-      "13",
-      "15"
-    ],
+    "price": "$37.00",
     "features": [
-      "water-resistant",
-      "shockproof",
-      "wireless charging"
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 1218,
+    "title": "Macbook Accessory",
+    "diagonals": [
+      "15",
+      "13"
+    ],
+    "colors": [
+      "#000000",
+      "#C0C0C0",
+      "#808080"
     ]
   },
   {
@@ -596,16 +1195,31 @@ export const bigProducts = [
     "img": product5,
     "type": "watch",
     "description": "Watch Band #38",
-    "price": "$54.00",
+    "price": "$42.00",
+    "features": [
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 2419,
+    "title": "Watch Band",
     "colors": [
       "#FFFFFF",
-      "#000000",
-      "#00FF00"
-    ],
-    "features": [
-      "MagSafe compatible",
-      "shockproof",
-      "water-resistant"
+      "#FF0000",
+      "#0000FF"
     ]
   },
   {
@@ -613,28 +1227,58 @@ export const bigProducts = [
     "img": product6,
     "type": "mini",
     "description": "Mac Mini Accessory #39",
-    "price": "$24.00",
+    "price": "$38.00",
     "features": [
-      "MagSafe compatible",
-      "water-resistant",
-      "shockproof"
-    ]
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 4697,
+    "title": "Mac Mini Accessory"
   },
   {
     "id": 40,
     "img": product7,
     "type": "airpods",
     "description": "AirPods Accessory #40",
-    "price": "$52.00",
-    "colors": [
-      "#0000FF",
-      "#000000",
-      "#FF0000"
-    ],
+    "price": "$56.00",
     "features": [
-      "shockproof",
-      "MagSafe compatible",
-      "wireless charging"
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 3277,
+    "title": "AirPods Accessory",
+    "colors": [
+      "#FF0000",
+      "#0000FF",
+      "#00FF00"
     ]
   },
   {
@@ -642,16 +1286,31 @@ export const bigProducts = [
     "img": product1,
     "type": "iphone",
     "description": "iPhone Accessory #41",
-    "price": "$39.00",
-    "colors": [
-      "#0000FF",
-      "#000000",
-      "#FF0000"
-    ],
+    "price": "$92.00",
     "features": [
-      "wireless charging",
-      "shockproof",
-      "water-resistant"
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 2206,
+    "title": "iPhone Accessory",
+    "colors": [
+      "#00FF00",
+      "#FF0000",
+      "#0000FF"
     ]
   },
   {
@@ -659,15 +1318,35 @@ export const bigProducts = [
     "img": product4,
     "type": "macbook",
     "description": "Macbook Accessory #42",
-    "price": "$61.00",
-    "diagonals": [
-      "14",
-      "15"
-    ],
+    "price": "$82.00",
     "features": [
-      "MagSafe compatible",
-      "shockproof",
-      "wireless charging"
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 4672,
+    "title": "Macbook Accessory",
+    "diagonals": [
+      "16",
+      "13"
+    ],
+    "colors": [
+      "#000000",
+      "#C0C0C0",
+      "#808080"
     ]
   },
   {
@@ -675,16 +1354,31 @@ export const bigProducts = [
     "img": product5,
     "type": "watch",
     "description": "Watch Band #43",
-    "price": "$80.00",
-    "colors": [
-      "#000000",
-      "#FF0000",
-      "#00FF00"
-    ],
+    "price": "$60.00",
     "features": [
-      "water-resistant",
-      "MagSafe compatible",
-      "shockproof"
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 1607,
+    "title": "Watch Band",
+    "colors": [
+      "#0000FF",
+      "#00FF00",
+      "#FF0000"
     ]
   },
   {
@@ -692,28 +1386,58 @@ export const bigProducts = [
     "img": product6,
     "type": "mini",
     "description": "Mac Mini Accessory #44",
-    "price": "$38.00",
+    "price": "$26.00",
     "features": [
-      "MagSafe compatible",
-      "wireless charging",
-      "shockproof"
-    ]
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 777,
+    "title": "Mac Mini Accessory"
   },
   {
     "id": 45,
     "img": product7,
     "type": "airpods",
     "description": "AirPods Accessory #45",
-    "price": "$30.00",
-    "colors": [
-      "#FF0000",
-      "#000000",
-      "#00FF00"
-    ],
+    "price": "$100.00",
     "features": [
-      "wireless charging",
-      "MagSafe compatible",
-      "shockproof"
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 1090,
+    "title": "AirPods Accessory",
+    "colors": [
+      "#0000FF",
+      "#FF0000",
+      "#00FF00"
     ]
   },
   {
@@ -721,16 +1445,31 @@ export const bigProducts = [
     "img": product1,
     "type": "iphone",
     "description": "iPhone Accessory #46",
-    "price": "$92.00",
-    "colors": [
-      "#000000",
-      "#FF0000",
-      "#00FF00"
-    ],
+    "price": "$86.00",
     "features": [
-      "wireless charging",
-      "MagSafe compatible",
-      "shockproof"
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 3384,
+    "title": "iPhone Accessory",
+    "colors": [
+      "#00FF00",
+      "#FF0000",
+      "#FFFFFF"
     ]
   },
   {
@@ -738,15 +1477,35 @@ export const bigProducts = [
     "img": product4,
     "type": "macbook",
     "description": "Macbook Accessory #47",
-    "price": "$69.00",
+    "price": "$49.00",
+    "features": [
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 234,
+    "title": "Macbook Accessory",
     "diagonals": [
       "14",
       "16"
     ],
-    "features": [
-      "wireless charging",
-      "MagSafe compatible",
-      "water-resistant"
+    "colors": [
+      "#000000",
+      "#C0C0C0",
+      "#808080"
     ]
   },
   {
@@ -754,16 +1513,31 @@ export const bigProducts = [
     "img": product5,
     "type": "watch",
     "description": "Watch Band #48",
-    "price": "$23.00",
+    "price": "$50.00",
+    "features": [
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 4889,
+    "title": "Watch Band",
     "colors": [
       "#FF0000",
-      "#000000",
+      "#0000FF",
       "#FFFFFF"
-    ],
-    "features": [
-      "MagSafe compatible",
-      "wireless charging",
-      "shockproof"
     ]
   },
   {
@@ -771,28 +1545,58 @@ export const bigProducts = [
     "img": product6,
     "type": "mini",
     "description": "Mac Mini Accessory #49",
-    "price": "$96.00",
+    "price": "$47.00",
     "features": [
-      "shockproof",
-      "wireless charging",
-      "MagSafe compatible"
-    ]
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 2909,
+    "title": "Mac Mini Accessory"
   },
   {
     "id": 50,
     "img": product7,
     "type": "airpods",
     "description": "AirPods Accessory #50",
-    "price": "$19.00",
+    "price": "$46.00",
+    "features": [
+      {
+        img: feature1,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature2,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature3,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+      {
+        img: feature4,
+        text: "IPS, 14.2, 3024x1964, 120Гц, 254 ppi",
+      },
+    ],
+    "views": 1663,
+    "title": "AirPods Accessory",
     "colors": [
       "#000000",
       "#00FF00",
       "#FF0000"
-    ],
-    "features": [
-      "water-resistant",
-      "shockproof",
-      "wireless charging"
     ]
   }
-];
+]

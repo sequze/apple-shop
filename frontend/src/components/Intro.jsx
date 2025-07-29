@@ -7,9 +7,9 @@ const Intro = (props) => {
                 <div className="flex justify-between  pt-[300px]">
                     <div>
                         <div>
-                            <h1 className="montserrat-600 text-[82px] font-bold slide-up">Ваша техника.</h1>
-                            <h1 className="montserrat-600 text-[82px] font-bold slide-up slide-up-delay-1">Ваш стиль.</h1>
-                            <h1 className="montserrat-600 text-[82px] font-bold slide-up slide-up-delay-2">Ваша Apple.</h1>
+                            <h1 className="montserrat-800 text-[82px] font-bold slide-up">Ваша техника.</h1>
+                            <h1 className="montserrat-800 text-[82px] font-bold slide-up slide-up-delay-1">Ваш стиль.</h1>
+                            <h1 className="montserrat-800 text-[82px] font-bold slide-up slide-up-delay-2">Ваша Apple.</h1>
                         </div>
                         <p className="inter-300 opacity-70 text-gray-700 mt-[45px] text-[18px]/[1.4]">
                             iStore — магазин, где Apple начинается с доверия. <br/>
