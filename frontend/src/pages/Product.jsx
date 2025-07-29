@@ -19,8 +19,8 @@ const Product = ({logo, products}) => {
         <div>
             <Header logo={logo} />
             <div className="bg-[#D9D9D9] h-[100vh] pt-[50px]">
-                <div className="mx-auto max-w-[1500px] w-fit relative  pt-[100px] pb-[100px]">
-                    <div className="bg-[#fff] w-full  rounded-[40px] p-[50px] flex justify-around">
+                <div className="mx-auto max-w-[1500px]  relative  pt-[100px] pb-[100px]">
+                    <div className="bg-[#fff] w-fit min-w-2/3 rounded-[40px] p-[50px] flex justify-around m-auto">
                         <div className="relative w-5/12 text-[22px] inter-300 flex flex-col items-center">
                             <div className="relative w-[260px] h-[50px]">
                                 {
@@ -60,16 +60,16 @@ const Product = ({logo, products}) => {
                                         <p className="inter-300">
                                             Доступно в {currentProduct.colors.length} цветах
                                         </p>
-                                        <div className="flex justify-between pt-[30px] ">
+                                        <div className="flex justify-between pt-[30px]">
                                             {currentProduct.colors.map((color, index) => (
                                                 <div
                                                     key={index}
-                                                    className={`transition-all w-[35px] h-[35px] flex items-center justify-center rounded-full cursor-pointer  ${index === activeColor ? "border-[2px] border-[#0071e3]" : ""}`}
+                                                    className={`transition-all w-[40px] h-[40px] flex items-center justify-center rounded-full cursor-pointer  ${index === activeColor ? "border-[2px] border-[#0071e3]" : ""}`}
                                                     onClick={() => setActiveColor(index)}
                                                 >
                                                     <div
-                                                        className="w-[20px] h-[20px] rounded-full"
-                                                        style={{ backgroundColor: color }}
+                                                        className="w-[25px] h-[25px] rounded-full"
+                                                        style={{ backgroundColor: color , boxShadow: 'inset 0px 3px 4px rgba(0, 0, 0, 0.2)',}}
                                                     />
                                                 </div>
 

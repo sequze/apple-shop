@@ -11,10 +11,7 @@ import card5 from "../assets/categories/card-5.jpeg";
 import product1 from "../assets/products/product-1.jpeg";
 import product2 from "../assets/products/product-2.jpeg";
 import product3 from "../assets/products/product-3.jpeg";
-import product4 from "../assets/products/product-4.png";
-import product5 from "../assets/products/product-5.png";
-import product6 from "../assets/products/product-6.jpeg";
-import product7 from "../assets/products/product-7.png";
+
 import Product from "../pages/Product.jsx";
 import {bigProducts} from "./bigProducts.js";
 
@@ -46,45 +43,11 @@ const categories = [
     }
 ]
 
-const products = [
-    {
-        img: product1,
-        description: "iPhone 16 PRO Max Silicone Case with MagSafe",
-        price: "$49.00"
-    },
-    {
-        img: product2,
-        description: "iPhone 16 PRO Max Silicone Case with MagSafe",
-        price: "$49.00"
-    },
-    {
-        img: product3,
-        description: "iPhone 16 PRO Max Silicone Case with MagSafe",
-        price: "$49.00"
-    },
-    {
-        img: product1,
-        description: "iPhone 16 PRO Max Silicone Case with MagSafe",
-        price: "$49.00"
-    },
-    {
-        img: product2,
-        description: "iPhone 16 PRO Max Silicone Case with MagSafe",
-        price: "$49.00"
-    },
-    {
-        img: product3,
-        description: "iPhone 16 PRO Max Silicone Case with MagSafe",
-        price: "$49.00"
-    }
-];
-
-
 
 export const routes = [
     {
         path: "/",
-        element: <Home products={products} categories={categories} intro={IntroPhoto} logo={SiteLogo} />
+        element: <Home products={bigProducts} categories={categories} intro={IntroPhoto} logo={SiteLogo} />
     },
     {
         path: "/products/:type",
