@@ -2,7 +2,7 @@ import React from 'react';
 import Header from "../components/Header.jsx";
 import Intro from "../components/Intro.jsx";
 import Cards from "../components/Cards.jsx";
-import Products from "../components/Products.jsx";
+import PopularProducts from "../components/PopularProducts.jsx";
 import Footer from "../components/Footer.jsx";
 
 const Home = ({products, categories, logo, intro}) => {
@@ -11,7 +11,7 @@ const Home = ({products, categories, logo, intro}) => {
             <Header logo={logo} />
             <Intro photo={intro} />
             <Cards categories={categories}/>
-            <Products products={products} />
+            <PopularProducts products={products} />
             <Footer />
         </div>
     );

@@ -11,6 +11,7 @@ import card5 from "../assets/categories/card-5.jpeg";
 import product1 from "../assets/products/product-1.jpeg";
 import product2 from "../assets/products/product-2.jpeg";
 import product3 from "../assets/products/product-3.jpeg";
+import Product from "../pages/Product.jsx";
 
 const categories = [
     {
@@ -245,5 +246,9 @@ export const routes = [
     {
         path: "/products/:type",
         element: <Products categories={categories} products={bigProducts} logo={SiteLogo} />
+    },
+    {
+        path: "/products/:type/:id",
+        element: <Product products={bigProducts} logo={SiteLogo}/>
     }
 ]

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Swiper, SwiperSlide} from "swiper/react";
 
-const Products = ({products}) => {
+const PopularProducts = ({products}) => {
     return (
         <div className="bg-[#D9D9D9] h-[100vh]">
             <div className="mx-auto max-w-[1500px] w-full">
@@ -22,4 +22,4 @@ const Products = ({products}) => {
     );
 };
 
-export default Products;
+export default PopularProducts;
