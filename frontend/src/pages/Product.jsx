@@ -11,14 +11,6 @@ const Product = ({logo, products}) => {
         .replace(/(^-|-$)+/g, "") === id);
     console.log(currentProduct)
 
-    // products.map(product => {
-    //     console.log(
-    //         product.description
-    //             .toLowerCase().replace(/[^a-z0-9]+/g, "-")
-    //             .replace(/(^-|-$)+/g, "")
-    //     )
-    // })
-
     return (
         <div>
             <Header logo={logo} />
