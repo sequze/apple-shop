@@ -22,6 +22,13 @@ class UserService:
         self.repository = repository
         self.uow = uow
 
+    async def get_by_email(self, email: str):
+        async with self.uow as uow:
+            user = await self.repository.get_by_filters(uow.session, {"email": email})
+            if user is None:
+                raise UserNotFoundError
+            return UserDTO.model_validate(user)
+
     async def get_by_id(self, id: int):
         async with self.uow as uow:
             user = await self.repository.get_by_id(uow.session, id)
