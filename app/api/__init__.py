@@ -8,8 +8,15 @@ from .orders import router as orders_router
 from .order_items import router as order_items_router
 from .cart_items import router as cart_items_router
 from .product_image import router as product_image_router
+from .auth import router as auth_router
 
 router = APIRouter()
+
+router.include_router(
+    auth_router,
+    tags=["Auth"],
+    prefix=settings.api_prefix.auth,
+)
 
 router.include_router(
     users_router,

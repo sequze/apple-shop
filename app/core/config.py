@@ -24,6 +24,7 @@ class ApiPrefix(BaseModel):
     order_items: str = "/order_items"
     cart_items: str = "/cart_items"
     product_images: str = "/product_images"
+    auth: str = "/auth"
 
 
 class ObjectStorageConfig(BaseModel):
