@@ -1,15 +1,23 @@
 import jwt
 from core.config import settings
 import bcrypt
-from passlib.context import CryptContext
+from datetime import datetime, UTC, timedelta
 
 
 def encode_jwt(
         payload: dict,
+        expire_minutes: int,
         private_key: str = settings.auth_jwt.private_key_path.read_text(),
         algorithm: str = settings.auth_jwt.algorithm,
 ) -> str:
-    encoded_jwt = jwt.encode(payload, private_key, algorithm=algorithm)
+    to_encode = payload.copy()
+    now = datetime.now(UTC)
+    expire = now + timedelta(minutes=expire_minutes)
+    to_encode.update(
+        iat=now,
+        exp=expire,
+    )
+    encoded_jwt = jwt.encode(to_encode, private_key, algorithm=algorithm)
     return encoded_jwt
 
 
@@ -17,7 +25,7 @@ def decode_jwt(
         jwt_token: str | bytes,
         public_key: str = settings.auth_jwt.public_key_path.read_text(),
         algorithm: str = settings.auth_jwt.algorithm,
-) -> str:
+) -> dict:
     decoded_jwt = jwt.decode(
         jwt_token,
         public_key,
