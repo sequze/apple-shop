@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useParams} from "react-router-dom";
 import Header from "../components/Header.jsx";
 import Footer from "../components/Footer.jsx";
-import MyActiveButton from "../components/ui/MyActiveButton/MyActiveButton.jsx";
+import MyActiveButton from "../components/ui/activeButton/MyActiveButton.jsx";
 
 const Product = ({logo, products}) => {
     const {id} = useParams();

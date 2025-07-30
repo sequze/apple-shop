@@ -14,9 +14,13 @@ const Header = (props) => {
                             <li className="cursor-pointer transition delay-150 duration-200 ease-in-out hover:opacity-50">
                                 <Link to="/">Главная</Link>
                             </li>
-                            <li className="cursor-pointer transition delay-150 duration-200 ease-in-out hover:opacity-50">О нас</li>
+                            <li className="cursor-pointer transition delay-150 duration-200 ease-in-out hover:opacity-50">
+                                О нас
+                            </li>
                             <li className="cursor-pointer transition delay-150 duration-200 ease-in-out hover:opacity-50">Контакты</li>
-                            <li className="cursor-pointer transition delay-150 duration-200 ease-in-out hover:opacity-50">Зарегестрироваться</li>
+                            <li className="cursor-pointer transition delay-150 duration-200 ease-in-out hover:opacity-50">
+                                <Link to="/register">Зарегестрироваться</Link>
+                            </li>
                         </ul>
                     </nav>
                 </div>

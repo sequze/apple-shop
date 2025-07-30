@@ -14,6 +14,8 @@ import product3 from "../assets/products/product-3.jpeg";
 
 import Product from "../pages/Product.jsx";
 import {bigProducts} from "./bigProducts.js";
+import Register from "../pages/Register.jsx";
+import Login from "../pages/Login.jsx";
 
 const categories = [
     {
@@ -48,6 +50,14 @@ export const routes = [
     {
         path: "/",
         element: <Home products={bigProducts} categories={categories} intro={IntroPhoto} logo={SiteLogo} />
+    },
+    {
+        path: "/register",
+        element: <Register  logo={SiteLogo} />
+    },
+    {
+        path: "/login",
+        element: <Login  logo={SiteLogo} />
     },
     {
         path: "/products/:type",
