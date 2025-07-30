@@ -28,13 +28,13 @@ const Register = ({logo}) => {
                             />
                             <MyInput
                                 placeholder="Пароль"
-                                type="text"
+                                type="password"
                                 value={password}
                                 onChange={(event) => setPassword(event.target.value)}
                             />
                             <MyInput
                                 placeholder="Повторите пароль"
-                                type="text"
+                                type="password"
                                 value={passwordCheck}
                                 onChange={(event) => setPasswordCheck(event.target.value)}
                             />
