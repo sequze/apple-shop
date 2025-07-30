@@ -1,0 +1,33 @@
+import React from 'react';
+import {Link} from "react-router-dom";
+
+const Header = (props) => {
+    return (
+        <header className="fixed w-full bg-[#fff] z-[100] shadow">
+            <div className="mx-auto max-w-[1500px] w-full">
+                <div className="flex justify-between w-full h-[75px] truncate items-center">
+                    <Link to="/">
+                        <img className="w-full max-w-[150px]" src={props.logo} alt="Логотип"/>
+                    </Link>
+                    <nav>
+                        <ul className="flex gap-[50px] list-none inter-300">
+                            <li className="cursor-pointer transition delay-150 duration-200 ease-in-out hover:opacity-50">
+                                <Link to="/">Главная</Link>
+                            </li>
+                            <li className="cursor-pointer transition delay-150 duration-200 ease-in-out hover:opacity-50">
+                                О нас
+                            </li>
+                            <li className="cursor-pointer transition delay-150 duration-200 ease-in-out hover:opacity-50">Контакты</li>
+                            <li className="cursor-pointer transition delay-150 duration-200 ease-in-out hover:opacity-50">
+                                <Link to="/register">Зарегестрироваться</Link>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+            </div>
+        </header>
+    );
+};
+
+export default Header;
