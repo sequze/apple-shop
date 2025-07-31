@@ -13,4 +13,13 @@ export default class AuthService {
         return response.data;
     }
 
+
+    static async login(email, password) {
+        const response = await axios.post("/api/auth/login", {
+            email,
+            password
+        });
+        return response.data;
+    }
+
 }
