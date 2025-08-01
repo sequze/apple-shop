@@ -13,24 +13,7 @@ class OrderRepository(SQlAlchemyRepository):
     async def create(self, session: AsyncSession, data: dict):
         stmt = insert(Order).values(**data, total_amount=0).returning(Order)
         result = await session.execute(stmt)
-        await session.commit()
         return result.scalar()
-
-    async def update(
-            self,
-            session: AsyncSession,
-            data: dict,
-            order: Order) -> Order:
-        mapper = inspect(Order)
-        for key, value in data.items():
-            if key in mapper.attrs:
-                setattr(order, key, value)
-        await session.commit()
-        await session.refresh(order)
-        return order
-
-    async def get_by_id(self, session: AsyncSession, id: int):
-        return await session.get(Order, id)
 
     async def get_with_items(self, session: AsyncSession, filters=None, one: bool = False):
         stmt = select(Order).options(joinedload(Order.items))

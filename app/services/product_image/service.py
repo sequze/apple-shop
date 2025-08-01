@@ -63,6 +63,7 @@ class ProductImageService:
                 "product_id": data.product_id,
             }
             image = await self.repository.create(uow.session, data_dict)
+            await uow.commit()
             return ProductImageDTO.model_validate(image)
 
     async def get_all(self) -> list[ProductImageDTO]:
@@ -80,8 +81,10 @@ class ProductImageService:
             image = await self.__find_by_id(uow.session, id)
             if data.is_main and not image.is_main:
                 await self.__validate_main_image(uow.session, product_id=image.product_id)
-            image_updated = await self.repository.update(uow.session, data.model_dump(exclude_unset=True), image)
-            return ProductImageDTO.model_validate(image_updated)
+            await self.repository.update(uow.session, data.model_dump(exclude_unset=True), image)
+            await uow.session.commit()
+            await uow.session.refresh(image)
+            return ProductImageDTO.model_validate(image)
 
     async def delete(self, id: int) -> ProductImageDTO:
         async with self.uow as uow:
@@ -91,4 +94,5 @@ class ProductImageService:
             except DeleteFileError:
                 raise
             await self.repository.delete(uow.session, image)
+            await uow.commit()
             return ProductImageDTO.model_validate(image)

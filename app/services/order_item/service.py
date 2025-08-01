@@ -40,19 +40,22 @@ class OrderItemService:
         async with self.uow as uow:
             await self.__validate_order_and_product(uow.session, data.order_id, data.product_id)
             item = await self.repository.create(uow.session, data.model_dump())
-
+            await uow.commit()
             return OrderItemDTO.model_validate(item)
 
     async def update(self, data: OrderItemUpdateSchema, id: int) -> OrderItemDTO:
         async with self.uow as uow:
             item = await self.__find_by_id(uow.session, id)
-            item_updated = await self.repository.update(uow.session, data.model_dump(exclude_unset=True), item)
-            return OrderItemDTO.model_validate(item_updated)
+            await self.repository.update(uow.session, data.model_dump(exclude_unset=True), item)
+            await uow.commit()
+            await uow.session.refresh(item)
+            return OrderItemDTO.model_validate(item)
 
     async def delete(self, id: int) -> OrderItemDTO:
         async with self.uow as uow:
             item = await self.__find_by_id(uow.session, id)
             await self.repository.delete(uow.session, item)
+            await uow.commit()
             return OrderItemDTO.model_validate(item)
 
     async def get_by_id(self, id: int) -> OrderItemDTO:

@@ -8,7 +8,6 @@ class SQlAlchemyRepository:
     async def create(self, session: AsyncSession, data: dict):
         stmt = insert(self.model).values(**data).returning(self.model)
         result = await session.execute(stmt)
-        await session.commit()
         return result.scalar()
 
     async def get_all(self, session: AsyncSession):
@@ -26,7 +25,6 @@ class SQlAlchemyRepository:
         res = await session.execute(
             delete(self.model)
             .where(self.model.id == entity_id).returning(self.model))
-        await session.commit()
         return res.scalar()
 
     async def delete(self, session: AsyncSession, entity):

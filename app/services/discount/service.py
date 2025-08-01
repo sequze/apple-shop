@@ -37,6 +37,7 @@ class DiscountService:
     ) -> DiscountDTO:
         async with self.uow as uow:
             res = await self.repository.create(uow.session, data.model_dump())
+            await uow.commit()
             return DiscountDTO.model_validate(res)
 
     async def get_by_id(self, id: int) -> DiscountDTO:
@@ -53,23 +54,29 @@ class DiscountService:
         async with self.uow as uow:
             discount = await self.__find_by_id(uow.session, id)
             await self.repository.delete(uow.session, discount)
+            await uow.commit()
             return DiscountDTO.model_validate(discount)
 
     async def update(self, id: int, data: DiscountUpdateSchema) -> DiscountDTO:
         async with self.uow as uow:
             discount = await self.__find_by_id(uow.session, id)
             if data.end_date or data.start_date:
-                end_date = data.end_date.replace(tzinfo=None) if data.end_date else discount.end_date
-                start_date = data.start_date.replace(tzinfo=None) if data.start_date else discount.start_date
+                if data.end_date: data.end_date = data.end_date.replace(tzinfo=None)
+                if data.start_date: data.start_date = data.start_date.replace(tzinfo=None)
+                end_date = data.end_date if data.end_date else discount.end_date
+                start_date = data.start_date if data.start_date else discount.start_date
                 if end_date <= start_date:
                     raise InvalidTimeIntervalError
-            discount_updated = await self.repository.update(
+            await self.repository.update(
                 uow.session,
                 data.model_dump(exclude_unset=True),
                 discount)
-            return DiscountDTO.model_validate(discount_updated)
+            await uow.commit()
+            await uow.session.refresh(discount)
+            return DiscountDTO.model_validate(discount)
 
     async def deactivate(self, id: int) -> None:
         async with self.uow as uow:
             discount = await self.__find_by_id(uow.session, id)
-            await self.repository.deactivate(uow.session, discount)
+            discount.is_active = False
+            await uow.commit()

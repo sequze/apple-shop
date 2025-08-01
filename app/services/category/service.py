@@ -20,19 +20,23 @@ class CategoryService:
     async def create(self, data: CategoryCreateSchema) -> CategoryDTO:
         async with self.uow as uow:
             category = await self.repository.create(uow.session, data.model_dump())
+            await uow.commit()
             return CategoryDTO.model_validate(category)
 
     async def update(self, data: CategoryUpdateSchema, id: int) -> CategoryDTO:
         async with self.uow as uow:
             category = await self.repository.get_by_id(uow.session, id)
-            category_updated = await self.repository.update(uow.session, data.model_dump(exclude_unset=True), category)
-            return CategoryDTO.model_validate(category_updated)
+            await self.repository.update(uow.session, data.model_dump(exclude_unset=True), category)
+            await uow.commit()
+            await uow.session.refresh(category)
+            return CategoryDTO.model_validate(category)
 
     async def delete(self, id: int) -> CategoryDTO:
         async with self.uow as uow:
             category = await self.repository.get_by_id(uow.session, id)
             if category is None: raise CategoryNotFoundError
             await self.repository.delete(uow.session, category)
+            await uow.commit()
             return CategoryDTO.model_validate(category)
 
     async def get_by_id(self, id: int) -> CategoryDTO:

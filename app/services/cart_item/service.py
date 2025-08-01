@@ -48,19 +48,23 @@ class CartItemService:
         async with self.uow as uow:
             await self.__validate_by_product_and_user(uow.session, data.user_id, data.product_id)
             cart_item = await self.repository.create(uow.session, data.model_dump())
+            await uow.commit()
             return CartItemDTO.model_validate(cart_item)
 
     async def update(self, data: CartItemUpdateSchema, id: int):
         async with self.uow as uow:
             cart_item = await self.__find_by_id(uow.session, id)
-            cart_item_updated = await self.repository.update(uow.session, data.model_dump(exclude_unset=True),
+            await self.repository.update(uow.session, data.model_dump(exclude_unset=True),
                                                              cart_item)
-            return CartItemDTO.model_validate(cart_item_updated)
+            await uow.commit()
+            await uow.session.refresh(cart_item)
+            return CartItemDTO.model_validate(cart_item)
 
     async def delete(self, id: int):
         async with self.uow as uow:
             cart_item = await self.__find_by_id(uow.session, id)
             await self.repository.delete(uow.session, cart_item)
+            await uow.commit()
             return CartItemDTO.model_validate(cart_item)
 
     async def get_all(self) -> list[CartItemDTO]:

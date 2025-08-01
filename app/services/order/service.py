@@ -11,7 +11,6 @@ class OrderNotFoundError(Exception):
 
 
 class OrderService:
-    # create update delete get by id get all
     def __init__(
             self,
             repository: OrderRepository,
@@ -34,18 +33,22 @@ class OrderService:
     async def create(self, data: OrderCreateSchema) -> OrderDTO:
         async with self.uow as uow:
             order = await self.repository.create(uow.session, data.model_dump())
+            await uow.commit()
             return OrderDTO.model_validate(order)
 
     async def update(self, data: OrderUpdateSchema, id: int) -> OrderDTO:
         async with self.uow as uow:
             order = await self.__find_by_id(uow.session, id)
-            order_updated = await self.repository.update(uow.session, data.model_dump(exclude_unset=True), order)
-            return OrderDTO.model_validate(order_updated)
+            await self.repository.update(uow.session, data.model_dump(exclude_unset=True), order)
+            await uow.commit()
+            await uow.session.refresh(order)
+            return OrderDTO.model_validate(order)
 
     async def delete(self, id: int) -> OrderDTO:
         async with self.uow as uow:
             order = await self.__find_by_id(uow.session, id)
             await self.repository.delete(uow.session, order)
+            await uow.commit()
             return OrderDTO.model_validate(order)
 
     async def get_all(self) -> list[OrderDTO]:

@@ -84,6 +84,7 @@ class AuthService:
         data = {}
         data.update(refresh_token=refresh_token, user_id=user_id)
         await self.auth_repository.create(session, data)
+        await session.commit()
         return Token(
             access_token=access_token,
             refresh_token=refresh_token,
@@ -101,6 +102,7 @@ class AuthService:
             )
             if token:
                 await self.auth_repository.delete(uow.session, token)
+                await uow.commit()
 
     async def refresh_token(self, refresh_token: str):
         async with self.uow as uow:
@@ -119,6 +121,7 @@ class AuthService:
             if datetime.now().timestamp() >= expires_in:
                 raise TokenExpiredError
             await self.auth_repository.delete(uow.session, token)
+            await uow.commit()
             return await self.__create_tokens(uow.session, user.id, user)
 
     async def authenticate_user(self, data: LoginSchema):
@@ -135,6 +138,7 @@ class AuthService:
     async def abort_all_sessions(self, user_id):
         async with self.uow as uow:
             await self.auth_repository.delete_multi(session=uow.session, user_id=user_id)
+            await uow.commit()
 
     async def change_password(self, email, old_password, new_password):
         async with self.uow as uow:

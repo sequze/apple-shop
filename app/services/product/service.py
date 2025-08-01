@@ -20,19 +20,15 @@ class ProductService:
     async def create(self, data: ProductCreateSchema) -> ProductDTO:
         async with self.uow as uow:
             product = await self.repository.create(uow.session, data.model_dump())
+            await uow.commit()
             return ProductDTO.model_validate(product)
 
     async def update(self, data: ProductUpdateSchema, id: int) -> ProductDTO:
         async with self.uow as uow:
             product = await self.repository.get_by_id(uow.session, id)
-            product_updated = await self.repository.update(uow.session, data.model_dump(exclude_unset=True), product)
-            return ProductDTO.model_validate(product_updated)
-
-    async def delete(self, id: int) -> ProductDTO:
-        async with self.uow as uow:
-            product = await self.repository.get_by_id(uow.session, id)
-            if product is None: raise ProductNotFoundError
-            await self.repository.delete(uow.session, product)
+            await self.repository.update(uow.session, data.model_dump(exclude_unset=True), product)
+            await uow.commit()
+            await uow.session.refresh(product)
             return ProductDTO.model_validate(product)
 
     async def get_by_id(self, id: int) -> ProductDTO:

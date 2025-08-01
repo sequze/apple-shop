@@ -44,29 +44,37 @@ class UserService:
 
     async def create_user(self, data: UserCreateSchema) -> UserDTO:
         async with self.uow as uow:
-            email_user = await self.repository.get_by_filters(uow.session, {"email": data.email}, True)
+            session = uow.session
+            email_user = await self.repository.get_by_filters(session, {"email": data.email}, True)
             if email_user: raise EmailAlreadyExists
             data_dict = data.model_dump()
             data_dict["password_hash"] = get_password_hash(data.password)
             data_dict.pop('password')
             user = await self.repository.create(
-                uow.session,
+                session,
                 data_dict
             )
+            await session.commit()
+            await session.refresh(user)
             return UserDTO.model_validate(user)
 
     async def update_user(self, data: UserUpdateSchema, id: int) -> UserDTO:
         async with self.uow as uow:
+            session = uow.session
             user = await self.repository.get_by_id(uow.session, id)
             if user is None:
                 raise UserNotFoundError
-            res = await self.repository.update(uow.session, data.model_dump(exclude_unset=True), user)
-            return UserDTO.model_validate(res)
+            await self.repository.update(session, data.model_dump(exclude_unset=True), user)
+            await session.commit()
+            await session.refresh(user)
+            return UserDTO.model_validate(user)
 
     async def delete_user(self, id: int) -> UserDTO:
         async with self.uow as uow:
-            user = await self.repository.get_by_id(uow.session, id)
+            session = uow.session
+            user = await self.repository.get_by_id(session, id)
             if user is None:
                 raise UserNotFoundError
-            await self.repository.delete(uow.session, user)
+            await self.repository.delete(session, user)
+            await session.commit()
             return UserDTO.model_validate(user)
