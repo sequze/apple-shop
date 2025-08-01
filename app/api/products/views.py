@@ -2,9 +2,10 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from api.dependencies import product_service
+from api.dependencies import product_service, product_delete_use_case
+from plugins.s3_storage import DeleteFileError
 from services.product.schemas import ProductDTO, ProductCreateSchema, ProductUpdateSchema
-from services.product.service import ProductService, ProductNotFoundError
+from services.product.service import ProductService, ProductNotFoundError, ProductDeleteUseCase
 
 router = APIRouter()
 
@@ -58,12 +59,17 @@ async def update_product(
 @router.delete("/{product_id}")
 async def delete_product(
         product_id: int,
-        product_service: product_service_dep,
+        product_delete: ProductDeleteUseCase = Depends(product_delete_use_case),
 ) -> ProductDTO:
     try:
-        return await product_service.delete(product_id)
+        return await product_delete.delete(product_id)
     except ProductNotFoundError:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Product not found"
+        )
+    except DeleteFileError:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Error with delete images",
         )

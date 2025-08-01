@@ -12,7 +12,7 @@ from services.order.service import OrderService
 from services.order_item.repository import OrderItemRepository
 from services.order_item.service import OrderItemService
 from services.product.repository import ProductRepository
-from services.product.service import ProductService
+from services.product.service import ProductService, ProductDeleteUseCase
 from services.product_image.repository import ProductImageRepository
 from services.product_image.service import ProductImageService
 from services.user import UserDTO
@@ -65,6 +65,8 @@ def product_image_service() -> ProductImageService:
 def auth_service() -> AuthService:
     return AuthService(UserRepository(), AuthRepository(), unit_of_work())
 
+def product_delete_use_case() -> ProductDeleteUseCase:
+    return ProductDeleteUseCase(ProductRepository(), ProductImageRepository(), unit_of_work())
 
 # auth dependencies
 
