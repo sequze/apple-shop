@@ -13,7 +13,7 @@ if TYPE_CHECKING:
     from core.models.product import Product
 
 
-class Products(CreatedAtMixin, IntIdPkMixin, Base):
+class Category(IntIdPkMixin, Base):
     __tablename__ = "categories"
     name: Mapped[str] = mapped_column()
 
@@ -22,12 +22,12 @@ class Products(CreatedAtMixin, IntIdPkMixin, Base):
         ForeignKey("categories.id"),
         nullable=True)
 
-    parent: Mapped["Products | None"] = relationship(
+    parent: Mapped["Category | None"] = relationship(
         back_populates="children",
-        remote_side="Products.id",
+        remote_side="Category.id",
         uselist=False,
     )
-    children: Mapped[list["Products"]] = relationship(back_populates="parent")
+    children: Mapped[list["Category"]] = relationship(back_populates="parent")
     products: Mapped[list["Product"]] = relationship(back_populates="category")
 
     # Unique constraints
