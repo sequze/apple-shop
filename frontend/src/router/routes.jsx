@@ -16,6 +16,8 @@ import Product from "../pages/Product.jsx";
 import {bigProducts} from "./bigProducts.js";
 import Register from "../pages/Register.jsx";
 import Login from "../pages/Login.jsx";
+import Bucket from "../pages/Bucket.jsx";
+import Profile from "../pages/Profile.jsx";
 
 const categories = [
     {
@@ -58,6 +60,14 @@ export const routes = [
     {
         path: "/login",
         element: <Login  logo={SiteLogo} />
+    },
+    {
+        path: "/bucket",
+        element: <Bucket  logo={SiteLogo} />
+    },
+    {
+        path: "/profile",
+        element: <Profile  logo={SiteLogo} />
     },
     {
         path: "/products/:type",
