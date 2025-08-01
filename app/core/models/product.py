@@ -24,7 +24,12 @@ class Product(CreatedAtMixin, IntIdPkMixin, Base):
     category_id: Mapped[int] = mapped_column(ForeignKey("categories.id"))
     # relationships
     category: Mapped["Category"] = relationship(back_populates="products")
-    images: Mapped[list["ProductImage"]] = relationship(back_populates="product", lazy="selectin")
+    images: Mapped[list["ProductImage"]] = relationship(
+        back_populates="product",
+        lazy="selectin",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )
     discounts: Mapped[list["Discount"]] = relationship(
         secondary=product_discount_association_table,
         back_populates="products",

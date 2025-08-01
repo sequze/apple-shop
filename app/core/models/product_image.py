@@ -14,5 +14,5 @@ class ProductImage(CreatedAtMixin, IntIdPkMixin, Base):
     url: Mapped[str]
     alt_text: Mapped[str]
     is_main: Mapped[bool]
-    product_id: Mapped[int] = mapped_column(ForeignKey("products.id"))
+    product_id: Mapped[int] = mapped_column(ForeignKey("products.id", ondelete="CASCADE"))
     product: Mapped["Product"] = relationship(back_populates="images")
