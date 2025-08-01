@@ -1,5 +1,5 @@
 from sqlalchemy.ext.asyncio.session import AsyncSession
-from sqlalchemy import insert, select, delete
+from sqlalchemy import insert, select, delete, inspect
 
 
 class SQlAlchemyRepository:
@@ -32,3 +32,17 @@ class SQlAlchemyRepository:
     async def delete(self, session: AsyncSession, entity):
         await session.delete(entity)
         await session.commit()
+
+
+    async def update(
+            self,
+            session: AsyncSession,
+            data: dict,
+            object_to_update):
+        mapper = inspect(self.model)
+        for key, value in data.items():
+            if key in mapper.attrs:
+                setattr(object_to_update, key, value)
+
+    async def get_by_id(self, session: AsyncSession, id: int):
+        return await session.get(self.model, id)
