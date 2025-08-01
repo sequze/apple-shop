@@ -28,4 +28,5 @@ class Product(CreatedAtMixin, IntIdPkMixin, Base):
     discounts: Mapped[list["Discount"]] = relationship(
         secondary=product_discount_association_table,
         back_populates="products",
+        lazy="selectin",
     )
