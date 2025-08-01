@@ -1,4 +1,5 @@
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 axios.defaults.baseURL = "http://localhost:8000";
 
@@ -20,6 +21,20 @@ export default class AuthService {
             password
         });
         return response.data;
+    }
+
+    static async checkAuth() {
+        const access = localStorage.getItem("access");
+        if (!access) return false;
+
+        try {
+            const { exp } = jwtDecode(access);
+            if (!exp) return false;
+
+            return exp * 1000 > Date.now();
+        } catch {
+            return false;
+        }
     }
 
 }
