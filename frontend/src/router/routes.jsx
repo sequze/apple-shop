@@ -18,6 +18,7 @@ import Register from "../pages/Register.jsx";
 import Login from "../pages/Login.jsx";
 import Bucket from "../pages/Bucket.jsx";
 import Profile from "../pages/Profile.jsx";
+import Order from "../pages/Order.jsx";
 
 const categories = [
     {
@@ -64,6 +65,10 @@ export const routes = [
     {
         path: "/bucket",
         element: <Bucket  logo={SiteLogo} />
+    },
+    {
+        path: "/order",
+        element: <Order  logo={SiteLogo} />
     },
     {
         path: "/profile",

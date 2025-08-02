@@ -2,6 +2,7 @@ import React from 'react';
 import Header from "../components/Header.jsx";
 import Footer from "../components/Footer.jsx";
 import MyActiveButton from "../components/ui/activeButton/MyActiveButton.jsx";
+import {Link} from "react-router-dom";
 
 const Bucket = ({logo}) => {
     return (
@@ -79,7 +80,9 @@ const Bucket = ({logo}) => {
                                 <div className="inter-400 text-[18px]">$1004.00</div>
                             </div>
                             <div className="flex justify-end">
-                                <MyActiveButton>Buy</MyActiveButton>
+                                <Link to={"/order"}>
+                                    <MyActiveButton>Buy</MyActiveButton>
+                                </Link>
                             </div>
                         </div>
                     </div>
