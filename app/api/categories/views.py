@@ -5,6 +5,7 @@ from fastapi import APIRouter, Path, HTTPException, status, Depends
 from services.category.schemas import CategoryDTO, CategoryCreateSchema, CategoryUpdateSchema
 from services.category.service import CategoryService, CategoryNotFoundError
 from api.dependencies import category_service
+from services.product.schemas import ProductDTO
 
 router = APIRouter()
 
@@ -29,7 +30,7 @@ async def get_children(
     except CategoryNotFoundError:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Products not found"
+            detail="Category not found"
         )
     return res
 
@@ -44,11 +45,22 @@ async def get_category_by_id(
     except CategoryNotFoundError:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Products not found"
+            detail="Category not found"
         )
     return res
 
-
+@router.get("/{category_id}/products")
+async def get_category_products(
+        category_id: Annotated[int, Path(ge=1)],
+        category_service: category_service_dep,
+) -> list[ProductDTO]:
+    try:
+        return await category_service.get_products(category_id)
+    except CategoryNotFoundError:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Category not found"
+        )
 @router.post("/")
 async def create_category(
         data: CategoryCreateSchema,
@@ -70,7 +82,7 @@ async def update_category(
     except CategoryNotFoundError:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Products not found"
+            detail="Category not found"
         )
 
 
@@ -85,5 +97,5 @@ async def delete_category(
     except CategoryNotFoundError:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Products not found"
+            detail="Category not found"
         )

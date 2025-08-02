@@ -1,6 +1,7 @@
 from core.repositories.uow import UnitOfWork
 from .repository import CategoryRepository
 from .schemas import CategoryCreateSchema, CategoryDTO, CategoryUpdateSchema
+from ..product.schemas import ProductDTO
 
 
 class CategoryNotFoundError(Exception):
@@ -55,3 +56,9 @@ class CategoryService:
             category = await self.repository.get_with_children(uow.session, id)
             if category is None: raise CategoryNotFoundError
             return [CategoryDTO.model_validate(child) for child in category.children]
+
+    async def get_products(self, id: int) -> list[ProductDTO]:
+        async with self.uow as uow:
+            category = await self.repository.get_with_products(uow.session, id)
+            if category is None: raise CategoryNotFoundError
+            return [ProductDTO.model_validate(product) for product in category.products]
