@@ -14,7 +14,6 @@ const Product = ({logo, products}) => {
     const [activeDiag, setActiveDiag] = useState(0);
     const [activeColor, setActiveColor] = useState(0);
 
-    console.log(currentProduct)
     return (
         <div>
             <Header logo={logo} />

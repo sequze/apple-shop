@@ -62,7 +62,12 @@ const Login = ({logo}) => {
                 <div className="mx-auto max-w-[1500px] w-full py-[200px]">
                     <div className="flex flex-col items-center bg-[#fff] rounded-[40px] py-[150px]">
                         <h1 className="montserrat-400 text-[36px]">Вход</h1>
-                        <div className="w-1/3 my-[75px] grid gap-[30px]">
+                        <form
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                handleLogin();
+                            }}
+                            className="w-1/3 my-[75px] grid gap-[30px]">
                             <MyInput
                                 placeholder="Email"
                                 type="text"
@@ -75,9 +80,12 @@ const Login = ({logo}) => {
                                 value={password}
                                 onChange={(event) => setPassword(event.target.value)}
                             />
-                        </div>
-                        {error && <div className="text-red-500">{error}</div>}
-                        <MyWhiteButton onClick={handleLogin} >Войти</MyWhiteButton>
+                            {error && <div className="text-red-500">{error}</div>}
+                            <div className="flex justify-center">
+                                <MyWhiteButton type="submit">Войти</MyWhiteButton>
+                            </div>
+                        </form>
+
                         <Link to="/register">
                             <p className="inter-300 mt-[20px] cursor-pointer">Не зарегестрированы? Зарегестрироваться</p>
                         </Link>

@@ -1,8 +1,34 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Header from "../components/Header.jsx";
 import Footer from "../components/Footer.jsx";
+import AuthService from "../components/api/AuthService.js";
+import {useNavigate} from "react-router-dom";
+import axios from "axios";
+import Loader from "../components/Loader.jsx";
 
 const Profile = ({logo}) => {
+
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        AuthService.logout(navigate)
+    }
+
+    const [user, setUser] = useState(null);
+    console.log(user);
+
+    useEffect(() => {
+        const token = localStorage.getItem("access");
+
+        AuthService.getCurrentUser()
+            .then(res => setUser(res.data))
+            .catch(err => {
+                console.log(err);
+            });
+    }, []);
+
+    if (!user) return <Loader />
+
     return (
         <div>
             <Header logo={logo}/>
@@ -17,8 +43,9 @@ const Profile = ({logo}) => {
                                         <div className="bg-[#D9D9D9] w-[200px] h-[200px] rounded-full"/>
                                     </div>
                                     <div>
-                                        <div className="montserrat-400 text-[36px] mb-[10px]">Айгиз Тулыбаев</div>
-                                        <div className="montserrat-400 text-[#0171E2] hover:underline cursor-pointer">Изменить профиль</div>
+                                        <div className="montserrat-400 text-[36px] mb-[10px]">{user.full_name}</div>
+                                        <div className="montserrat-400 text-[#0171E2] hover:underline cursor-pointer mb-[10px]">Изменить профиль</div>
+                                        <div className="montserrat-400 text-red-500 hover:underline cursor-pointer" onClick={handleLogout}>Выйти</div>
                                     </div>
                                 </div>
                                 <div>
