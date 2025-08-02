@@ -2,6 +2,7 @@ from services.user.schemas import UserCreateSchema, UserUpdateSchema, UserDTO
 from core.repositories.uow import UnitOfWork
 from .repository import UserRepository
 from core.auth.utils import get_password_hash
+from services.order.schemas import OrderDTO
 
 
 class UserNotFoundError(Exception):
@@ -78,3 +79,9 @@ class UserService:
             await self.repository.delete(session, user)
             await session.commit()
             return UserDTO.model_validate(user)
+
+    async def get_orders(self, user: UserDTO) -> list[OrderDTO]:
+        async with self.uow as uow:
+            user = await self.repository.get_with_orders(uow.session, user.id)
+            if user is None: raise UserNotFoundError
+            return [OrderDTO.model_validate(order) for order in user.orders]

@@ -1,9 +1,10 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Path, HTTPException, status, Depends
+from services.order.schemas import OrderDTO
 from services.user.schemas import UserDTO, UserCreateSchema, UserUpdateSchema
 from services.user.service import UserService, UserNotFoundError, EmailAlreadyExists
-from api.dependencies import users_service
+from api.dependencies import users_service, get_current_active_user
 
 router = APIRouter()
 
@@ -17,6 +18,12 @@ async def get_users(
     res = await user_service.get_users()
     return res
 
+@router.get("/orders")
+async def get_user_orders(
+        user_service: user_service_dep,
+        current_user: UserDTO = Depends(get_current_active_user),
+) -> list[OrderDTO]:
+    return await user_service.get_orders(current_user)
 
 @router.get("/{user_id}")
 async def get_user_by_id(
