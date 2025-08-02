@@ -15,14 +15,9 @@ class OrderDTO(OrderBaseSchema):
     id: PositiveInt
     created_at: datetime
     total_amount: NonNegativeFloat
-
+    items: list[OrderItemDTO]
     class Config:
         from_attributes = True
-
-
-class OrderDetailedDTO(OrderDTO):
-    items: list[OrderItemDTO]
-
 
 class OrderCreateSchema(OrderBaseSchema):
     pass

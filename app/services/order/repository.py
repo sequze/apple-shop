@@ -14,12 +14,3 @@ class OrderRepository(SQlAlchemyRepository):
         stmt = insert(Order).values(**data, total_amount=0).returning(Order)
         result = await session.execute(stmt)
         return result.scalar()
-
-    async def get_with_items(self, session: AsyncSession, filters=None, one: bool = False):
-        stmt = select(Order).options(joinedload(Order.items))
-        if filters:
-            stmt = stmt.filter_by(**filters)
-        res = await session.execute(stmt)
-        if one:
-            return res.unique().scalar_one_or_none()
-        return res.scalars().all()

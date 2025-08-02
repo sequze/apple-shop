@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio.session import AsyncSession
 from core.models import Order
 from core.repositories.uow import UnitOfWork
 from services.order.repository import OrderRepository
-from services.order.schemas import OrderDTO, OrderCreateSchema, OrderUpdateSchema, OrderDetailedDTO
+from services.order.schemas import OrderDTO, OrderCreateSchema, OrderUpdateSchema
 
 
 class OrderNotFoundError(Exception):
@@ -25,10 +25,10 @@ class OrderService:
             raise OrderNotFoundError
         return order
 
-    async def get_by_id(self, id: int) -> OrderDetailedDTO:
+    async def get_by_id(self, id: int) -> OrderDTO:
         async with self.uow as uow:
             order = await self.repository.get_with_items(uow.session, {"id": id}, True)
-            return OrderDetailedDTO.model_validate(order)
+            return OrderDTO.model_validate(order)
 
     async def create(self, data: OrderCreateSchema) -> OrderDTO:
         async with self.uow as uow:

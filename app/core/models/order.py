@@ -42,4 +42,4 @@ class Order(CreatedAtMixin, IntIdPkMixin, Base):
     status: Mapped[OrderStatus]
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     user: Mapped["User"] = relationship(back_populates="orders")
-    items: Mapped[list["OrderItem"]] = relationship(back_populates="order")
+    items: Mapped[list["OrderItem"]] = relationship(back_populates="order", lazy="selectin")
