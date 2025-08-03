@@ -9,9 +9,6 @@ import Registration from "../components/Registration.jsx";
 
 
 const Register = ({logo}) => {
-
-
-
     return (
         <div>
             <Header logo={logo}/>

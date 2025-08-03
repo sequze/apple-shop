@@ -7,7 +7,7 @@ const Header = (props) => {
 
     const [about, setAbout] = useState(false);
     const [contact, setContact] = useState(false);
-    const [isAuth, setIsAuth] = useState(null); // null -> ещё не знаем
+    const [isAuth, setIsAuth] = useState(null);
 
     useEffect(() => {
         const check = async () => {
