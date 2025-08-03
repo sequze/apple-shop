@@ -2,14 +2,24 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from api.dependencies import cart_item_service
+from api.dependencies import cart_item_service, user_get_cart_use_case, get_current_active_user
+from services.cart.schemas import CartDTO
+from services.cart.service import UserGetCartUseCase
 from services.cart_item.schemas import CartItemDTO, CartItemUpdateSchema, CartItemCreateSchema
 from services.cart_item.service import CartItemService, CartItemNotFoundError, CartItemAlreadyExistsError
+from services.user import UserDTO
 
 router = APIRouter()
 
 cart_item_service_dep = Annotated[CartItemService, Depends(cart_item_service)]
 
+user_cart_service = Annotated[UserGetCartUseCase, Depends(user_get_cart_use_case)]
+@router.get("/user_cart")
+async def get_user_cart(
+        cart_service: user_cart_service,
+        user: UserDTO = Depends(get_current_active_user),
+) -> CartDTO:
+    return await cart_service.execute(user_data=user)
 
 @router.get("/")
 async def get_all_cart_items(
@@ -73,3 +83,4 @@ async def delete_cart_item(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Cart Item not found"
         )
+

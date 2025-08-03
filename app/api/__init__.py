@@ -6,7 +6,7 @@ from core.config import settings
 from .discounts import router as discounts_router
 from .orders import router as orders_router
 from .order_items import router as order_items_router
-from .cart_items import router as cart_items_router
+from .cart import router as cart_items_router
 from .product_image import router as product_image_router
 from .auth import router as auth_router
 

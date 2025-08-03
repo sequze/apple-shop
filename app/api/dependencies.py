@@ -1,6 +1,7 @@
 from core.models import db_helper
 from services.auth.repository import AuthRepository
 from services.auth.service import AuthService
+from services.cart.service import UserGetCartUseCase
 from services.cart_item.repository import CartItemRepository
 from services.cart_item.service import CartItemService
 from services.category.repository import CategoryRepository
@@ -68,6 +69,8 @@ def auth_service() -> AuthService:
 def product_delete_use_case() -> ProductDeleteUseCase:
     return ProductDeleteUseCase(ProductRepository(), ProductImageRepository(), unit_of_work())
 
+def user_get_cart_use_case() -> UserGetCartUseCase:
+    return UserGetCartUseCase(UserRepository(), unit_of_work())
 # auth dependencies
 
 
