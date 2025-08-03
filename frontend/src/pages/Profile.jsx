@@ -3,7 +3,6 @@ import Header from "../components/Header.jsx";
 import Footer from "../components/Footer.jsx";
 import AuthService from "../components/api/AuthService.js";
 import {useNavigate} from "react-router-dom";
-import axios from "axios";
 import Loader from "../components/Loader.jsx";
 
 const Profile = ({logo}) => {
@@ -15,7 +14,6 @@ const Profile = ({logo}) => {
     }
 
     const [user, setUser] = useState(null);
-    console.log(user);
 
     useEffect(() => {
         const token = localStorage.getItem("access");

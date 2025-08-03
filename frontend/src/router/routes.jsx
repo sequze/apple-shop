@@ -8,9 +8,6 @@ import card2 from "../assets/categories/card-2.jpeg";
 import card3 from "../assets/categories/card-3.jpeg";
 import card4 from "../assets/categories/card-4.jpeg";
 import card5 from "../assets/categories/card-5.jpeg";
-import product1 from "../assets/products/product-1.jpeg";
-import product2 from "../assets/products/product-2.jpeg";
-import product3 from "../assets/products/product-3.jpeg";
 
 import Product from "../pages/Product.jsx";
 import {bigProducts} from "./bigProducts.js";
@@ -19,6 +16,7 @@ import Login from "../pages/Login.jsx";
 import Bucket from "../pages/Bucket.jsx";
 import Profile from "../pages/Profile.jsx";
 import Order from "../pages/Order.jsx";
+import Admin from "../pages/Admin.jsx";
 
 const categories = [
     {
@@ -48,8 +46,7 @@ const categories = [
     }
 ]
 
-
-export const routes = [
+export const publicRoutes = [
     {
         path: "/",
         element: <Home products={bigProducts} categories={categories} intro={IntroPhoto} logo={SiteLogo} />
@@ -61,6 +58,30 @@ export const routes = [
     {
         path: "/login",
         element: <Login  logo={SiteLogo} />
+    },
+    {
+        path: "/products/:type",
+        element: <Products categories={categories} products={bigProducts} logo={SiteLogo} />
+    },
+    {
+        path: "/products/:type/:id",
+        element: <Product products={bigProducts} logo={SiteLogo}/>
+    }
+]
+
+
+export const privateRoutes = [
+    {
+        path: "/",
+        element: <Home products={bigProducts} categories={categories} intro={IntroPhoto} logo={SiteLogo} />
+    },
+    {
+        path: "/products/:type",
+        element: <Products categories={categories} products={bigProducts} logo={SiteLogo} />
+    },
+    {
+        path: "/products/:type/:id",
+        element: <Product products={bigProducts} logo={SiteLogo}/>
     },
     {
         path: "/bucket",
@@ -75,11 +96,7 @@ export const routes = [
         element: <Profile  logo={SiteLogo} />
     },
     {
-        path: "/products/:type",
-        element: <Products categories={categories} products={bigProducts} logo={SiteLogo} />
-    },
-    {
-        path: "/products/:type/:id",
-        element: <Product products={bigProducts} logo={SiteLogo}/>
+        path: "/admin",
+        element: <Admin logo={SiteLogo} />
     }
 ]
