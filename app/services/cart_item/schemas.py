@@ -1,5 +1,5 @@
+from decimal import Decimal
 from pydantic import BaseModel, PositiveInt
-
 from services.product.schemas import ProductDTO
 
 
@@ -10,6 +10,10 @@ class CartItemBaseSchema(BaseModel):
 
 
 class CartItemDTO(CartItemBaseSchema):
+    total_price: Decimal
+    discount: Decimal
+    discount_description: str | None = None
+    price_with_discount: Decimal
     id: PositiveInt
     product: ProductDTO | None = None
 
