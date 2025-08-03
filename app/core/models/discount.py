@@ -1,6 +1,7 @@
+from decimal import Decimal
 from typing import TYPE_CHECKING
 
-from sqlalchemy import CheckConstraint
+from sqlalchemy import CheckConstraint, Numeric
 from sqlalchemy.orm import mapped_column, Mapped, relationship
 from datetime import datetime, timezone
 from .base import Base
@@ -11,7 +12,7 @@ if TYPE_CHECKING:
 
 
 class Discount(IntIdPkMixin, Base):
-    percent: Mapped[float] = mapped_column()
+    percent: Mapped[Decimal] = mapped_column(Numeric(5,2))
     start_date: Mapped[datetime]
     end_date: Mapped[datetime]
     description: Mapped[str] = mapped_column(nullable=True)
