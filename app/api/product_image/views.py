@@ -34,6 +34,12 @@ async def create_image(
             503,
             detail="Uploading file error"
         )
+    except InvalidFileTypeError:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Only image files are allowed",
+        )
+
 
 
 @router.get("/")

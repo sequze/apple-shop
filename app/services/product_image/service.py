@@ -38,6 +38,8 @@ class ProductImageService:
         await session.flush()
 
     async def create(self, data: ProductImageCreate, file: UploadFile) -> ProductImageDTO:
+        if not file.content_type.startswith("image/"):
+            raise InvalidFileTypeError
         async with self.uow as uow:
             if data.is_main:
                 await self.__validate_main_image(uow.session, product_id=data.product_id)
