@@ -63,11 +63,19 @@ async def register(
 
 @router.post("/refresh")
 async def refresh_jwt(
+        response: Response,
         service: auth_service_dep,
         token=Depends(get_token_for_refresh),
 ) -> Token:
     try:
-        return await service.refresh_token(token)
+        tokens = await service.refresh_token(token)
+        response.set_cookie(
+            'refresh_token',
+            tokens.refresh_token,
+            max_age=settings.auth_jwt.refresh_token_expire_days * 24 * 60,
+            httponly=True,
+        )
+        return tokens
     except (InvalidTokenError, TokenExpiredError):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
