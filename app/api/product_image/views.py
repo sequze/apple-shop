@@ -5,9 +5,9 @@ from fastapi import APIRouter, Depends, UploadFile, Form, status, HTTPException
 from pydantic import PositiveInt
 
 from api.dependencies import product_image_service
-from plugins.s3_storage import UploadingFileError, DeleteFileError
+from plugins.s3_storage.client import UploadingFileError, DeleteFileError, InvalidFileTypeError
 from services.product_image.schemas import ProductImageDTO, ProductImageCreate, ProductImageUpdateSchema
-from services.product_image.service import ProductImageService, ProductImageNotFoundError, MainImageAlreadyExistsError
+from services.product_image.service import ProductImageService, ProductImageNotFoundError
 
 router = APIRouter()
 

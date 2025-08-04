@@ -3,7 +3,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, status
 
 from api.dependencies import product_service, product_delete_use_case
-from plugins.s3_storage import DeleteFileError
+from plugins.s3_storage.client import DeleteFileError
 from services.product.schemas import ProductDTO, ProductCreateSchema, ProductUpdateSchema
 from services.product.service import ProductService, ProductNotFoundError, ProductDeleteUseCase
 

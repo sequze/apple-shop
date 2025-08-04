@@ -1,9 +1,9 @@
 from core.repositories.uow import UnitOfWork
-from plugins.s3_storage import DeleteFileError
+from plugins.s3_storage.client import DeleteFileError
 from services.product.repository import ProductRepository
 from services.product.schemas import ProductCreateSchema, ProductDTO, ProductUpdateSchema
 from services.product_image.repository import ProductImageRepository
-from services.product_image.service import delete_file_from_storage
+from plugins.s3_storage.utils import delete_file_from_storage
 
 
 class ProductNotFoundError(Exception):

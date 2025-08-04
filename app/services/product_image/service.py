@@ -2,12 +2,12 @@ from sqlalchemy.ext.asyncio.session import AsyncSession
 
 from core.models import ProductImage
 from core.repositories.uow import UnitOfWork
-from plugins.s3_storage import UploadingFileError, DeleteFileError
+from plugins.s3_storage.client import UploadingFileError, DeleteFileError, InvalidFileTypeError
+from plugins.s3_storage.utils import upload_file_to_storage, delete_file_from_storage
 from services.product_image.repository import ProductImageRepository
 from services.product_image.schemas import ProductImageDTO, ProductImageCreate, \
     ProductImageUpdateSchema
 from fastapi import UploadFile
-from plugins import s3_client
 
 
 class ProductImageNotFoundError(Exception):
@@ -16,16 +16,6 @@ class ProductImageNotFoundError(Exception):
 
 class MainImageAlreadyExistsError(Exception):
     pass
-
-
-async def upload_file_to_storage(file, filename: str) -> str:
-    url = await s3_client.upload_file(file, filename)
-    return url
-
-
-async def delete_file_from_storage(url: str):
-    filename = url.split("/")[-1]
-    await s3_client.delete_file(filename)
 
 
 class ProductImageService:
