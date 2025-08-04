@@ -1,15 +1,9 @@
 import React from 'react';
-import Header from "../components/Header.jsx";
-import Footer from "../components/Footer.jsx";
-import BucketForm from "../components/BucketForm.jsx";
+import BucketForm from "../components/bucket/BucketForm.jsx";
 
-const Bucket = ({logo}) => {
+const Bucket = () => {
     return (
-        <div>
-            <Header logo={logo} />
-            <BucketForm />
-            <Footer />
-        </div>
+        <BucketForm />
     );
 };
 

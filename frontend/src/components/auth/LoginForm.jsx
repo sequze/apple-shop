@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import MyInput from "./ui/input/MyInput.jsx";
-import MyWhiteButton from "./ui/whiteButton/MyWhiteButton.jsx";
+import MyInput from "../ui/input/MyInput.jsx";
+import MyWhiteButton from "../ui/whiteButton/MyWhiteButton.jsx";
 import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
-import AuthService from "./api/AuthService.js";
+import AuthService from "../api/AuthService.js";
 
 const LoginForm = () => {
 

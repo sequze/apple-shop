@@ -4,7 +4,7 @@ import FooterContent from "./modals/FooterContent.jsx";
 import GuaranteeContent from "./modals/GuaranteeContent.jsx";
 import FaqContent from "./modals/FaqContent.jsx";
 import ConfidentialContent from "./modals/ConfidentialContent.jsx";
-import UserAgreement from "./UserAgreement.jsx";
+import UserAgreement from "./modals/UserAgreement.jsx";
 
 const Footer = () => {
 

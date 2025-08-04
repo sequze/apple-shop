@@ -1,7 +1,6 @@
 import React from 'react';
-import Footer from "./Footer.jsx";
 import {Link} from "react-router-dom";
-import MyActiveButton from "./ui/activeButton/MyActiveButton.jsx";
+import MyActiveButton from "../ui/activeButton/MyActiveButton.jsx";
 
 const BucketForm = () => {
     return (

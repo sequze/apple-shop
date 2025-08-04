@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import MyWhiteButton from "./ui/whiteButton/MyWhiteButton.jsx";
+import MyWhiteButton from "../ui/whiteButton/MyWhiteButton.jsx";
 import {Link, useNavigate} from "react-router-dom";
-import AuthService from "./api/AuthService.js";
-import MyInput from "./ui/input/MyInput.jsx";
+import AuthService from "../api/AuthService.js";
+import MyInput from "../ui/input/MyInput.jsx";
 
 const Registration = () => {
 

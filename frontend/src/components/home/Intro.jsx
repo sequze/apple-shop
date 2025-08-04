@@ -1,5 +1,5 @@
 import React from 'react';
-import photoSrc from '../assets/intro__photo.png'
+import photoSrc from '../../assets/intro__photo.png'
 
 const Intro = () => {
     return (
