@@ -1,6 +1,8 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Path, HTTPException, status, Depends
+from fastapi import APIRouter, Path, HTTPException, status, Depends, UploadFile
+
+from plugins.s3_storage.client import DeleteFileError, UploadingFileError, InvalidFileTypeError
 from services.order.schemas import OrderDTO
 from services.user.schemas import UserDTO, UserCreateSchema, UserUpdateSchema
 from services.user.service import UserService, UserNotFoundError, EmailAlreadyExists
@@ -38,6 +40,40 @@ async def get_user_by_id(
             detail="User not found"
         )
     return res
+
+
+
+@router.post("/image")
+async def update_profile_image(
+        file: UploadFile,
+        user_service: user_service_dep,
+        current_user: UserDTO = Depends(get_current_active_user),
+) -> str:
+    try:
+        return await user_service.update_profile_image(current_user, file)
+    except (UploadingFileError, DeleteFileError):
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Error while uploading/deleting image",
+        )
+    except InvalidFileTypeError:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Only image files are allowed",
+        )
+
+@router.delete("/image")
+async def delete_profile_image(
+        user_service: user_service_dep,
+        current_user: UserDTO = Depends(get_current_active_user),
+):
+    try:
+        await user_service.delete_profile_image(current_user)
+    except DeleteFileError:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Error while deleting image",
+        )
 
 
 @router.post("/")
