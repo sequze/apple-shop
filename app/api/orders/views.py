@@ -2,9 +2,9 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from api.dependencies import order_service
+from api.dependencies import order_service, order_delete_use_case
 from services.order.schemas import OrderDTO, OrderCreateSchema, OrderUpdateSchema
-from services.order.service import OrderService, OrderNotFoundError
+from services.order.service import OrderService, OrderNotFoundError, OrderDeleteUseCase
 
 router = APIRouter()
 
@@ -58,10 +58,13 @@ async def update_order(
 @router.delete("/{order_id}")
 async def delete_order(
         order_id: int,
-        order_service: order_service_dep,
-) -> OrderDTO:
+        order_delete: OrderDeleteUseCase = Depends(order_delete_use_case),
+):
     try:
-        return await order_service.delete(order_id)
+        await order_delete.execute(order_id)
+        return {
+            "success": True,
+        }
     except OrderNotFoundError:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,

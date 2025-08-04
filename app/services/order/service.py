@@ -4,6 +4,7 @@ from core.models import Order
 from core.repositories.uow import UnitOfWork
 from services.order.repository import OrderRepository
 from services.order.schemas import OrderDTO, OrderCreateSchema, OrderUpdateSchema
+from services.order_item.repository import OrderItemRepository
 
 
 class OrderNotFoundError(Exception):
@@ -44,14 +45,30 @@ class OrderService:
             await uow.session.refresh(order)
             return OrderDTO.model_validate(order)
 
-    async def delete(self, id: int) -> OrderDTO:
-        async with self.uow as uow:
-            order = await self.__find_by_id(uow.session, id)
-            await self.repository.delete(uow.session, order)
-            await uow.commit()
-            return OrderDTO.model_validate(order)
-
     async def get_all(self) -> list[OrderDTO]:
         async with self.uow as uow:
             orders = await self.repository.get_all(uow.session)
             return [OrderDTO.model_validate(order) for order in orders]
+
+
+class OrderDeleteUseCase:
+    def __init__(
+            self,
+            order_repository: OrderRepository,
+            order_item_repository: OrderItemRepository,
+            uow: UnitOfWork,
+    ):
+        self.order_repository = order_repository
+        self.order_item_repository = order_item_repository
+        self.uow = uow
+
+    async def execute(self, id: int):
+        async with self.uow as uow:
+            session = uow.session
+            order = await self.order_repository.get_by_id(session, id)
+            if order is None:
+                raise OrderNotFoundError
+            for item in order.items:
+                await self.order_item_repository.delete(session, item)
+            await self.order_repository.delete(session, order)
+            await session.commit()
