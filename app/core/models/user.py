@@ -1,9 +1,7 @@
-from enum import Enum
 from typing import TYPE_CHECKING
 
 from .base import Base
 from .mixins import IntIdPkMixin
-from datetime import datetime, timezone
 
 from .mixins.created_at import CreatedAtMixin
 
@@ -22,6 +20,6 @@ class User(CreatedAtMixin, IntIdPkMixin, Base):
     is_superuser: Mapped[bool] = mapped_column(default=False)
     cart_items: Mapped[list["CartItem"]] = relationship(back_populates="user")
     orders: Mapped[list["Order"]] = relationship(back_populates="user")
-
+    profile_image_url: Mapped[str | None] = mapped_column(nullable=True)
     def __repr__(self):
         return f"User {self.full_name}, id: {self.id} email: {self.email}, created at: {self.created_at}"

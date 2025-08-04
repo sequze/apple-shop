@@ -13,6 +13,7 @@ class UserBaseSchema(BaseModel):
 class UserDTO(UserBaseSchema):
     id: PositiveInt
     created_at: datetime
+    profile_image_url: str | None = None
 
     class Config:
         from_attributes = True
