@@ -1,1 +1,1 @@
-from .s3_storage import s3_client
+from plugins.s3_storage.client import s3_client

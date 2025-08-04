@@ -9,6 +9,8 @@ from core.config import settings
 class UploadingFileError(Exception):
     pass
 
+class InvalidFileTypeError(Exception):
+    pass
 
 class DeleteFileError(Exception):
     pass
