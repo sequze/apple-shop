@@ -8,20 +8,19 @@ const PopularProducts = ({products}) => {
     const cardRefs = useRef([]);
 
     useEffect(() => {
-        const onLoad = () => {
+        const observer = new ResizeObserver(() => {
             const heights = cardRefs.current.map(ref => ref?.offsetHeight || 0);
             const maxHeight = Math.max(...heights);
             cardRefs.current.forEach(ref => {
                 if (ref) ref.style.height = `${maxHeight}px`;
             });
-        }
+        });
 
-        if (document.readyState === "complete") {
-            onLoad();
-        } else {
-            window.addEventListener("load", onLoad);
-        }
-        return () => window.removeEventListener("load", onLoad);
+        cardRefs.current.forEach(ref => {
+            if (ref) observer.observe(ref);
+        })
+
+        return () => observer.disconnect();
     }, []);
 
 
@@ -36,9 +35,8 @@ const PopularProducts = ({products}) => {
                     slidesPerView={3}
                 >
                     {popularProducts.map((product, index) => (
-                        <SwiperSlide key={index} className="h-auto">
+                        <SwiperSlide key={product.id} className="h-auto">
                             <Link
-                                key={product.description}
                                 to={`products/${product.type}/${product.description
                                     .toLowerCase()
                                     .replace(/[^a-z0-9]+/g, "-")
@@ -46,7 +44,7 @@ const PopularProducts = ({products}) => {
                                 <div
                                     ref={el => cardRefs.current[index] = el}
                                     className="flex flex-col justify-between rounded-[50px] bg-[#fff] p-[30px] w-full h-full">
-                                    <img className="m-auto" src={product.img} alt=""/>
+                                    <img className="m-auto" src={product.img} alt={product.description}/>
                                     <p className="inter-400 opacity-[80%] text-[20px]">{product.description}</p>
                                     <p className="mt-[20px] opacity-[60%] text-[24px]">{product.price}</p>
                                 </div>

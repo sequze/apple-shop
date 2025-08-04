@@ -1,5 +1,4 @@
 import Home from "../pages/Home.jsx";
-import IntroPhoto from "../assets/intro__photo.png";
 import SiteLogo from "../assets/logo.png";
 import Products from "../pages/Products.jsx";
 import React from "react";
@@ -49,7 +48,7 @@ const categories = [
 export const publicRoutes = [
     {
         path: "/",
-        element: <Home products={bigProducts} categories={categories} intro={IntroPhoto} logo={SiteLogo} />
+        element: <Home products={bigProducts} categories={categories} logo={SiteLogo} />
     },
     {
         path: "/register",
@@ -73,7 +72,7 @@ export const publicRoutes = [
 export const privateRoutes = [
     {
         path: "/",
-        element: <Home products={bigProducts} categories={categories} intro={IntroPhoto} logo={SiteLogo} />
+        element: <Home products={bigProducts} categories={categories} logo={SiteLogo} />
     },
     {
         path: "/products/:type",
