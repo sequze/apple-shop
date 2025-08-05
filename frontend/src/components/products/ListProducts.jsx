@@ -5,7 +5,7 @@ const ListProducts = ({currentCategory, currentProducts}) => {
     return (
         <div className="bg-[#D9D9D9]">
             <div className="mx-auto max-w-[1500px] w-full relative  pt-[100px] pb-[100px] min-h-[100vh]">
-                <h2 className="ml-[25px] text-[36px] inter-300 mt-[30px] mb-[40px]">{currentCategory.title}</h2>
+                <h2 className="ml-[25px] text-[36px] montserrat-300 mt-[30px] mb-[40px]">{currentCategory.title}</h2>
                 <div className="flex">
                     <div>
                         <div className="bg-[#fff] rounded-[25px] mr-[50px] p-[25px] min-w-[350px] w-max shadow-md">

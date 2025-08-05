@@ -47,7 +47,7 @@ class S3Client:
         try:
             async with self.get_client() as client:
                 await client.put_object(
-                    Bucket=self.bucket_name,
+                    BucketForm=self.bucket_name,
                     Key=filename,
                     Body=file,
                 )
@@ -58,7 +58,7 @@ class S3Client:
     async def delete_file(self, object_name: str):
         try:
             async with self.get_client() as client:
-                await client.delete_object(Bucket=self.bucket_name, Key=object_name)
+                await client.delete_object(BucketForm=self.bucket_name, Key=object_name)
         except ClientError as e:
             raise DeleteFileError
 
