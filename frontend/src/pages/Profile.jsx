@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import AuthService from "../components/api/AuthService.js";
 import {useNavigate} from "react-router-dom";
 import Loader from "../components/Loader.jsx";
-import ProductContent from "../components/product/ProductContent.jsx";
+import ProfileContent from "../components/profile/ProfileContent.jsx";
 
 const Profile = () => {
 
@@ -27,7 +27,7 @@ const Profile = () => {
     if (!user) return <Loader />
 
     return (
-        <ProductContent user={user} logout={handleLogout}/>
+        <ProfileContent user={user} logout={handleLogout}/>
     );
 };
 

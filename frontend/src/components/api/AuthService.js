@@ -1,4 +1,3 @@
-import { jwtDecode } from "jwt-decode";
 import api from "./api";
 
 
@@ -31,17 +30,14 @@ export default class AuthService {
     }
 
     static async checkAuth() {
-        const access = localStorage.getItem("access");
-        if (!access) return false;
         try {
-            const { exp } = jwtDecode(access);
-            if (!exp) return false;
-
-            return exp * 1000 > Date.now();
+            await this.getCurrentUser();
+            return true;
         } catch {
             return false;
         }
     }
+
 
     static async logout(navigate) {
         try {
@@ -58,6 +54,7 @@ export default class AuthService {
     }
 
     static async refreshToken() {
+        console.log("REFRESH");
         const response = await api.post("/api/auth/refresh", {}, {withCredentials: true});
         const newAccess = response.data.access;
         localStorage.setItem("access", newAccess);

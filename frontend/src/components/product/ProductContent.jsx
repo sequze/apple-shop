@@ -41,7 +41,7 @@ const ProductContent = ({product}) => {
                         </div>
 
                         <div className="min-w-[250px]">
-                            <img className="" src={product?.img} alt={product?.description}/>
+                            <img className="m-auto" src={product?.img} alt={product?.description}/>
                         </div>
                         <div className="flex flex-col items-center">
                             {product && product?.colors && (
