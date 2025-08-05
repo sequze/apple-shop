@@ -1,5 +1,3 @@
-from decimal import Decimal
-
 from sqlalchemy.ext.asyncio.session import AsyncSession
 
 from core.models import CartItem
@@ -7,6 +5,7 @@ from core.repositories.uow import UnitOfWork
 from services.cart_item.repository import CartItemRepository
 from services.cart_item.schemas import CartItemDTO, CartItemCreateSchema, CartItemUpdateSchema
 from services.product.schemas import ProductDTO
+from services.product.service import get_product_discount
 
 
 class CartItemNotFoundError(Exception):
@@ -19,25 +18,17 @@ class CartItemAlreadyExistsError(Exception):
 
 
 def get_cart_item_dto(item: CartItem) -> CartItemDTO:
-    total_price = item.product.price
-    discount_description = None
-    if len(item.product.discounts) == 0: discount = 0
-    else:
-        discount = max([ds for ds in item.product.discounts if ds.is_active == True], key=lambda d: d.percent)
-        discount_description = discount.description
-        discount = discount.percent
-    price_with_discount = total_price * Decimal((100 - discount) / 100)
+    discount_info = get_product_discount(item.product)
     return CartItemDTO(
-        total_price=total_price,
-        discount=discount,
-        discount_description=discount_description,
-        price_with_discount=price_with_discount,
+        total_price=discount_info.total_price,
+        discount=discount_info.discount_sumdiscount,
+        discount_description=discount_info.discount_description,
+        price_with_discount=discount_info.price_with_discount,
         id=item.id,
         product=ProductDTO.model_validate(item.product),
         quantity=item.quantity,
         user_id=item.user_id,
         product_id=item.product.id,
-
     )
 
 

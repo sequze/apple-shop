@@ -1,10 +1,30 @@
+from decimal import Decimal
+
+from core.models import Product
 from core.repositories.uow import UnitOfWork
 from plugins.s3_storage.client import DeleteFileError
 from services.product.repository import ProductRepository
-from services.product.schemas import ProductCreateSchema, ProductDTO, ProductUpdateSchema
+from services.product.schemas import ProductCreateSchema, ProductDTO, ProductUpdateSchema, ProductPriceInfo
 from services.product_image.repository import ProductImageRepository
 from plugins.s3_storage.utils import delete_file_from_storage
 
+
+
+def get_product_discount(product: Product):
+    total_price = product.price
+    discount_description = None
+    if len(product.discounts) == 0: discount = 0
+    else:
+        discount = max([ds for ds in product.discounts if ds.is_active == True], key=lambda d: d.percent)
+        discount_description = discount.description
+        discount = discount.percent
+    price_with_discount = total_price * Decimal((100 - discount) / 100)
+    return ProductPriceInfo(
+        total_price=total_price,
+        discount_sum=total_price - price_with_discount,
+        price_with_discount=price_with_discount,
+        discount_description=discount_description,
+    )
 
 class ProductNotFoundError(Exception):
     """Product not found"""

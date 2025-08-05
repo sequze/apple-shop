@@ -35,3 +35,10 @@ class ProductDTO(ProductBaseSchema):
 
     class Config:
         from_attributes = True
+
+
+class ProductPriceInfo(BaseModel):
+    total_price: NonNegativeInt
+    discount_sum: NonNegativeInt
+    price_with_discount: NonNegativeInt
+    discount_description: str | None = None
