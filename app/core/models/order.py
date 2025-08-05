@@ -36,10 +36,21 @@ class OrderStatus(str, Enum):
     cancelled = "cancelled"
     refunded = "refunded"
 
+class PaymentMethod(str, Enum):
+    cash = "cash"
+    card = "card"
 
 class Order(CreatedAtMixin, IntIdPkMixin, Base):
+    first_name: Mapped[str]
+    last_name: Mapped[str]
+    phone_number: Mapped[str]
+    email: Mapped[str]
+    city: Mapped[str]
+    address_line: Mapped[str]
+    region: Mapped[str]
+    payment_method: Mapped[PaymentMethod]
     total_amount: Mapped[Decimal] = mapped_column(Numeric(10, 2))
-    status: Mapped[OrderStatus]
+    status: Mapped[OrderStatus] = mapped_column(default=OrderStatus.pending)
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     user: Mapped["User"] = relationship(back_populates="orders")
     items: Mapped[list["OrderItem"]] = relationship(back_populates="order", lazy="selectin")
