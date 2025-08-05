@@ -13,7 +13,7 @@ const ProductContent = ({product}) => {
                     <div className="relative w-6/12 lg:w-5/12 text-[22px] inter-300 flex flex-col items-center">
                         <div className="relative w-[260px] h-[50px] mt-[40px] sm:mt-0">
                             {
-                                product.diagonals && (
+                                product?.diagonals && (
                                     <>
                                         <div
                                             className="absolute h-full w-[110px] bg-[#D9D9D9] rounded-full transition-transform duration-300"
@@ -21,7 +21,7 @@ const ProductContent = ({product}) => {
                                         />
 
                                         <div className="relative z-10 flex justify-between">
-                                            {product.diagonals
+                                            {product?.diagonals
                                                 .sort((a, b) => Number(a) - Number(b))
                                                 .map((diag, index) => (
                                                     <div
@@ -41,16 +41,16 @@ const ProductContent = ({product}) => {
                         </div>
 
                         <div className="min-w-[250px]">
-                            <img className="" src={product.img} alt={product.description}/>
+                            <img className="" src={product?.img} alt={product?.description}/>
                         </div>
                         <div className="flex flex-col items-center">
-                            {product && product.colors && (
+                            {product && product?.colors && (
                                 <>
                                     <p className="inter-300 sm:text-left text-center">
-                                        Доступно в {product.colors.length} цветах
+                                        Доступно в {product?.colors.length} цветах
                                     </p>
                                     <div className="flex justify-between pt-[30px]">
-                                        {product.colors.map((color, index) => (
+                                        {product?.colors.map((color, index) => (
                                             <div
                                                 key={index}
                                                 className={`transition-all w-[40px] h-[40px] flex items-center justify-center rounded-full cursor-pointer  ${index === activeColor ? "border-[2px] border-[#0071e3]" : ""}`}
@@ -73,9 +73,9 @@ const ProductContent = ({product}) => {
                     <div>
                         <h1
                             className="text-center sm:text-left absolute sm: top-4 sm:top-auto left-1/2 sm:left-auto -translate-x-1/2 sm:translate-x-0 montserrat-400 text-[24px] lg:text-[36px]"
-                        >{product.title}</h1>
+                        >{product?.title}</h1>
                         <div className="mt-[40px] md:mt-[100px]">
-                            {product.features.map((feature, index) => (
+                            {product?.features.map((feature, index) => (
                                 <div key={index}>
                                     <div className="flex items-center gap-[20px]">
                                         <div className="w-[40px] ml-[10px]">
@@ -85,14 +85,14 @@ const ProductContent = ({product}) => {
                                             {feature.text}
                                         </div>
                                     </div>
-                                    {index !== product.features.length - 1 && (
+                                    {index !== product?.features.length - 1 && (
                                         <hr className="my-[20px] opacity-40"/>
                                     )}
                                 </div>
                             ))}
                         </div>
                         <div className="flex gap-[25px] mt-[40px] md:mt-[90px] md:ml-auto justify-center">
-                            <div className="bg-[#D9D9D9] rounded-full px-[25px] py-[15px] sm:ml-auto">{product.price}</div>
+                            <div className="bg-[#D9D9D9] rounded-full px-[25px] py-[15px] sm:ml-auto">{product?.price}</div>
                             <MyActiveButton>Buy</MyActiveButton>
                         </div>
                     </div>

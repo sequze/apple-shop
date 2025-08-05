@@ -4,9 +4,10 @@ import ListProducts from "../components/products/ListProducts.jsx";
 
 const Products = ({categories, products}) => {
     const {type} = useParams();
+    const normalizedType = type.toLowerCase();
 
-    const currentCategory = categories.find(category => category.type === type);
-    const currentProducts = products.filter(product => product.type === type);
+    const currentCategory = categories.find(category => category.type === normalizedType);
+    const currentProducts = products.filter(product => product.type === normalizedType);
     return (
         <ListProducts currentCategory={currentCategory} currentProducts={currentProducts}/>
     );

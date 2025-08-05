@@ -33,7 +33,7 @@ const Cards = ({categories}) => {
 
                         return (
                             <div key={index}>
-                                {isActive ? <Link to={`/product/${category.type}`}>{card}</Link> : card}
+                                {isActive ? <Link to={`/products/${category.type}`}>{card}</Link> : card}
                             </div>
                         );
                     })}
@@ -41,7 +41,7 @@ const Cards = ({categories}) => {
 
                 <div className="flex flex-wrap justify-center items-center gap-5 lg:hidden mt-[40px]">
                     {categories.map((category, index) => (
-                        <Link key={index} to={`/product/${category.type}`}>
+                        <Link key={index} to={`/products/${category.type}`}>
                             <div
                                 className="relative w-[150px] h-[150px]  sm:w-[250px] sm:h-[250px] rounded-[30px] overflow-hidden bg-cover bg-center transition-transform duration-300 hover:scale-[1.03]"
                                 style={{ backgroundImage: `url(${category.img})` }}

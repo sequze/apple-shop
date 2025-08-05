@@ -2,6 +2,9 @@ import React from 'react';
 import {Link} from "react-router-dom";
 
 const ListProducts = ({currentCategory, currentProducts}) => {
+
+    if (!currentCategory) return <div>Категория не найдена</div>;
+
     return (
         <div className="bg-[#D9D9D9]">
             <div className="mx-auto max-w-[1500px] w-full relative  pt-[100px] pb-[100px] min-h-[100vh]">
