@@ -6,7 +6,7 @@ import Loader from "./Loader.jsx";
 import AboutContent from "./modals/AboutContent.jsx";
 import ContactContent from "./modals/ContactContent.jsx";
 
-const Header = (props) => {
+const Header = ({logo}) => {
 
     const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
     const [isContactModalOpen, setIsContactModalOpen] = useState(false);
@@ -37,6 +37,14 @@ const Header = (props) => {
         }
     }, [isBurgerOpen]);
 
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape') setIsBurgerOpen(false);
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, []);
+
     const menuLink = "cursor-pointer transition delay-250 duration-200 ease-in-out hover:opacity-50";
     const burgerLine = "block w-10 h-1 bg-black rounded-full  transition-all duration-200";
 
@@ -52,7 +60,7 @@ const Header = (props) => {
                         <div className={`
                          ${isBurgerOpen ? "h-full justify-center" : "justify-between "} flex w-full h-[75px] truncate items-center`}>
                             <Link className={ isBurgerOpen ? "absolute top-0 -translate-y-9 left-0" : ""} to="/" onClick={() => setIsBurgerOpen(false)}>
-                                <img className="max-w-[150px]" src={props.logo} alt="Логотип"/>
+                                <img className="max-w-[150px]" src={logo} alt="Логотип"/>
                             </Link>
                             <nav>
                                 <button
