@@ -6,7 +6,12 @@ class SQlAlchemyRepository:
     model = None
 
     async def create(self, session: AsyncSession, data: dict):
-        stmt = insert(self.model).values(**data).returning(self.model)
+        mapper = inspect(self.model)
+        data_to_create = {}
+        for key, value in data.items():
+            if key in mapper.columns:
+                data_to_create[key] = value
+        stmt = insert(self.model).values(**data_to_create).returning(self.model)
         result = await session.execute(stmt)
         return result.scalar()
 
