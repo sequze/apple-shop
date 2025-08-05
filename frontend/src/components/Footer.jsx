@@ -31,9 +31,9 @@ const Footer = () => {
     ]
 
     return (
-        <div className="h-[350px]">
+        <div className="h-auto sm:h-[350px]">
             <div className="mx-auto max-w-[1500px] w-full">
-                <div className="flex justify-between pt-[100px] leading-[1.4] text-[#000]/60">
+                <div className="flex flex-col items-center sm:flex-row sm:justify-around md:justify-between py-[20px] sm:pt-[100px] flex-wrap leading-[1.4] text-[#000]/60 px-[20px] gap-3">
                     <FooterContent contents={footerContents} />
                 </div>
             </div>
