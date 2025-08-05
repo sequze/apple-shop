@@ -53,16 +53,16 @@ const LoginForm = () => {
 
 
     return (
-        <div className="h-[100vh] bg-[#D9D9D9]">
-            <div className="mx-auto max-w-[1500px] w-full py-[200px]">
-                <div className="flex flex-col items-center bg-[#fff] rounded-[40px] py-[150px]">
-                    <h1 className="montserrat-400 text-[36px]">Вход</h1>
+        <div className="min-h-screen bg-[#D9D9D9] flex justify-center">
+            <div className="max-w-[1200px] w-full pt-[100px] pb-[50px] sm:py-[100px] lg:py-[150px] mx-[20px]">
+                <div className="flex flex-col items-center bg-[#fff] rounded-[40px] py-[40px] sm:py-[80px] lg:py-[120px]">
+                    <h1 className="montserrat-400 text-[28px] sm:text-[36px]">Вход</h1>
                     <form
                         onSubmit={(e) => {
                             e.preventDefault();
                             handleLogin();
                         }}
-                        className="w-1/3 my-[75px] grid gap-[30px]">
+                        className="w-10/12 sm:w-2/3 lg:w-1/3 my-[75px] grid gap-[30px]">
                         <MyInput
                             placeholder="Email"
                             type="text"
@@ -82,7 +82,7 @@ const LoginForm = () => {
                     </form>
 
                     <Link to="/register">
-                        <p className="inter-300 mt-[20px] cursor-pointer">Не зарегестрированы? Зарегестрироваться</p>
+                        <p className="inter-300 mt-[0] text-center sm:text-left sm:mt-[20px] cursor-pointer">Не зарегестрированы? Зарегестрироваться</p>
                     </Link>
                 </div>
             </div>
