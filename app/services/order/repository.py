@@ -9,8 +9,3 @@ from core.repositories.base_repository import SQlAlchemyRepository
 
 class OrderRepository(SQlAlchemyRepository):
     model = Order
-
-    async def create(self, session: AsyncSession, data: dict):
-        stmt = insert(Order).values(**data, total_amount=0).returning(Order)
-        result = await session.execute(stmt)
-        return result.scalar()
