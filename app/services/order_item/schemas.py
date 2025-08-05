@@ -24,6 +24,6 @@ class OrderItemUpdateSchema(BaseModel):
     quantity: PositiveInt | None = None
     unit_price: PositiveFloat | None = None
 
-
-class OrderItemCreateSchema(OrderItemSchema):
-    pass
+class OrderItemCreateSchema(BaseModel):
+    quantity: PositiveInt
+    product_id: PositiveInt
