@@ -28,7 +28,7 @@ const MyModal = ({children, visible, setVisible}) => {
         } onClick={() => setVisible(false)}>
             <div className={
                 visible
-                    ? "max-h-[80vh] overflow-y-auto bg-[#fff] w-1/2 m-auto rounded-[15px] px-[50px] transition-colors duration-1000 py-[30px]"
+                    ? "w-11/12 sm:w-3/4 md:w-1/2 max-h-[80vh] overflow-y-auto bg-[#fff] m-auto rounded-[15px] px-[50px] transition-colors duration-1000 py-[30px]"
                     : ""
             } onClick={(e) => e.stopPropagation()}>
                 <div>

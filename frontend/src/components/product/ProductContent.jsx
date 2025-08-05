@@ -7,11 +7,11 @@ const ProductContent = ({product}) => {
     const [activeDiag, setActiveDiag] = useState(0);
 
     return (
-        <div className="bg-[#D9D9D9] h-[100vh] pt-[50px]">
-            <div className="mx-auto max-w-[1500px]  relative  pt-[100px] pb-[100px]">
-                <div className="bg-[#fff] w-fit min-w-2/3 rounded-[40px] p-[50px] flex justify-around m-auto">
-                    <div className="relative w-5/12 text-[22px] inter-300 flex flex-col items-center">
-                        <div className="relative w-[260px] h-[50px]">
+        <div className="bg-[#D9D9D9] min-h-screen pt-[50px]">
+            <div className="flex justify-center max-w-[1500px]  relative py-[50px] sm:py-[100px] m-auto">
+                <div className="relative flex-col items-center sm:flex-row bg-[#fff] w-fit min-w-2/3 rounded-[40px] p-[50px] flex justify-around mx-[20px]">
+                    <div className="relative w-6/12 lg:w-5/12 text-[22px] inter-300 flex flex-col items-center">
+                        <div className="relative w-[260px] h-[50px] mt-[40px] sm:mt-0">
                             {
                                 product.diagonals && (
                                     <>
@@ -40,13 +40,13 @@ const ProductContent = ({product}) => {
                             }
                         </div>
 
-                        <div>
-                            <img src={product.img} alt=""/>
+                        <div className="min-w-[250px]">
+                            <img className="" src={product.img} alt={product.description}/>
                         </div>
                         <div className="flex flex-col items-center">
                             {product && product.colors && (
                                 <>
-                                    <p className="inter-300">
+                                    <p className="inter-300 sm:text-left text-center">
                                         Доступно в {product.colors.length} цветах
                                     </p>
                                     <div className="flex justify-between pt-[30px]">
@@ -71,15 +71,17 @@ const ProductContent = ({product}) => {
                         </div>
                     </div>
                     <div>
-                        <h1 className="montserrat-400 text-[48px]">{product.title}</h1>
-                        <div className="mt-[100px]">
+                        <h1
+                            className="text-center sm:text-left absolute sm: top-4 sm:top-auto left-1/2 sm:left-auto -translate-x-1/2 sm:translate-x-0 montserrat-400 text-[24px] lg:text-[36px]"
+                        >{product.title}</h1>
+                        <div className="mt-[40px] md:mt-[100px]">
                             {product.features.map((feature, index) => (
                                 <div key={index}>
                                     <div className="flex items-center gap-[20px]">
                                         <div className="w-[40px] ml-[10px]">
                                             <img src={feature.img} alt={feature.text}/>
                                         </div>
-                                        <div>
+                                        <div className="text-[13px] md:text-[14px]">
                                             {feature.text}
                                         </div>
                                     </div>
@@ -89,8 +91,8 @@ const ProductContent = ({product}) => {
                                 </div>
                             ))}
                         </div>
-                        <div className="flex gap-[25px] mt-[90px] ml-auto">
-                            <div className="bg-[#D9D9D9] rounded-full px-[25px] py-[15px] ml-auto">{product.price}</div>
+                        <div className="flex gap-[25px] mt-[40px] md:mt-[90px] md:ml-auto justify-center">
+                            <div className="bg-[#D9D9D9] rounded-full px-[25px] py-[15px] sm:ml-auto">{product.price}</div>
                             <MyActiveButton>Buy</MyActiveButton>
                         </div>
                     </div>

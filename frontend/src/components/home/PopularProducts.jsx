@@ -28,7 +28,7 @@ const PopularProducts = ({products}) => {
     return (
         <div className="bg-[#D9D9D9]">
             <div className="mx-auto max-w-[1500px] w-full py-[25px] sm:py-[100px]">
-                <h2 className="text-[24px] sm:text-[36px] inter-300 pl-10 lg:pl-0">Популярные продукты</h2>
+                <h2 className="text-[24px] sm:text-[36px] inter-300 pl-10 2xl:pl-0">Популярные продукты</h2>
                 <Swiper
                     className="mt-[60px] items-stretch"
                     breakpoints={{
@@ -60,8 +60,8 @@ const PopularProducts = ({products}) => {
                                 <div
                                     ref={el => cardRefs.current[index] = el}
                                     className="flex flex-col justify-between rounded-[50px] bg-[#fff] p-[30px] w-4/5 m-auto sm:w-full h-full">
-                                        <img className="m-auto" src={product.img} alt={product.description}/>
-                                        <p className="inter-400 opacity-[80%] text-[20px]">{product.description}</p>
+                                        <img className="m-auto max-h-[200px] sm:max-h-none" src={product.img} alt={product.description}/>
+                                        <p className="inter-400 opacity-[80%] text-[20px] pt-[20px] sm:pt-0">{product.description}</p>
                                         <p className="mt-[20px] opacity-[60%] text-[24px]">{product.price}</p>
                                 </div>
                             </Link>
