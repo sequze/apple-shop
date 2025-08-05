@@ -51,7 +51,7 @@ class OrderService:
             return [OrderDTO.model_validate(order) for order in orders]
 
 
-class OrderDeleteUseCase:
+class DeleteOrderUseCase:
     def __init__(
             self,
             order_repository: OrderRepository,

@@ -9,7 +9,7 @@ from services.category.service import CategoryService
 from services.discount.repository import DiscountRepository
 from services.discount.service import DiscountService
 from services.order.repository import OrderRepository
-from services.order.service import OrderService
+from services.order.service import OrderService, DeleteOrderUseCase
 from services.order_item.repository import OrderItemRepository
 from services.order_item.service import OrderItemService
 from services.product.repository import ProductRepository
@@ -71,6 +71,10 @@ def product_delete_use_case() -> ProductDeleteUseCase:
 
 def user_get_cart_use_case() -> UserGetCartUseCase:
     return UserGetCartUseCase(UserRepository(), unit_of_work())
+
+def delete_order_use_case() -> DeleteOrderUseCase:
+    return DeleteOrderUseCase(OrderRepository(), OrderItemRepository(), unit_of_work())
+
 # auth dependencies
 
 
