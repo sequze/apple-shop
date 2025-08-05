@@ -57,7 +57,7 @@
 }
 
 .card__active {
-    @apply pt-[30px] pl-[50px] bg-cover w-[650px] h-[650px] rounded-[30px] text-[#fff] text-[32px] transition-all duration-700;
+    @apply pt-[30px] pl-[50px] bg-cover h-[650px] rounded-[30px] text-[#fff] text-[32px] transition-all duration-700;
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
     -webkit-box-shadow: 0px -42px 81px 10px rgba(34, 60, 80, 0.2);
@@ -66,7 +66,7 @@
 }
 
 .card {
-    @apply bg-cover w-[130px] h-[650px] rounded-[30px] text-[#fff] transition-all duration-700 hover:scale-105 cursor-pointer;
+    @apply bg-cover h-[650px] rounded-[30px] text-[#fff] transition-all duration-700 hover:scale-105 cursor-pointer;
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
     -webkit-box-shadow: 0px -42px 81px 10px rgba(34, 60, 80, 0.2);
