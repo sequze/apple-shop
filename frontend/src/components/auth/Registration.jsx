@@ -70,7 +70,7 @@ const Registration = () => {
 
 
     return (
-        <div className="min-h-screen bg-[#D9D9D9] flex justify-center">
+        <div className="min-h-screen bg-[#D9D9D9] flex justify-center  items-center">
             <div className="max-w-[1200px] w-full pt-[100px] pb-[50px] sm:py-[100px] lg:py-[150px] mx-[20px]">
                 <div className="flex flex-col items-center bg-[#fff] rounded-[40px] py-[40px] sm:py-[80px] lg:py-[120px]">
                     <h1 className="montserrat-400 text-[28px] sm:text-[36px]">Регистрация</h1>
