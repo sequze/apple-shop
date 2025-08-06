@@ -1,4 +1,5 @@
 from fastapi import UploadFile
+from sqlalchemy.exc import SQLAlchemyError
 
 from plugins.s3_storage.client import InvalidFileTypeError
 from services.user.schemas import UserCreateSchema, UserUpdateSchema, UserDTO
@@ -100,8 +101,11 @@ class UserService:
                 await delete_file_from_storage(user.profile_image_url)
             file_binary = await file.read()
             file_path = await upload_file_to_storage(file_binary, file.filename)
-            user.profile_image_url = file_path
-            await uow.session.commit()
+            try:
+                user.profile_image_url = file_path
+                await uow.session.commit()
+            except SQLAlchemyError:
+                await delete_file_from_storage(file_path)
             return file_path
 
     async def delete_profile_image(self, user_data: UserDTO) -> None:

@@ -8,6 +8,7 @@ from services.product_image.repository import ProductImageRepository
 from services.product_image.schemas import ProductImageDTO, ProductImageCreate, \
     ProductImageUpdateSchema
 from fastapi import UploadFile
+from sqlalchemy.exc import SQLAlchemyError
 
 
 class ProductImageNotFoundError(Exception):
@@ -54,8 +55,12 @@ class ProductImageService:
                 "is_main": data.is_main,
                 "product_id": data.product_id,
             }
-            image = await self.repository.create(uow.session, data_dict)
-            await uow.commit()
+            try:
+                image = await self.repository.create(uow.session, data_dict)
+                await uow.commit()
+            except SQLAlchemyError:
+                await delete_file_from_storage(file_path)
+                raise
             return ProductImageDTO.model_validate(image)
 
     async def get_all(self) -> list[ProductImageDTO]:
