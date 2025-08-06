@@ -7,7 +7,6 @@ from services.order_item.schemas import OrderItemDTO, OrderItemCreateSchema
 
 
 class OrderBaseSchema(BaseModel):
-    status: OrderStatus
     first_name: str
     last_name: str
     phone_number: str
@@ -19,6 +18,7 @@ class OrderBaseSchema(BaseModel):
 
 
 class OrderDTO(OrderBaseSchema):
+    status: OrderStatus
     id: PositiveInt
     created_at: datetime
     total_amount: NonNegativeFloat

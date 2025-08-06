@@ -1,6 +1,7 @@
 from sqlalchemy.ext.asyncio.session import AsyncSession
 
 from core.models import Order, Product
+from core.models.order import OrderStatus, VALID_TRANSITIONS
 from core.repositories.uow import UnitOfWork
 from services.order.repository import OrderRepository
 from services.order.schemas import OrderDTO, OrderCreateSchema, OrderUpdateSchema
@@ -9,6 +10,10 @@ from services.product.service import ProductNotFoundError, get_product_discount
 
 
 class OrderNotFoundError(Exception):
+    pass
+
+
+class StatusNotAllowed(Exception):
     pass
 
 
@@ -44,6 +49,16 @@ class OrderService:
         async with self.uow as uow:
             orders = await self.repository.get_all(uow.session)
             return [OrderDTO.model_validate(order) for order in orders]
+
+    async def update_status(self, new_status: OrderStatus, order_id: int):
+        async with self.uow as uow:
+            session = uow.session
+            order = await self.__find_by_id(session, order_id)
+            if new_status in VALID_TRANSITIONS[order.status]:
+                order.status = new_status
+                await session.commit()
+                return OrderDTO.model_validate(order)
+            raise StatusNotAllowed
 
 
 class DeleteOrderUseCase:

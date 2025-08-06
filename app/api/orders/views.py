@@ -1,13 +1,14 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, status
+from pydantic import PositiveInt
 
 from api.dependencies import order_service, delete_order_use_case, create_order_use_case, \
     CurrentUserDep, AdminUserDep
 from core.models.order import OrderStatus
 from services.order.schemas import OrderDTO, OrderCreateSchema, OrderUpdateSchema
-from services.order.service import OrderService, OrderNotFoundError, DeleteOrderUseCase, CreateOrderUseCase
-from services.user import UserDTO
+from services.order.service import OrderService, OrderNotFoundError, DeleteOrderUseCase, CreateOrderUseCase, \
+    StatusNotAllowed
 
 router = APIRouter()
 
@@ -58,6 +59,26 @@ async def update_order(
             detail="Order not found"
         )
 
+
+@router.put("/{order_id}/update_status", tags=["Admin"])
+async def update_order_status(
+        order_id: PositiveInt,
+        order_status: OrderStatus,
+        service: order_service_dep,
+        admin_user: AdminUserDep,
+) -> OrderDTO:
+    try:
+        return await service.update_status(order_status, order_id)
+    except OrderNotFoundError:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Order not found"
+        )
+    except StatusNotAllowed:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Status not allowed"
+        )
 
 @router.delete("/{order_id}")
 async def delete_order(
