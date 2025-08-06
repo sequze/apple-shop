@@ -1,26 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 import {Navigate, Route, Routes} from "react-router-dom";
 import {publicRoutes, privateRoutes, categories} from "../router/routes.jsx";
-import AuthService from "./api/AuthService.js";
-import Loader from "./Loader.jsx";
 import Layout from "./layout/Layout.jsx";
 import SiteLogo from "../assets/logo.png";
 import {bigProducts} from "../router/bigProducts.js";
+import {AuthContext} from "../context/context.js";
 
 
 const AppRouter = () => {
 
-    const [isAuth, setIsAuth] = useState(null);
-
-    useEffect(() => {
-        const check = async () => {
-            const auth = await AuthService.checkAuth();
-            setIsAuth(auth);
-        };
-        check();
-    }, []);
-
-    if (isAuth === null) return <Loader />;
+    const {isAuth} = useContext(AuthContext);
 
     const routes = isAuth ? privateRoutes : publicRoutes;
 
@@ -43,7 +32,7 @@ const AppRouter = () => {
             ))}
             <Route
                 path="*"
-                element={<Navigate to={isAuth ? "/" : "login"} />}
+                element={<Navigate to={isAuth ? "/" : "/login"} />}
             />
         </Routes>
     );

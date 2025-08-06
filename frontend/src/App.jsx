@@ -1,16 +1,16 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import './App.css'
 import 'swiper/css';
-import {BrowserRouter, useLocation, useNavigate} from "react-router-dom";
+import {BrowserRouter, useNavigate} from "react-router-dom";
 import AppRouter from "./components/AppRouter.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
-import axios from "axios";
 import AuthService from "./components/api/AuthService.js";
 import {setupInterceptors} from "./components/api/setupInterceptors.js";
+import {AuthContext} from "./context/context.js";
 
 function AppContent() {
     const navigate = useNavigate();
-    const location = useLocation();
+
 
     useEffect(() => {
         setupInterceptors(navigate);
@@ -26,10 +26,29 @@ function AppContent() {
 
 
 function App() {
+    const [isAuth, setIsAuth] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const checkAuthStatus = async () => {
+            const res = await AuthService.checkAuth();
+            if (res) setIsAuth(true);
+            setIsLoading(false);
+        }
+        checkAuthStatus()
+    }, []);
+
+
     return (
-        <BrowserRouter>
-            <AppContent />
-        </BrowserRouter>
+        <AuthContext.Provider value={{
+            isAuth,
+            setIsAuth,
+            isLoading
+        }}>
+            <BrowserRouter>
+                <AppContent />
+            </BrowserRouter>
+        </AuthContext.Provider>
     )
 }
 

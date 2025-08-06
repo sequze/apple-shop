@@ -1,29 +1,18 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
-import AuthService from "./api/AuthService.js";
 import MyModal from "./ui/modal/MyModal.jsx";
 import Loader from "./Loader.jsx";
 import AboutContent from "./modals/AboutContent.jsx";
 import ContactContent from "./modals/ContactContent.jsx";
+import {AuthContext} from "../context/context.js";
 
 const Header = ({logo}) => {
 
     const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
     const [isContactModalOpen, setIsContactModalOpen] = useState(false);
-    const [isAuth, setIsAuth] = useState(null);
+    const {isAuth} = useContext(AuthContext);
     const [isBurgerOpen, setIsBurgerOpen] = useState(false);
 
-    useEffect(() => {
-        const check = async () => {
-            try {
-                const auth = await AuthService.checkAuth();
-                setIsAuth(auth);
-            } catch (e) {
-                setIsAuth(false);
-            }
-        };
-        check();
-    }, []);
 
     useEffect(() => {
         if (isBurgerOpen) {

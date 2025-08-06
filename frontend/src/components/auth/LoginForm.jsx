@@ -1,15 +1,17 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import MyInput from "../ui/input/MyInput.jsx";
 import MyWhiteButton from "../ui/whiteButton/MyWhiteButton.jsx";
 import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 import AuthService from "../api/AuthService.js";
+import {AuthContext} from "../../context/context.js";
 
 const LoginForm = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("")
+    const {setIsAuth} = useContext(AuthContext);
 
     const navigate = useNavigate();
 
@@ -36,6 +38,7 @@ const LoginForm = () => {
             const {access_token} = await AuthService.login(email, password);
             localStorage.setItem("access", access_token);
             axios.defaults.headers.common.Authorization = "Bearer " + access_token;
+            setIsAuth(true);
             navigate("/");
         } catch (err) {
             const detail = err.response?.data?.detail;
@@ -82,7 +85,7 @@ const LoginForm = () => {
                     </form>
 
                     <Link to="/register">
-                        <p className="inter-300 mt-[0] text-center sm:text-left sm:mt-[20px] cursor-pointer">Не зарегестрированы? Зарегестрироваться</p>
+                        <p className="inter-300 mt-[0] text-center sm:text-left sm:mt-[20px] cursor-pointer">Не зарегистрированы? Зарегестрироваться</p>
                     </Link>
                 </div>
             </div>
