@@ -1,13 +1,15 @@
 from decimal import Decimal
 
-from core.models import Product
+from core.models import Product, Category
 from core.repositories.uow import UnitOfWork
 from plugins.s3_storage.client import DeleteFileError
+from services.category.repository import CategoryRepository
+from services.category.service import CategoryNotFoundError
 from services.product.repository import ProductRepository
 from services.product.schemas import ProductCreateSchema, ProductDTO, ProductUpdateSchema, ProductPriceInfo
 from services.product_image.repository import ProductImageRepository
 from plugins.s3_storage.utils import delete_file_from_storage
-
+from sqlalchemy import select
 
 
 def get_product_discount(product: Product):
@@ -60,11 +62,6 @@ class ProductService:
             if product is None: raise ProductNotFoundError
             return ProductDTO.model_validate(product)
 
-    async def get_all(self) -> list[ProductDTO]:
-        async with self.uow as uow:
-            products = await self.repository.get_all(uow.session)
-            return [ProductDTO.model_validate(product) for product in products]
-
 
 class ProductDeleteUseCase:
     def __init__(
@@ -90,3 +87,28 @@ class ProductDeleteUseCase:
             await self.product_repository.delete(uow.session, product)
             await uow.commit()
             return ProductDTO.model_validate(product)
+
+
+class GetProductsUseCase:
+    def __init__(self,
+                 product_repository: ProductRepository,
+                 category_repository: CategoryRepository,
+                 uow: UnitOfWork):
+        self.product_repository = product_repository
+        self.category_repository = category_repository
+        self.uow = uow
+    async def execute(self,
+            category: str | None = None,
+            min_price: int | None = None,
+            max_price: int | None = None,
+            order_by: str | None = None,
+            in_stock: bool | None = None,
+    ) -> list[ProductDTO]:
+        async with self.uow as uow:
+            category_id = None
+            if category:
+                category_obj = await self.category_repository.get_by_filters(uow.session, {'name': category})
+                if category_obj is None: raise CategoryNotFoundError
+                category_id = category_obj.id
+            products = await self.product_repository.get_all(uow.session, category_id, min_price, max_price, order_by, in_stock)
+            return [ProductDTO.model_validate(product) for product in products]

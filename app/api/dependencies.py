@@ -14,7 +14,7 @@ from services.order.repository import OrderRepository
 from services.order.service import OrderService, DeleteOrderUseCase, CreateOrderUseCase
 from services.order_item.repository import OrderItemRepository
 from services.product.repository import ProductRepository
-from services.product.service import ProductService, ProductDeleteUseCase
+from services.product.service import ProductService, ProductDeleteUseCase, GetProductsUseCase
 from services.product_image.repository import ProductImageRepository
 from services.product_image.service import ProductImageService
 from services.user import UserDTO
@@ -74,6 +74,9 @@ def delete_order_use_case() -> DeleteOrderUseCase:
 
 def create_order_use_case() -> CreateOrderUseCase:
     return CreateOrderUseCase(OrderRepository(), OrderItemRepository(), unit_of_work())
+
+def get_products_use_case() -> GetProductsUseCase:
+    return GetProductsUseCase(ProductRepository(), CategoryRepository(), unit_of_work())
 
 
 # auth dependencies

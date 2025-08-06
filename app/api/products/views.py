@@ -2,8 +2,9 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from api.dependencies import product_service, product_delete_use_case
+from api.dependencies import product_service, product_delete_use_case, get_products_use_case
 from plugins.s3_storage.client import DeleteFileError
+from services.category.service import CategoryNotFoundError
 from services.product.schemas import ProductDTO, ProductCreateSchema, ProductUpdateSchema
 from services.product.service import ProductService, ProductNotFoundError, ProductDeleteUseCase
 
@@ -14,9 +15,23 @@ product_service_dep = Annotated[ProductService, Depends(product_service)]
 
 @router.get("/")
 async def get_all_products(
-        product_service: product_service_dep,
+        category: str | None = None,
+        min_price: int | None = None,
+        max_price: int | None = None,
+        order_by: str | None = None,
+        in_stock: bool | None = None,
+        get_products=Depends(get_products_use_case),
 ) -> list[ProductDTO]:
-    return await product_service.get_all()
+    try:
+        return await get_products.execute(
+            category,
+            min_price,
+            max_price,
+            order_by,
+            in_stock,
+        )
+    except CategoryNotFoundError:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Category not found")
 
 
 @router.get("/{product_id}")
