@@ -72,7 +72,7 @@ async def refresh_jwt(
         response.set_cookie(
             'refresh_token',
             tokens.refresh_token,
-            max_age=settings.auth_jwt.refresh_token_expire_days * 24 * 60,
+            max_age=settings.auth_jwt.refresh_token_expire_days * 24 * 60 * 60,
             httponly=True,
         )
         return tokens
@@ -118,8 +118,9 @@ async def change_password(
 @router.post("/quit_all")
 async def quit_all(
         service: auth_service_dep,
-        user=Depends(get_current_active_user),
+        response: Response,
         user: CurrentUserDep,
 ):
     await service.abort_all_sessions(user.id)
+    response.delete_cookie('refresh_token')
     return {"message": "ok"}
