@@ -2,7 +2,7 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from api.dependencies import cart_item_service, user_get_cart_use_case, get_current_active_user
+from api.dependencies import cart_item_service, user_get_cart_use_case, CurrentUserDep
 from services.cart.schemas import CartDTO
 from services.cart.service import UserGetCartUseCase
 from services.cart_item.schemas import CartItemDTO, CartItemUpdateSchema, CartItemCreateSchema
@@ -17,7 +17,7 @@ user_cart_service = Annotated[UserGetCartUseCase, Depends(user_get_cart_use_case
 @router.get("/user_cart")
 async def get_user_cart(
         cart_service: user_cart_service,
-        user: UserDTO = Depends(get_current_active_user),
+        user: CurrentUserDep,
 ) -> CartDTO:
     return await cart_service.execute(user_data=user)
 

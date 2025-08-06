@@ -6,7 +6,7 @@ from plugins.s3_storage.client import DeleteFileError, UploadingFileError, Inval
 from services.order.schemas import OrderDTO
 from services.user.schemas import UserDTO, UserCreateSchema, UserUpdateSchema
 from services.user.service import UserService, UserNotFoundError, EmailAlreadyExists
-from api.dependencies import users_service, get_current_active_user
+from api.dependencies import users_service, CurrentUserDep
 
 router = APIRouter()
 
@@ -23,7 +23,7 @@ async def get_users(
 @router.get("/orders")
 async def get_user_orders(
         user_service: user_service_dep,
-        current_user: UserDTO = Depends(get_current_active_user),
+        current_user: CurrentUserDep,
 ) -> list[OrderDTO]:
     return await user_service.get_orders(current_user)
 
@@ -47,7 +47,7 @@ async def get_user_by_id(
 async def update_profile_image(
         file: UploadFile,
         user_service: user_service_dep,
-        current_user: UserDTO = Depends(get_current_active_user),
+        current_user: CurrentUserDep,
 ) -> str:
     try:
         return await user_service.update_profile_image(current_user, file)
@@ -65,7 +65,7 @@ async def update_profile_image(
 @router.delete("/image")
 async def delete_profile_image(
         user_service: user_service_dep,
-        current_user: UserDTO = Depends(get_current_active_user),
+        current_user: CurrentUserDep,
 ):
     try:
         await user_service.delete_profile_image(current_user)

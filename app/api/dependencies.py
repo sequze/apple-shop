@@ -1,3 +1,5 @@
+from typing import Annotated
+
 from core.models import db_helper
 from services.auth.repository import AuthRepository
 from services.auth.service import AuthService
@@ -151,3 +153,8 @@ async def get_current_superuser(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="User not a superuser",
         )
+
+# current user dependencies
+
+AdminUserDep = Annotated[UserDTO, Depends(get_current_superuser)]
+CurrentUserDep = Annotated[UserDTO, Depends(get_current_active_user)]

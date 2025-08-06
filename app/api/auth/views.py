@@ -1,7 +1,7 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, status, Response
-from api.dependencies import get_current_active_user, auth_service, users_service, get_token_for_refresh
+from api.dependencies import auth_service, users_service, get_token_for_refresh, CurrentUserDep
 from core.auth.token import Token
 from core.config import settings
 from services.auth.schemas import LoginSchema, RegisterSchema
@@ -19,7 +19,7 @@ user_service_dep = Annotated[UserService, Depends(users_service)]
 
 @router.get("/me")
 async def get_user(
-        user: UserDTO = Depends(get_current_active_user),
+        user: CurrentUserDep,
 ) -> UserDTO:
     return user
 
@@ -102,7 +102,7 @@ class ChangePasswordSchema(BaseModel):
 async def change_password(
         service: auth_service_dep,
         data: ChangePasswordSchema,
-        user=Depends(get_current_active_user),
+        user: CurrentUserDep,
 
 ):
     try:
@@ -119,6 +119,7 @@ async def change_password(
 async def quit_all(
         service: auth_service_dep,
         user=Depends(get_current_active_user),
+        user: CurrentUserDep,
 ):
     await service.abort_all_sessions(user.id)
     return {"message": "ok"}

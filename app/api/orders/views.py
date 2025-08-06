@@ -2,7 +2,9 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from api.dependencies import order_service, delete_order_use_case, get_current_active_user, create_order_use_case
+from api.dependencies import order_service, delete_order_use_case, create_order_use_case, \
+    CurrentUserDep, AdminUserDep
+from core.models.order import OrderStatus
 from services.order.schemas import OrderDTO, OrderCreateSchema, OrderUpdateSchema
 from services.order.service import OrderService, OrderNotFoundError, DeleteOrderUseCase, CreateOrderUseCase
 from services.user import UserDTO
@@ -36,8 +38,8 @@ async def get_order(
 @router.post("/")
 async def create_order(
         data: OrderCreateSchema,
+        user: CurrentUserDep,
         order_create: CreateOrderUseCase = Depends(create_order_use_case),
-        user: UserDTO = Depends(get_current_active_user),
 ) -> OrderDTO:
     return await order_create.execute(data, user.id)
 
