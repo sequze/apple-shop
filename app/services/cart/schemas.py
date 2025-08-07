@@ -9,3 +9,7 @@ class CartDTO(BaseModel):
     discount_sum: NonNegativeInt
     price_with_discount: NonNegativeInt
     items: list[CartItemDTO]
+
+class AddToCartSchema(BaseModel):
+    product_id: PositiveInt
+    quantity: PositiveInt
