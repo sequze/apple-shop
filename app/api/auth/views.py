@@ -35,7 +35,7 @@ async def login(
         response.set_cookie(
             'refresh_token',
             tokens.refresh_token,
-            max_age=settings.auth_jwt.refresh_token_expire_days * 24 * 60,
+            max_age=settings.auth_jwt.refresh_token_expire_days * 60 * 24 * 60,
             httponly=True,
         )
         return tokens
