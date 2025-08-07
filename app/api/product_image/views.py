@@ -6,6 +6,7 @@ from pydantic import PositiveInt
 
 from api.dependencies import product_image_service, AdminUserDep
 from plugins.s3_storage.client import UploadingFileError, DeleteFileError, InvalidFileTypeError
+from services.product.service import ProductNotFoundError
 from services.product_image.schemas import ProductImageDTO, ProductImageCreate, ProductImageUpdateSchema
 from services.product_image.service import ProductImageService, ProductImageNotFoundError
 
@@ -39,6 +40,11 @@ async def create_image(
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Only image files are allowed",
+        )
+    except ProductNotFoundError:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Product not found",
         )
 
 

@@ -7,7 +7,7 @@ from services.cart.schemas import CartDTO
 from services.cart.service import UserGetCartUseCase
 from services.cart_item.schemas import CartItemDTO, CartItemUpdateSchema, CartItemCreateSchema
 from services.cart_item.service import CartItemService, CartItemNotFoundError, CartItemAlreadyExistsError
-from services.user import UserDTO
+from services.product.service import ProductNotFoundError
 
 router = APIRouter()
 
@@ -54,6 +54,11 @@ async def create_cart_item(
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
             detail="Cart Item already exists",
+        )
+    except ProductNotFoundError:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Product not found",
         )
 
 

@@ -54,7 +54,10 @@ async def create_product(
         data: ProductCreateSchema,
         admin: AdminUserDep,
 ) -> ProductDTO:
-    return await product_service.create(data)
+    try:
+        return await product_service.create(data)
+    except CategoryNotFoundError:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Category not found")
 
 
 @router.patch("/{product_id}")

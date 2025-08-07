@@ -9,6 +9,7 @@ from core.models.order import OrderStatus
 from services.order.schemas import OrderDTO, OrderCreateSchema, OrderUpdateSchema
 from services.order.service import OrderService, OrderNotFoundError, DeleteOrderUseCase, CreateOrderUseCase, \
     StatusNotAllowed
+from services.product.service import ProductNotFoundError
 
 router = APIRouter()
 
@@ -42,7 +43,13 @@ async def create_order(
         user: CurrentUserDep,
         order_create: CreateOrderUseCase = Depends(create_order_use_case),
 ) -> OrderDTO:
-    return await order_create.execute(data, user.id)
+    try:
+        return await order_create.execute(data, user.id)
+    except ProductNotFoundError as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Product with id {e} not found",
+        )
 
 
 @router.patch("/{order_id}")

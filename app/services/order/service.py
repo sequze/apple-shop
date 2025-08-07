@@ -105,7 +105,7 @@ class CreateOrderUseCase:
             order = await self.order_repository.create(session, data_to_create)
             for product in data.items:
                 product_db = await session.get(Product, product.product_id)
-                if not product_db: raise ProductNotFoundError
+                if not product_db: raise ProductNotFoundError(product.product_id)
                 product_discount = get_product_discount(product_db)
                 total_amount += product_discount.price_with_discount * product.quantity
                 await self.order_item_repository.create(

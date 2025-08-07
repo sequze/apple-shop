@@ -44,6 +44,9 @@ class ProductService:
 
     async def create(self, data: ProductCreateSchema) -> ProductDTO:
         async with self.uow as uow:
+            category = await uow.session.get(Category, data.category_id)
+            if not category:
+                raise CategoryNotFoundError
             product = await self.repository.create(uow.session, data.model_dump())
             await uow.commit()
             return ProductDTO.model_validate(product)

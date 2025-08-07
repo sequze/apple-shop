@@ -1,9 +1,10 @@
 from sqlalchemy.ext.asyncio.session import AsyncSession
 
-from core.models import ProductImage
+from core.models import ProductImage, Product
 from core.repositories.uow import UnitOfWork
 from plugins.s3_storage.client import UploadingFileError, DeleteFileError, InvalidFileTypeError
 from plugins.s3_storage.utils import upload_file_to_storage, delete_file_from_storage
+from services.product.service import ProductNotFoundError
 from services.product_image.repository import ProductImageRepository
 from services.product_image.schemas import ProductImageDTO, ProductImageCreate, \
     ProductImageUpdateSchema
@@ -42,6 +43,9 @@ class ProductImageService:
         if not file.content_type.startswith("image/"):
             raise InvalidFileTypeError
         async with self.uow as uow:
+            product = await uow.session.get(Product, data.product_id)
+            if not product:
+                raise ProductNotFoundError
             if data.is_main:
                 await self.__validate_main_image(uow.session, product_id=data.product_id)
             file_binary = await file.read()
