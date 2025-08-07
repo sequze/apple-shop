@@ -20,21 +20,6 @@ async def get_categories(
     return res
 
 
-@router.get("/{category_id}/children")
-async def get_children(
-        category_id: Annotated[int, Path(ge=1)],
-        category_service: category_service_dep,
-) -> list[CategoryDTO]:
-    try:
-        res = await category_service.get_children(category_id)
-    except CategoryNotFoundError:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Category not found"
-        )
-    return res
-
-
 @router.get("/{category_id}")
 async def get_category_by_id(
         category_id: Annotated[int, Path(ge=1)],

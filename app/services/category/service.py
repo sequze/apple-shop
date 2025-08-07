@@ -51,12 +51,6 @@ class CategoryService:
             categories = await self.repository.get_all(uow.session)
             return [CategoryDTO.model_validate(category) for category in categories]
 
-    async def get_children(self, id: int) -> list[CategoryDTO]:
-        async with self.uow as uow:
-            category = await self.repository.get_with_children(uow.session, id)
-            if category is None: raise CategoryNotFoundError
-            return [CategoryDTO.model_validate(child) for child in category.children]
-
     async def get_products(self, id: int) -> list[ProductDTO]:
         async with self.uow as uow:
             category = await self.repository.get_with_products(uow.session, id)
