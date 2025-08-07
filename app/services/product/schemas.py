@@ -32,6 +32,7 @@ class ProductDTO(ProductBaseSchema):
     images: list[ProductImageDTO]
     discounts: list[DiscountDTO]
     created_at: datetime
+    category_id: PositiveInt | None = None
 
     class Config:
         from_attributes = True

@@ -51,6 +51,11 @@ class Order(CreatedAtMixin, IntIdPkMixin, Base):
     payment_method: Mapped[PaymentMethod]
     total_amount: Mapped[Decimal] = mapped_column(Numeric(10, 2))
     status: Mapped[OrderStatus] = mapped_column(default=OrderStatus.pending)
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"))
     user: Mapped["User"] = relationship(back_populates="orders")
-    items: Mapped[list["OrderItem"]] = relationship(back_populates="order", lazy="selectin")
+    items: Mapped[list["OrderItem"]] = relationship(
+        back_populates="order",
+        lazy="selectin",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )

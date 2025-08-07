@@ -21,7 +21,7 @@ class Product(CreatedAtMixin, IntIdPkMixin, Base):
     description: Mapped[str] = mapped_column(nullable=True)
     price: Mapped[Decimal] = mapped_column(Numeric(10, 2))
     stock: Mapped[int]
-    category_id: Mapped[int] = mapped_column(ForeignKey("categories.id"))
+    category_id: Mapped[int] = mapped_column(ForeignKey("categories.id", ondelete="SET NULL"), nullable=True)
     # relationships
     category: Mapped["Category"] = relationship(back_populates="products")
     images: Mapped[list["ProductImage"]] = relationship(

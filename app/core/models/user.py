@@ -18,8 +18,16 @@ class User(CreatedAtMixin, IntIdPkMixin, Base):
     is_active: Mapped[bool] = mapped_column(default=True)
     is_verified: Mapped[bool] = mapped_column(default=False)
     is_superuser: Mapped[bool] = mapped_column(default=False)
-    cart_items: Mapped[list["CartItem"]] = relationship(back_populates="user")
-    orders: Mapped[list["Order"]] = relationship(back_populates="user")
     profile_image_url: Mapped[str | None] = mapped_column(nullable=True)
+    cart_items: Mapped[list["CartItem"]] = relationship(
+        back_populates="user",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )
+    orders: Mapped[list["Order"]] = relationship(
+        back_populates="user",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )
     def __repr__(self):
         return f"User {self.full_name}, id: {self.id} email: {self.email}, created at: {self.created_at}"

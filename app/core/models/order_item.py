@@ -16,8 +16,8 @@ if TYPE_CHECKING:
 class OrderItem(IntIdPkMixin, Base):
     quantity: Mapped[int]
     unit_price: Mapped[Decimal] = mapped_column(Numeric(10, 2))
-    order_id: Mapped[int] = mapped_column(ForeignKey("orders.id"))
-    product_id: Mapped[int] = mapped_column(ForeignKey("products.id"))
+    order_id: Mapped[int] = mapped_column(ForeignKey("orders.id", ondelete="CASCADE"))
+    product_id: Mapped[int] = mapped_column(ForeignKey("products.id"), nullable=True)
 
     order: Mapped["Order"] = relationship(back_populates="items")
     product: Mapped["Product"] = relationship(lazy="selectin")
