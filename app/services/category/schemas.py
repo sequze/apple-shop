@@ -3,7 +3,6 @@ from pydantic import BaseModel, PositiveInt
 
 class CategoryBaseSchema(BaseModel):
     name: str
-    parent_id: PositiveInt | None = None
 
 
 class CategoryDTO(CategoryBaseSchema):
