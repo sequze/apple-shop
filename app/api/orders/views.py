@@ -50,6 +50,7 @@ async def update_order(
         order_id: int,
         data: OrderUpdateSchema,
         order_service: order_service_dep,
+        admin: AdminUserDep,
 ) -> OrderDTO:
     try:
         return await order_service.update(data, order_id)
@@ -83,6 +84,7 @@ async def update_order_status(
 @router.delete("/{order_id}")
 async def delete_order(
         order_id: int,
+        admin: AdminUserDep,
         order_delete: DeleteOrderUseCase = Depends(delete_order_use_case),
 ):
     try:

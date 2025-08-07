@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, UploadFile, Form, status, HTTPException
 
 from pydantic import PositiveInt
 
-from api.dependencies import product_image_service
+from api.dependencies import product_image_service, AdminUserDep
 from plugins.s3_storage.client import UploadingFileError, DeleteFileError, InvalidFileTypeError
 from services.product_image.schemas import ProductImageDTO, ProductImageCreate, ProductImageUpdateSchema
 from services.product_image.service import ProductImageService, ProductImageNotFoundError
@@ -18,6 +18,7 @@ product_image_service_dep = Annotated[ProductImageService, Depends(product_image
 async def create_image(
         file: UploadFile,
         service: product_image_service_dep,
+        admin: AdminUserDep,
         alt_text: str = Form(...),
         is_main: bool = Form(...),
         product_id: PositiveInt = Form(...),
@@ -45,6 +46,7 @@ async def create_image(
 @router.get("/")
 async def get_images(
         service: product_image_service_dep,
+        admin: AdminUserDep,
 ) -> list[ProductImageDTO]:
     return await service.get_all()
 
@@ -68,6 +70,7 @@ async def update_image(
         product_image_id: PositiveInt,
         data: ProductImageUpdateSchema,
         service: product_image_service_dep,
+        admin: AdminUserDep,
 ) -> ProductImageDTO:
     try:
         return await service.update(data, product_image_id)
@@ -82,6 +85,7 @@ async def update_image(
 async def delete_product_image(
         product_image_id: PositiveInt,
         service: product_image_service_dep,
+        admin: AdminUserDep,
 ) -> ProductImageDTO:
     try:
         return await service.delete(product_image_id)

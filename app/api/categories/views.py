@@ -4,7 +4,7 @@ from fastapi import APIRouter, Path, HTTPException, status, Depends
 
 from services.category.schemas import CategoryDTO, CategoryCreateSchema, CategoryUpdateSchema
 from services.category.service import CategoryService, CategoryNotFoundError
-from api.dependencies import category_service
+from api.dependencies import category_service, AdminUserDep
 from services.product.schemas import ProductDTO
 
 router = APIRouter()
@@ -65,6 +65,7 @@ async def get_category_products(
 async def create_category(
         data: CategoryCreateSchema,
         category_service: category_service_dep,
+        admin: AdminUserDep,
 ):
     res = await category_service.create(data)
     return res
@@ -75,6 +76,7 @@ async def update_category(
         category_id: int,
         data: CategoryUpdateSchema,
         category_service: category_service_dep,
+        admin: AdminUserDep,
 ) -> CategoryDTO:
     try:
         category = await category_service.update(data, category_id)
@@ -90,6 +92,7 @@ async def update_category(
 async def delete_category(
         category_id: int,
         category_service: category_service_dep,
+        admin: AdminUserDep,
 ) -> CategoryDTO:
     try:
         category = await category_service.delete(category_id)

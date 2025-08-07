@@ -2,7 +2,7 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from api.dependencies import discount_service
+from api.dependencies import discount_service, AdminUserDep
 from services.discount.schemas import DiscountDTO, DiscountCreateSchema, DiscountUpdateSchema
 from services.discount.service import DiscountService, DiscountNotFoundError, InvalidTimeIntervalError
 
@@ -36,6 +36,7 @@ async def get_discount(
 async def create_discount(
         discount_service: discount_service_dep,
         data: DiscountCreateSchema,
+        admin: AdminUserDep,
 ) -> DiscountDTO:
     return await discount_service.create(data)
 
@@ -45,6 +46,7 @@ async def update_discount(
         discount_id: int,
         data: DiscountUpdateSchema,
         discount_service: discount_service_dep,
+        admin: AdminUserDep,
 ) -> DiscountDTO:
     try:
         return await discount_service.update(discount_id, data)
@@ -64,6 +66,7 @@ async def update_discount(
 async def delete_discount(
         discount_id: int,
         discount_service: discount_service_dep,
+        admin: AdminUserDep,
 ) -> DiscountDTO:
     try:
         return await discount_service.delete(discount_id)
@@ -78,6 +81,7 @@ async def delete_discount(
 async def deactivate_discount(
         discount_id: int,
         discount_service: discount_service_dep,
+        admin: AdminUserDep,
 ) -> None:
     try:
         await discount_service.deactivate(discount_id)

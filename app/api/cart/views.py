@@ -46,6 +46,7 @@ async def get_cart_item(
 async def create_cart_item(
         cart_item_service: cart_item_service_dep,
         data: CartItemCreateSchema,
+        admin: AdminUserDep,
 ) -> CartItemDTO:
     try:
         return await cart_item_service.create(data)

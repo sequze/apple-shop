@@ -2,7 +2,7 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from api.dependencies import product_service, product_delete_use_case, get_products_use_case
+from api.dependencies import product_service, product_delete_use_case, get_products_use_case, AdminUserDep
 from plugins.s3_storage.client import DeleteFileError
 from services.category.service import CategoryNotFoundError
 from services.product.schemas import ProductDTO, ProductCreateSchema, ProductUpdateSchema
@@ -52,6 +52,7 @@ async def get_product(
 async def create_product(
         product_service: product_service_dep,
         data: ProductCreateSchema,
+        admin: AdminUserDep,
 ) -> ProductDTO:
     return await product_service.create(data)
 
@@ -61,6 +62,7 @@ async def update_product(
         product_id: int,
         data: ProductUpdateSchema,
         product_service: product_service_dep,
+        admin: AdminUserDep,
 ) -> ProductDTO:
     try:
         return await product_service.update(data, product_id)
@@ -74,6 +76,7 @@ async def update_product(
 @router.delete("/{product_id}")
 async def delete_product(
         product_id: int,
+        admin: AdminUserDep,
         product_delete: ProductDeleteUseCase = Depends(product_delete_use_case),
 ) -> ProductDTO:
     try:

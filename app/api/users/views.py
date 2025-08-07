@@ -6,7 +6,7 @@ from plugins.s3_storage.client import DeleteFileError, UploadingFileError, Inval
 from services.order.schemas import OrderDTO
 from services.user.schemas import UserDTO, UserCreateSchema, UserUpdateSchema
 from services.user.service import UserService, UserNotFoundError, EmailAlreadyExists
-from api.dependencies import users_service, CurrentUserDep
+from api.dependencies import users_service, CurrentUserDep, AdminUserDep
 
 router = APIRouter()
 
@@ -16,6 +16,7 @@ user_service_dep = Annotated[UserService, Depends(users_service)]
 @router.get("/")
 async def get_users(
         user_service: user_service_dep,
+        admin: AdminUserDep,
 ) -> list[UserDTO]:
     res = await user_service.get_users()
     return res
@@ -31,6 +32,7 @@ async def get_user_orders(
 async def get_user_by_id(
         user_id: Annotated[int, Path(ge=1)],
         user_service: user_service_dep,
+        admin: AdminUserDep,
 ) -> UserDTO:
     try:
         res = await user_service.get_by_id(user_id)
@@ -80,6 +82,7 @@ async def delete_profile_image(
 async def create_user(
         data: UserCreateSchema,
         user_service: user_service_dep,
+        admin: AdminUserDep,
 ):
     try:
         res = await user_service.create_user(data)
@@ -95,6 +98,7 @@ async def update_user(
         user_id: int,
         data: UserUpdateSchema,
         user_service: user_service_dep,
+        admin: AdminUserDep,
 ) -> UserDTO:
     try:
         user = await user_service.update_user(data, user_id)
@@ -110,6 +114,7 @@ async def update_user(
 async def delete_user(
         user_id: int,
         user_service: user_service_dep,
+        admin: AdminUserDep,
 ) -> UserDTO:
     try:
         user = await user_service.delete_user(user_id)
