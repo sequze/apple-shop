@@ -35,6 +35,9 @@ export default class AuthService {
     }
 
     static async checkAuth() {
+        const token = localStorage.getItem("access");
+        if (!token) return false;
+
         try {
             await this.getCurrentUser();
             return true;
@@ -42,6 +45,7 @@ export default class AuthService {
             return false;
         }
     }
+
 
 
     static async logout(navigate) {

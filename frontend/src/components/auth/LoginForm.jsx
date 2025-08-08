@@ -35,9 +35,7 @@ const LoginForm = () => {
 
         try {
             const { access_token } = await AuthService.login(email, password);
-            console.log("LOGIN ACCESS TOKEN:", access_token);
             localStorage.setItem("access", access_token);
-            console.log("TOKEN IN LOCALSTORAGE AFTER SET:", localStorage.getItem("access"));
             setIsAuth(true);
             navigate("/");
         } catch (err) {

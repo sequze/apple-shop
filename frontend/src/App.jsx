@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import './App.css'
 import 'swiper/css';
 import {BrowserRouter, useNavigate} from "react-router-dom";
@@ -7,13 +7,17 @@ import ScrollToTop from "./components/ScrollToTop.jsx";
 import AuthService from "./components/api/AuthService.js";
 import {setupInterceptors} from "./components/api/setupInterceptors.js";
 import {AuthContext} from "./context/context.js";
+import Loader from "./components/Loader.jsx";
 
 function AppContent() {
     const navigate = useNavigate();
+    const { isLoading } = useContext(AuthContext);
 
     useEffect(() => {
         setupInterceptors(navigate);
     }, [navigate]);
+
+    if (isLoading) return <Loader />
 
     return (
         <>
