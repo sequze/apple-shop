@@ -23,7 +23,12 @@ export default class AuthService {
                 email,
                 password
             });
-            return response.data;
+            const access_token = response.data.access_token;
+            if (!access_token) {
+                throw new Error("No access token returned");
+            }
+
+            return { access_token };
         } catch (error) {
             throw error.response?.data || error;
         }
@@ -56,7 +61,7 @@ export default class AuthService {
     static async refreshToken() {
         console.log("REFRESH");
         const response = await api.post("/api/auth/refresh", {}, {withCredentials: true});
-        const newAccess = response.data.access;
+        const newAccess = response.data.access_token;
         localStorage.setItem("access", newAccess);
         return newAccess;
     }
@@ -69,6 +74,12 @@ export default class AuthService {
                 Authorization: `Bearer ${token}`
             }
         })
+    }
+
+    static async quitAll() {
+        const response = await api.post("/api/auth/quit_all", {}, { withCredentials: true });
+        console.log("Все сессии очищены");
+        return null;
     }
 
 }

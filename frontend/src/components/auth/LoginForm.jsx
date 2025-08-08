@@ -2,7 +2,6 @@ import React, {useContext, useState} from 'react';
 import MyInput from "../ui/input/MyInput.jsx";
 import MyWhiteButton from "../ui/whiteButton/MyWhiteButton.jsx";
 import {Link, useNavigate} from "react-router-dom";
-import axios from "axios";
 import AuthService from "../api/AuthService.js";
 import {AuthContext} from "../../context/context.js";
 
@@ -35,9 +34,10 @@ const LoginForm = () => {
         }
 
         try {
-            const {access_token} = await AuthService.login(email, password);
+            const { access_token } = await AuthService.login(email, password);
+            console.log("LOGIN ACCESS TOKEN:", access_token);
             localStorage.setItem("access", access_token);
-            axios.defaults.headers.common.Authorization = "Bearer " + access_token;
+            console.log("TOKEN IN LOCALSTORAGE AFTER SET:", localStorage.getItem("access"));
             setIsAuth(true);
             navigate("/");
         } catch (err) {

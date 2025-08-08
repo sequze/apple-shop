@@ -11,7 +11,6 @@ import {AuthContext} from "./context/context.js";
 function AppContent() {
     const navigate = useNavigate();
 
-
     useEffect(() => {
         setupInterceptors(navigate);
     }, [navigate]);

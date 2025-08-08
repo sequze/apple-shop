@@ -17,7 +17,10 @@ export function setupInterceptors(navigate) {
         async error => {
             const originalRequest = error.config;
 
-            if (error.response?.status === 401 && !originalRequest._retry) {
+            if (error.response?.status === 401 &&
+                !originalRequest._retry &&
+                !originalRequest.url.includes("/api/auth/refresh")
+            ) {
                 originalRequest._retry = true;
 
                 try {
@@ -29,6 +32,14 @@ export function setupInterceptors(navigate) {
                     navigate("/login");
                     return Promise.reject(refreshError);
                 }
+            }
+
+            if (
+                error.response?.status === 401 &&
+                !originalRequest.url.includes("/api/auth/refresh")
+            ) {
+                localStorage.removeItem("access");
+                navigate("/login");
             }
 
             return Promise.reject(error);
