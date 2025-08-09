@@ -9,6 +9,7 @@ __all__ = [
     "Order",
     "OrderItem",
     "Product",
+    "ProductColor",
     "product_discount_association_table",
     "ProductImage",
     "db_helper",
@@ -26,3 +27,4 @@ from .product import Product
 from .product_image import ProductImage
 from .db_helper import db_helper
 from .user import User
+from .product_color import ProductColor
