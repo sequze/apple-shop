@@ -57,7 +57,7 @@ async def update_order(
         order_id: int,
         data: OrderUpdateSchema,
         order_service: order_service_dep,
-        admin: AdminUserDep,
+        admin: CurrentUserDep,
 ) -> OrderDTO:
     try:
         return await order_service.update(data, order_id)
