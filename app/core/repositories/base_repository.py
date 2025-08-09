@@ -34,7 +34,6 @@ class SQlAlchemyRepository:
 
     async def delete(self, session: AsyncSession, entity):
         await session.delete(entity)
-        await session.commit()
 
 
     async def update(
