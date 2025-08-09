@@ -6,7 +6,8 @@ from core.repositories.uow import UnitOfWork
 from services.order.repository import OrderRepository
 from services.order.schemas import OrderDTO, OrderCreateSchema, OrderUpdateSchema
 from services.order_item.repository import OrderItemRepository
-from services.product.service import ProductNotFoundError, get_product_discount
+from services.product.service import get_product_discount
+from services.product.exceptions import ProductNotFoundError
 
 
 class OrderNotFoundError(Exception):

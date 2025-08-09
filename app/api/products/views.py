@@ -6,7 +6,8 @@ from api.dependencies import product_service, product_delete_use_case, get_produ
 from plugins.s3_storage.client import DeleteFileError
 from services.category.service import CategoryNotFoundError
 from services.product.schemas import ProductDTO, ProductCreateSchema, ProductUpdateSchema
-from services.product.service import ProductService, ProductNotFoundError, ProductDeleteUseCase
+from services.product.service import ProductService, ProductDeleteUseCase
+from services.product.exceptions import ProductNotFoundError
 
 router = APIRouter()
 
