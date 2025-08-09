@@ -28,10 +28,6 @@ def get_product_discount(product: Product):
         discount_description=discount_description,
     )
 
-class ProductNotFoundError(Exception):
-    """Product not found"""
-    pass
-
 
 class ProductService:
     def __init__(
