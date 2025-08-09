@@ -8,6 +8,8 @@ from services.cart_item.repository import CartItemRepository
 from services.cart_item.service import CartItemService
 from services.category.repository import CategoryRepository
 from services.category.service import CategoryService
+from services.colors.repository import ProductColorRepository
+from services.colors.service import ProductColorService, DeleteColorUseCase
 from services.discount.repository import DiscountRepository
 from services.discount.service import DiscountService
 from services.order.repository import OrderRepository
@@ -63,8 +65,11 @@ def product_image_service() -> ProductImageService:
 def auth_service() -> AuthService:
     return AuthService(UserRepository(), AuthRepository(), unit_of_work())
 
+def delete_color_use_case() -> DeleteColorUseCase:
+    return DeleteColorUseCase(ProductColorRepository(), ProductImageRepository(), unit_of_work())
+
 def product_delete_use_case() -> ProductDeleteUseCase:
-    return ProductDeleteUseCase(ProductRepository(), ProductImageRepository(), unit_of_work())
+    return ProductDeleteUseCase(ProductRepository(), delete_color_use_case(), unit_of_work())
 
 def user_get_cart_use_case() -> UserGetCartUseCase:
     return UserGetCartUseCase(UserRepository(), unit_of_work())
@@ -78,6 +83,8 @@ def create_order_use_case() -> CreateOrderUseCase:
 def get_products_use_case() -> GetProductsUseCase:
     return GetProductsUseCase(ProductRepository(), CategoryRepository(), unit_of_work())
 
+def product_color_service() -> ProductColorService:
+    return ProductColorService(ProductColorRepository(), unit_of_work())
 
 # auth dependencies
 

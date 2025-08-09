@@ -6,7 +6,7 @@ from pydantic import PositiveInt
 
 from api.dependencies import product_image_service, AdminUserDep
 from plugins.s3_storage.client import UploadingFileError, DeleteFileError, InvalidFileTypeError
-from services.product.service import ProductNotFoundError
+from services.colors.service import ProductColorNotFoundError
 from services.product_image.schemas import ProductImageDTO, ProductImageCreate, ProductImageUpdateSchema
 from services.product_image.service import ProductImageService, ProductImageNotFoundError
 
@@ -22,12 +22,12 @@ async def create_image(
         admin: AdminUserDep,
         alt_text: str = Form(...),
         is_main: bool = Form(...),
-        product_id: PositiveInt = Form(...),
+        color_id: PositiveInt = Form(...),
 ) -> ProductImageDTO:
     data = ProductImageCreate(
         alt_text=alt_text,
         is_main=is_main,
-        product_id=product_id
+        color_id=color_id
     )
     try:
         return await service.create(data, file)
@@ -41,10 +41,10 @@ async def create_image(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Only image files are allowed",
         )
-    except ProductNotFoundError:
+    except ProductColorNotFoundError:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Product not found",
+            detail="Product color not found",
         )
 
 
