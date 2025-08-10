@@ -9,8 +9,8 @@ import {AuthContext} from "../context/context.js";
 
 const AppRouter = () => {
 
-    const {isAuth} = useContext(AuthContext);
-    const {isAdmin} = useContext(AuthContext);
+    const {isAuth, isAdmin} = useContext(AuthContext);
+    console.log(isAdmin)
 
     const routes = isAuth ? privateRoutes : publicRoutes;
 

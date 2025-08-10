@@ -41,11 +41,29 @@ function App() {
 
     useEffect(() => {
         const checkAuthStatus = async () => {
-            const res = await AuthService.checkAuth();
-            if (res) setIsAuth(true);
-            setIsLoading(false);
-        }
-        checkAuthStatus()
+            try {
+                const res = await AuthService.checkAuth();
+                if (res) {
+                    setIsAuth(true);
+
+                    const { data } = await AuthService.getCurrentUser();
+                    if (data.is_superuser) {
+                        setIsAdmin(true);
+                    } else {
+                        setIsAdmin(false);
+                    }
+                } else {
+                    setIsAuth(false);
+                    setIsAdmin(false);
+                }
+            } catch (e) {
+                setIsAuth(false);
+                setIsAdmin(false);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        checkAuthStatus();
     }, []);
 
 
