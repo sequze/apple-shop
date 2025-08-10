@@ -1,7 +1,7 @@
 import api from "./api.js";
 
 
-export default class ProfileService {
+export default class UsersService {
     static async updateUserData({ email = "", full_name = "", is_verified = "", is_superuser = "", is_active = "" }) {
         const {id, email: old_email, full_name: old_full_name, is_verified: old_is_verified, is_superuser: old_is_superuser, is_active: old_is_active} = await this.getCurrentUser()
             .then(res => res.data)

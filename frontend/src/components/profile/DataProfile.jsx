@@ -5,7 +5,7 @@ import GreyButton from "../ui/greyButton/greyButton.jsx";
 import AuthService from "../api/AuthService.js";
 import cameraImg from "../../assets/camera.png"
 import userImg from "../../assets/user_logo.PNG";
-import ProfileService from "../api/ProfileService.js";
+import UsersService from "../api/UsersService.js";
 
 const DataProfile = ({user, logout}) => {
     const [isChangeData, setIsChangeData] = useState(false);
@@ -18,7 +18,7 @@ const DataProfile = ({user, logout}) => {
     const fileInput = useRef();
 
 
-    const updateData = (event) => {
+    const handleUpdateData = (event) => {
         event.preventDefault();
 
         setError("");
@@ -49,27 +49,29 @@ const DataProfile = ({user, logout}) => {
         }
     }
 
-    const updatePassword = () => {
+    const handleUpdatePassword = async (event) => {
+        event.preventDefault();
 
-        if (password.length < 6) {
+        if (oldPassword.length < 6 || newPassword.length < 6) {
             setError("Пароль должен быть минимум 6 символов");
             return;
         }
 
-        if (!passwordCheck.trim()) {
-            setError("Повторите пароль");
-            return;
-        }
-
-        if (password.trim() !== passwordCheck.trim()) {
-            setError("Пароли не совпадают");
+        if (!oldPassword.trim() || !newPassword.trim()) {
+            setError("Напишите пароль");
             return;
         }
 
         try {
-            setIsChangeData(false);
+            await AuthService.changePassword(oldPassword, newPassword)
+            setIsChangePassword(false);
             setError("")
         } catch (err) {
+            if (err.status === 409) {
+                setError("Старый пароль неверный");
+            } else {
+                setError("Ошибка при смене пароля");
+            }
             console.error(err);
         }
     }
@@ -82,7 +84,7 @@ const DataProfile = ({user, logout}) => {
         formData.append('file', file);
 
         try {
-            await ProfileService.uploadUserImage(formData);
+            await UsersService.uploadUserImage(formData);
             console.log("Фото успешно загружено");
         } catch (err) {
             console.error("Ошибка загрузки: ", err);
@@ -93,7 +95,7 @@ const DataProfile = ({user, logout}) => {
         return (
             <>
                 <form className="flex flex-col justify-center gap-[20px] w-full lg:w-1/2 mb-[20px]"
-                 onSubmit={updateData}>
+                 onSubmit={handleUpdateData}>
                     <MyInput placeholder="Имя..."
                     onChange={(event) => setName(event.target.value)}
                     />
@@ -112,7 +114,7 @@ const DataProfile = ({user, logout}) => {
         return (
             <>
                 <form className="flex flex-col justify-center gap-[20px] w-full lg:w-1/2 mb-[20px]"
-                      onSubmit={updatePassword}>
+                      onSubmit={handleUpdatePassword}>
                     <MyInput placeholder="Старый пароль..."
                              onChange={(event) => setOldPassword(event.target.value)}
                     />

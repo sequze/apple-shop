@@ -46,8 +46,6 @@ export default class AuthService {
         }
     }
 
-
-
     static async logout(navigate) {
         try {
             await api.post("/api/auth/logout", {}, {
@@ -79,6 +77,21 @@ export default class AuthService {
             }
         })
     }
+
+
+    static async changePassword(old_password, new_password) {
+        try {
+            const response = api.post("api/auth/change_password", {
+                old_password,
+                new_password
+            });
+
+            console.log(response);
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
 
 
     static async quitAll() {
