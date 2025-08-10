@@ -1,9 +1,13 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import MyInput from "../ui/input/MyInput.jsx";
 import image from "../../assets/img.png";
 import GreyButton from "../ui/greyButton/greyButton.jsx";
+import Loader from "../Loader.jsx";
+import AuthService from "../api/AuthService.js";
+import {useNavigate} from "react-router-dom";
 
 const AdminContent = () => {
+
     return (
         <div className="bg-[#D9D9D9] flex justify-center">
             <div className="max-w-[1500px] w-full relative pt-[130px] pb-[100px] min-h-screen mx-[20px]">

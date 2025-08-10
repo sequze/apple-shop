@@ -10,26 +10,37 @@ import {AuthContext} from "../context/context.js";
 const AppRouter = () => {
 
     const {isAuth} = useContext(AuthContext);
+    const {isAdmin} = useContext(AuthContext);
 
     const routes = isAuth ? privateRoutes : publicRoutes;
 
     return (
         <Routes>
-            {routes.map(({path, component: Component}) => (
-              <Route
-                key={path}
-                path={path}
-                element={
-                    <Layout logo={SiteLogo}>
-                        <Component
-                            products={bigProducts}
-                            categories={categories}
-                            logo={SiteLogo}
+            {routes.map(({path, component: Component}) => {
+
+                if (path === "/admin" && !isAdmin) {
+                    return (
+                        <Route
+                            key={path}
+                            path={path}
+                            element={<Navigate to="/login" replace />}
                         />
-                    </Layout>
+                    );
                 }
-              />
-            ))}
+                return (<Route
+                    key={path}
+                    path={path}
+                    element={
+                        <Layout logo={SiteLogo}>
+                            <Component
+                                products={bigProducts}
+                                categories={categories}
+                                logo={SiteLogo}
+                            />
+                        </Layout>
+                    }
+                />)
+            })}
             <Route
                 path="*"
                 element={<Navigate to={isAuth ? "/" : "/login"} />}

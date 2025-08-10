@@ -10,7 +10,7 @@ const LoginForm = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("")
-    const {setIsAuth} = useContext(AuthContext);
+    const {setIsAuth, setIsAdmin} = useContext(AuthContext);
 
     const navigate = useNavigate();
 
@@ -35,6 +35,10 @@ const LoginForm = () => {
 
         try {
             const { access_token } = await AuthService.login(email, password);
+            const {data} = await AuthService.getCurrentUser();
+            if (data.is_superuser) {
+                setIsAdmin(true);
+            }
             localStorage.setItem("access", access_token);
             setIsAuth(true);
             navigate("/");

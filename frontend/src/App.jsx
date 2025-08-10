@@ -37,6 +37,7 @@ function AppContent() {
 function App() {
     const [isAuth, setIsAuth] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [isAdmin, setIsAdmin] = useState(false);
 
     useEffect(() => {
         const checkAuthStatus = async () => {
@@ -52,7 +53,9 @@ function App() {
         <AuthContext.Provider value={{
             isAuth,
             setIsAuth,
-            isLoading
+            isLoading,
+            isAdmin,
+            setIsAdmin
         }}>
             <BrowserRouter>
                 <AppContent />
