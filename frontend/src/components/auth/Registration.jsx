@@ -44,13 +44,13 @@ const Registration = () => {
             return;
         }
 
-        if (password !== passwordCheck) {
+        if (password.trim() !== passwordCheck.trim()) {
             setError("Пароли не совпадают");
             return;
         }
 
         try {
-            const res = await AuthService.register(email, password, name);
+            const res = await AuthService.register(email.trim(), password.trim(), name.trim());
             console.log("Успешная регистрация", res);
             navigate("/login");
         } catch (err) {

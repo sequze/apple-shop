@@ -80,6 +80,7 @@ export default class AuthService {
         })
     }
 
+
     static async quitAll() {
         const response = await api.post("/api/auth/quit_all", {}, { withCredentials: true });
         console.log("Все сессии очищены");
