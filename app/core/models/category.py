@@ -16,6 +16,5 @@ if TYPE_CHECKING:
 class Category(IntIdPkMixin, Base):
     __tablename__ = "categories"
     name: Mapped[str] = mapped_column()
-
+    image_url: Mapped[str | None] = mapped_column(nullable=True)
     products: Mapped[list["Product"]] = relationship(back_populates="category")
-
