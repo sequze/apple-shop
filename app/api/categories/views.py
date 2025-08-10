@@ -1,8 +1,10 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Path, HTTPException, status, Depends
+from fastapi import APIRouter, Path, HTTPException, status, Depends, UploadFile
+from pydantic import PositiveInt
 from pygments.lexers import data
 
+from plugins.s3_storage.client import UploadingFileError, DeleteFileError, InvalidFileTypeError
 from services.category.schemas import CategoryDTO, CategoryCreateSchema, CategoryUpdateSchema
 from services.category.service import CategoryService, CategoryNotFoundError
 from api.dependencies import category_service, AdminUserDep, create_category_discount_use_case, \
@@ -120,4 +122,38 @@ async def delete_category_discount(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Category not found",
+        )
+
+@router.post("/{category_id}/image")
+async def update_category_image(
+        category_id: PositiveInt,
+        file: UploadFile,
+        service: category_service_dep,
+        admin_dep: AdminUserDep,
+) -> str:
+    try:
+        return await service.update_image(category_id, file)
+    except (UploadingFileError, DeleteFileError):
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Error while uploading/deleting image",
+        )
+    except InvalidFileTypeError:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Only image files are allowed",
+        )
+
+@router.delete("/{category_id}/image")
+async def delete_category_image(
+        category_id: PositiveInt,
+        service: category_service_dep,
+        admin_dep: AdminUserDep,
+):
+    try:
+        await service.delete_image(category_id)
+    except DeleteFileError:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Error while deleting image",
         )
