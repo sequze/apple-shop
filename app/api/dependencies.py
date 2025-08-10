@@ -11,7 +11,8 @@ from services.category.service import CategoryService
 from services.colors.repository import ProductColorRepository
 from services.colors.service import ProductColorService, DeleteColorUseCase
 from services.discount.repository import DiscountRepository
-from services.discount.service import DiscountService
+from services.discount.service import DiscountService, AddDiscountToProductUseCase, AddDiscountToCategoryUseCase, \
+    CreateProductDiscountUseCase, CreateCategoryDiscountUseCase, DeleteDiscountFromCategoryUseCase
 from services.order.repository import OrderRepository
 from services.order.service import OrderService, DeleteOrderUseCase, CreateOrderUseCase
 from services.order_item.repository import OrderItemRepository
@@ -86,6 +87,20 @@ def get_products_use_case() -> GetProductsUseCase:
 def product_color_service() -> ProductColorService:
     return ProductColorService(ProductColorRepository(), unit_of_work())
 
+def add_discount_to_product_use_case() -> AddDiscountToProductUseCase:
+    return AddDiscountToProductUseCase(ProductRepository(), DiscountRepository(), unit_of_work())
+
+def add_discount_to_category_use_case() -> AddDiscountToCategoryUseCase:
+    return AddDiscountToCategoryUseCase(CategoryRepository(), DiscountRepository(), unit_of_work())
+
+def create_product_discount_use_case() -> CreateProductDiscountUseCase:
+    return CreateProductDiscountUseCase(ProductRepository(), DiscountRepository(), unit_of_work())
+
+def create_category_discount_use_case() -> CreateCategoryDiscountUseCase:
+    return CreateCategoryDiscountUseCase(CategoryRepository(), DiscountRepository(), unit_of_work())
+
+def delete_discount_from_category_use_case() -> DeleteDiscountFromCategoryUseCase:
+    return DeleteDiscountFromCategoryUseCase(unit_of_work(), CategoryRepository())
 # auth dependencies
 
 

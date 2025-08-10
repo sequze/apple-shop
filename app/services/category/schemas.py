@@ -7,6 +7,7 @@ class CategoryBaseSchema(BaseModel):
 
 class CategoryDTO(CategoryBaseSchema):
     id: PositiveInt
+    image_url: str | None = None
 
     class Config:
         from_attributes = True
