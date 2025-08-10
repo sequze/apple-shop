@@ -3,11 +3,13 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, status
 
 from api.dependencies import product_service, product_delete_use_case, get_products_use_case, AdminUserDep, \
-    product_color_service
-from plugins.s3_storage.client import DeleteFileError, UploadingFileError, InvalidFileTypeError
+    product_color_service, create_product_discount_use_case
+from plugins.s3_storage.client import DeleteFileError
 from services.category.service import CategoryNotFoundError
 from services.colors.schemas import ProductColorCreateSchema, ProductColorDTO, ProductColorBaseSchema
 from services.colors.service import ProductColorService
+from services.discount.schemas import DiscountCreateSchema, DiscountDTO
+from services.discount.service import AddDiscountToProductUseCase, DiscountNotFoundError
 from services.product.schemas import ProductDTO, ProductCreateSchema, ProductUpdateSchema
 from services.product.service import ProductService, ProductDeleteUseCase
 from services.product.exceptions import ProductNotFoundError
@@ -116,4 +118,41 @@ async def create_product_color(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Product not found",
+        )
+
+@router.post("/{product_id}/discount")
+async def create_product_discount(
+        product_id: int,
+        data: DiscountCreateSchema,
+        admin: AdminUserDep,
+        use_case = Depends(create_product_discount_use_case),
+):
+    try:
+        await use_case.execute(data, product_id)
+        return {"status": "ok"}
+    except ProductNotFoundError:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Product not found"
+        )
+
+@router.delete("/{product_id}/discount/{discount_id}")
+async def delete_product_discount(
+        product_id: int,
+        discount_id: int,
+        service: product_service_dep,
+        admin: AdminUserDep,
+):
+    try:
+        await service.remove_discount(product_id, discount_id)
+        return {"status": "ok"}
+    except ProductNotFoundError:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Product not found",
+        )
+    except DiscountNotFoundError:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Discount not found",
         )

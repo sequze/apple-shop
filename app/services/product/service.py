@@ -6,6 +6,7 @@ from plugins.s3_storage.client import DeleteFileError
 from services.category.repository import CategoryRepository
 from services.category.service import CategoryNotFoundError
 from services.colors.service import DeleteColorUseCase
+from services.discount.service import DiscountNotFoundError
 from services.product.exceptions import ProductNotFoundError
 from services.product.repository import ProductRepository
 from services.product.schemas import ProductCreateSchema, ProductDTO, ProductUpdateSchema, ProductPriceInfo
@@ -59,6 +60,19 @@ class ProductService:
             product = await self.repository.get_by_id(uow.session, id)
             if product is None: raise ProductNotFoundError
             return ProductDTO.model_validate(product)
+
+    async def remove_discount(self, product_id, discount_id) -> None:
+        removed = False
+        async with self.uow as uow:
+            product = await self.repository.get_by_id(uow.session, product_id)
+            if product is None: raise ProductNotFoundError
+            for discount in product.discounts:
+                if discount.id == discount_id:
+                    product.discounts.remove(discount)
+                    removed = True
+            await uow.commit()
+        if not removed:
+            raise DiscountNotFoundError
 
 
 class ProductDeleteUseCase:
