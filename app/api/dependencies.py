@@ -25,11 +25,21 @@ from services.user.service import UserService, UserNotFoundError
 from core.repositories.uow import UnitOfWork
 from services.user.repository import UserRepository
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from fastapi import Depends, HTTPException, status, Request
+from fastapi import Depends, HTTPException, status, Request, Query
 from core.auth.utils import decode_jwt
 from jwt import InvalidTokenError
 from services.auth.service import TOKEN_TYPE_FIELD, ACCESS_TOKEN_FIELD
 
+def pagination_params(
+    page: int = Query(ge=0, default=0),
+    size: int | None = Query(ge=1, le=100, default=None)
+):
+    return {
+        "page": page,
+        "size": size,
+    }
+
+PaginationParams = Annotated[dict, Depends(pagination_params)]
 
 def unit_of_work() -> UnitOfWork:
     return UnitOfWork(db_helper.session_factory)

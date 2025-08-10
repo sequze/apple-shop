@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import PositiveInt
 
 from api.dependencies import order_service, delete_order_use_case, create_order_use_case, \
-    CurrentUserDep, AdminUserDep
+    CurrentUserDep, AdminUserDep, PaginationParams
 from core.models.order import OrderStatus
 from services.order.schemas import OrderDTO, OrderCreateSchema, OrderUpdateSchema
 from services.order.service import OrderService, OrderNotFoundError, DeleteOrderUseCase, CreateOrderUseCase, \
@@ -18,9 +18,13 @@ order_service_dep = Annotated[OrderService, Depends(order_service)]
 
 @router.get("/")
 async def get_all_orders(
+        pagination: PaginationParams,
         order_service: order_service_dep,
 ) -> list[OrderDTO]:
-    return await order_service.get_all()
+    return await order_service.get_all(
+        pagination["page"],
+        pagination["size"],
+    )
 
 
 @router.get("/{order_id}")

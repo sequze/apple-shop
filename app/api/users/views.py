@@ -6,7 +6,7 @@ from plugins.s3_storage.client import DeleteFileError, UploadingFileError, Inval
 from services.order.schemas import OrderDTO
 from services.user.schemas import UserDTO, UserCreateSchema, UserUpdateSchema
 from services.user.service import UserService, UserNotFoundError, EmailAlreadyExists
-from api.dependencies import users_service, CurrentUserDep, AdminUserDep
+from api.dependencies import users_service, CurrentUserDep, AdminUserDep, PaginationParams
 
 router = APIRouter()
 
@@ -15,18 +15,27 @@ user_service_dep = Annotated[UserService, Depends(users_service)]
 
 @router.get("/")
 async def get_users(
+        pagination: PaginationParams,
         user_service: user_service_dep,
         admin: AdminUserDep,
 ) -> list[UserDTO]:
-    res = await user_service.get_users()
+    res = await user_service.get_users(
+        pagination["page"],
+        pagination["size"],
+    )
     return res
 
 @router.get("/orders")
 async def get_user_orders(
+        pagination: PaginationParams,
         user_service: user_service_dep,
         current_user: CurrentUserDep,
 ) -> list[OrderDTO]:
-    return await user_service.get_orders(current_user)
+    return await user_service.get_orders(
+        current_user,
+        pagination["page"],
+        pagination["size"],
+    )
 
 @router.get("/{user_id}")
 async def get_user_by_id(

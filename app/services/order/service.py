@@ -46,9 +46,17 @@ class OrderService:
             await uow.session.refresh(order)
             return OrderDTO.model_validate(order)
 
-    async def get_all(self) -> list[OrderDTO]:
+    async def get_all(
+            self,
+            page: int | None = None,
+            size: int | None = None,
+    ) -> list[OrderDTO]:
         async with self.uow as uow:
             orders = await self.repository.get_all(uow.session)
+            if page is not None and size is not None:
+                offset_min = page * size
+                offset_max = (page + 1) * size
+                orders = orders[offset_min:offset_max]
             return [OrderDTO.model_validate(order) for order in orders]
 
     async def update_status(self, new_status: OrderStatus, order_id: int):

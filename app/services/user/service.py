@@ -41,9 +41,18 @@ class UserService:
                 raise UserNotFoundError
             return UserDTO.model_validate(user)
 
-    async def get_users(self) -> list[UserDTO]:
+    async def get_users(
+            self,
+            page: int | None = None,
+            size: int | None = None,
+    ) -> list[UserDTO]:
         async with self.uow as uow:
             users = await self.repository.get_all(uow.session)
+
+            if page is not None and size is not None:
+                offset_min = page * size
+                offset_max = (page + 1) * size
+                users = users[offset_min:offset_max]
             dtos = [UserDTO.model_validate(user) for user in users]
             return dtos
 
@@ -84,11 +93,21 @@ class UserService:
             await session.commit()
             return UserDTO.model_validate(user)
 
-    async def get_orders(self, user: UserDTO) -> list[OrderDTO]:
+    async def get_orders(
+            self,
+            user: UserDTO,
+            page: int | None = None,
+            size: int | None = None,
+    ) -> list[OrderDTO]:
         async with self.uow as uow:
             user = await self.repository.get_with_orders(uow.session, user.id)
             if user is None: raise UserNotFoundError
-            return [OrderDTO.model_validate(order) for order in user.orders]
+            orders = user.orders
+            if page is not None and size is not None:
+                offset_min = page * size
+                offset_max = (page + 1) * size
+                orders = orders[offset_min:offset_max]
+            return [OrderDTO.model_validate(order) for order in orders]
 
     async def update_profile_image(self, user_data: UserDTO, file: UploadFile) -> str:
         if not file.content_type.startswith("image/"):

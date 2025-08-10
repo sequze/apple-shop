@@ -10,7 +10,10 @@ class UserGetCartUseCase:
     def __init__(self, user_repository: UserRepository, uow: UnitOfWork):
         self.user_repository = user_repository
         self.uow = uow
-    async def execute(self, user_data: UserDTO) -> CartDTO:
+    async def execute(
+            self,
+            user_data: UserDTO,
+    ) -> CartDTO:
         async with self.uow as uow:
             user = await self.user_repository.get_with_cart_items(uow.session, user_data.id)
             if not user: raise UserNotFoundError

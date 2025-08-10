@@ -3,7 +3,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, status
 
 from api.dependencies import product_service, product_delete_use_case, get_products_use_case, AdminUserDep, \
-    product_color_service, create_product_discount_use_case
+    product_color_service, create_product_discount_use_case, PaginationParams
 from plugins.s3_storage.client import DeleteFileError
 from services.category.service import CategoryNotFoundError
 from services.colors.schemas import ProductColorCreateSchema, ProductColorDTO, ProductColorBaseSchema
@@ -21,6 +21,7 @@ product_service_dep = Annotated[ProductService, Depends(product_service)]
 
 @router.get("/")
 async def get_all_products(
+        pagination: PaginationParams,
         category: str | None = None,
         min_price: int | None = None,
         max_price: int | None = None,
@@ -30,6 +31,8 @@ async def get_all_products(
 ) -> list[ProductDTO]:
     try:
         return await get_products.execute(
+            pagination.get("page"),
+            pagination.get("size"),
             category,
             min_price,
             max_price,

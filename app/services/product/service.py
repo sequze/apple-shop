@@ -112,6 +112,8 @@ class GetProductsUseCase:
         self.category_repository = category_repository
         self.uow = uow
     async def execute(self,
+            page: int | None = None,
+            size: int | None = None,
             category: str | None = None,
             min_price: int | None = None,
             max_price: int | None = None,
@@ -125,4 +127,8 @@ class GetProductsUseCase:
                 if category_obj is None: raise CategoryNotFoundError
                 category_id = category_obj.id
             products = await self.product_repository.get_all(uow.session, category_id, min_price, max_price, order_by, in_stock)
+            if page is not None and size is not None:
+                offset_min = page * size
+                offset_max = (page + 1) * size
+                products = products[offset_min:offset_max]
             return [ProductDTO.model_validate(product) for product in products]
