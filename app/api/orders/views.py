@@ -9,7 +9,7 @@ from core.models.order import OrderStatus
 from services.order.schemas import OrderDTO, OrderCreateSchema, OrderUpdateSchema
 from services.order.service import OrderService, OrderNotFoundError, DeleteOrderUseCase, CreateOrderUseCase, \
     StatusNotAllowed
-from services.product.service import ProductNotFoundError
+from services.product.exceptions import ProductNotFoundError
 
 router = APIRouter()
 
@@ -57,7 +57,7 @@ async def update_order(
         order_id: int,
         data: OrderUpdateSchema,
         order_service: order_service_dep,
-        admin: AdminUserDep,
+        admin: CurrentUserDep,
 ) -> OrderDTO:
     try:
         return await order_service.update(data, order_id)

@@ -2,11 +2,15 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from api.dependencies import product_service, product_delete_use_case, get_products_use_case, AdminUserDep
-from plugins.s3_storage.client import DeleteFileError
+from api.dependencies import product_service, product_delete_use_case, get_products_use_case, AdminUserDep, \
+    product_color_service
+from plugins.s3_storage.client import DeleteFileError, UploadingFileError, InvalidFileTypeError
 from services.category.service import CategoryNotFoundError
+from services.colors.schemas import ProductColorCreateSchema, ProductColorDTO, ProductColorBaseSchema
+from services.colors.service import ProductColorService
 from services.product.schemas import ProductDTO, ProductCreateSchema, ProductUpdateSchema
-from services.product.service import ProductService, ProductNotFoundError, ProductDeleteUseCase
+from services.product.service import ProductService, ProductDeleteUseCase
+from services.product.exceptions import ProductNotFoundError
 
 router = APIRouter()
 
@@ -93,4 +97,23 @@ async def delete_product(
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
             detail="Error with delete images",
+        )
+
+@router.post("/{product_id}/colors")
+async def create_product_color(
+        product_id: int,
+        data: ProductColorBaseSchema,
+        service: ProductColorService = Depends(product_color_service)
+) -> ProductColorDTO:
+    try:
+        return await service.create(
+            ProductColorCreateSchema(
+                name=data.name,
+                stock=data.stock,
+                product_id=product_id,
+            ))
+    except ProductNotFoundError:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Product not found",
         )

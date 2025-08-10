@@ -1,10 +1,10 @@
 from sqlalchemy.ext.asyncio.session import AsyncSession
 
-from core.models import ProductImage, Product
+from core.models import ProductImage, ProductColor
 from core.repositories.uow import UnitOfWork
 from plugins.s3_storage.client import UploadingFileError, DeleteFileError, InvalidFileTypeError
 from plugins.s3_storage.utils import upload_file_to_storage, delete_file_from_storage
-from services.product.service import ProductNotFoundError
+from services.colors.service import ProductColorNotFoundError
 from services.product_image.repository import ProductImageRepository
 from services.product_image.schemas import ProductImageDTO, ProductImageCreate, \
     ProductImageUpdateSchema
@@ -31,9 +31,9 @@ class ProductImageService:
             raise ProductImageNotFoundError
         return image
 
-    async def __validate_main_image(self, session: AsyncSession, product_id: int):
+    async def __validate_main_image(self, session: AsyncSession, color_id: int):
         images = await self.repository.get_by_filters(
-            session, {"product_id": product_id, "is_main": True}, one=False
+            session, {"color_id": color_id, "is_main": True}, one=False
         )
         for i in images:
             i.is_main = False
@@ -43,11 +43,11 @@ class ProductImageService:
         if not file.content_type.startswith("image/"):
             raise InvalidFileTypeError
         async with self.uow as uow:
-            product = await uow.session.get(Product, data.product_id)
-            if not product:
-                raise ProductNotFoundError
+            color = await uow.session.get(ProductColor, data.color_id)
+            if not color:
+                raise ProductColorNotFoundError
             if data.is_main:
-                await self.__validate_main_image(uow.session, product_id=data.product_id)
+                await self.__validate_main_image(uow.session, color_id=data.color_id)
             file_binary = await file.read()
             try:
                 file_path = await upload_file_to_storage(file_binary, file.filename)
@@ -57,7 +57,7 @@ class ProductImageService:
                 "url": file_path,
                 "alt_text": data.alt_text,
                 "is_main": data.is_main,
-                "product_id": data.product_id,
+                "color_id": data.color_id,
             }
             try:
                 image = await self.repository.create(uow.session, data_dict)
@@ -81,7 +81,7 @@ class ProductImageService:
         async with self.uow as uow:
             image = await self.__find_by_id(uow.session, id)
             if data.is_main and not image.is_main:
-                await self.__validate_main_image(uow.session, product_id=image.product_id)
+                await self.__validate_main_image(uow.session, color_id=image.color_id)
             await self.repository.update(uow.session, data.model_dump(exclude_unset=True), image)
             await uow.session.commit()
             await uow.session.refresh(image)

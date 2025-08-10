@@ -5,7 +5,8 @@ from core.repositories.uow import UnitOfWork
 from services.cart_item.repository import CartItemRepository
 from services.cart_item.schemas import CartItemDTO, CartItemCreateSchema, CartItemUpdateSchema
 from services.product.schemas import ProductDTO
-from services.product.service import get_product_discount, ProductNotFoundError
+from services.product.service import get_product_discount
+from services.product.exceptions import ProductNotFoundError
 
 
 class CartItemNotFoundError(Exception):

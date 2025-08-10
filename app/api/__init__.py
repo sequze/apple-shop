@@ -8,7 +8,7 @@ from .orders import router as orders_router
 from .cart import router as cart_items_router
 from .product_image import router as product_image_router
 from .auth import router as auth_router
-
+from .colors import router as colors_router
 router = APIRouter()
 
 router.include_router(
@@ -57,4 +57,10 @@ router.include_router(
     product_image_router,
     tags=["Product Images"],
     prefix=settings.api_prefix.product_images
+)
+
+router.include_router(
+    colors_router,
+    tags=["Colors"],
+    prefix=settings.api_prefix.colors
 )

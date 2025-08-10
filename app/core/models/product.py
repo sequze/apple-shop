@@ -13,23 +13,21 @@ from .product_discount_association_table import product_discount_association_tab
 
 if TYPE_CHECKING:
     from .category import Category
-    from .product_image import ProductImage
+    from .product_color import ProductColor
     from .discount import Discount
 
 class Product(CreatedAtMixin, IntIdPkMixin, Base):
     name: Mapped[str]
     description: Mapped[str] = mapped_column(nullable=True)
     price: Mapped[Decimal] = mapped_column(Numeric(10, 2))
-    stock: Mapped[int]
     category_id: Mapped[int] = mapped_column(ForeignKey("categories.id", ondelete="SET NULL"), nullable=True)
-    # relationships
-    category: Mapped["Category"] = relationship(back_populates="products")
-    images: Mapped[list["ProductImage"]] = relationship(
+    colors: Mapped[list["ProductColor"]] = relationship(
         back_populates="product",
         lazy="selectin",
         cascade="all, delete-orphan",
         passive_deletes=True,
     )
+    category: Mapped["Category"] = relationship(back_populates="products")
     discounts: Mapped[list["Discount"]] = relationship(
         secondary=product_discount_association_table,
         back_populates="products",

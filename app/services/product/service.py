@@ -5,11 +5,10 @@ from core.repositories.uow import UnitOfWork
 from plugins.s3_storage.client import DeleteFileError
 from services.category.repository import CategoryRepository
 from services.category.service import CategoryNotFoundError
+from services.colors.service import DeleteColorUseCase
+from services.product.exceptions import ProductNotFoundError
 from services.product.repository import ProductRepository
 from services.product.schemas import ProductCreateSchema, ProductDTO, ProductUpdateSchema, ProductPriceInfo
-from services.product_image.repository import ProductImageRepository
-from plugins.s3_storage.utils import delete_file_from_storage
-from sqlalchemy import select
 
 
 def get_product_discount(product: Product):
@@ -27,10 +26,6 @@ def get_product_discount(product: Product):
         price_with_discount=price_with_discount,
         discount_description=discount_description,
     )
-
-class ProductNotFoundError(Exception):
-    """Product not found"""
-    pass
 
 
 class ProductService:
@@ -70,26 +65,28 @@ class ProductDeleteUseCase:
     def __init__(
             self,
             product_repository: ProductRepository,
-            product_image_repository: ProductImageRepository,
+            delete_color_use_case: DeleteColorUseCase,
             uow: UnitOfWork,
     ):
         self.product_repository = product_repository
-        self.product_image_repository = product_image_repository
+        self.delete_color_use_case = delete_color_use_case
         self.uow = uow
+
+
     async def delete(self, id: int) -> ProductDTO:
         async with self.uow as uow:
-            product = await self.product_repository.get_by_id(uow.session, id)
+            session = uow.session
+            product = await self.product_repository.get_by_id(session, id)
             if product is None: raise ProductNotFoundError
-            for image in product.images:
+            dto = ProductDTO.model_validate(product)
+            for color in product.colors:
                 try:
-                    await delete_file_from_storage(image.url)
+                    await self.delete_color_use_case.delete(session, color)
                 except DeleteFileError:
                     raise
-                await self.product_image_repository.delete(uow.session, image)
-            await uow.session.refresh(product)
-            await self.product_repository.delete(uow.session, product)
+            await self.product_repository.delete(session, product)
             await uow.commit()
-            return ProductDTO.model_validate(product)
+            return dto
 
 
 class GetProductsUseCase:

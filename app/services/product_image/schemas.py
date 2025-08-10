@@ -6,7 +6,7 @@ class ProductImageBaseSchema(BaseModel):
     url: HttpUrl
     alt_text: str
     is_main: bool
-    product_id: PositiveInt
+    color_id: PositiveInt
 
 
 class ProductImageDTO(ProductImageBaseSchema):
@@ -20,7 +20,7 @@ class ProductImageDTO(ProductImageBaseSchema):
 class ProductImageCreate(BaseModel):
     alt_text: str
     is_main: bool
-    product_id: PositiveInt
+    color_id: PositiveInt
 
 
 class ProductImageUpdateSchema(BaseModel):

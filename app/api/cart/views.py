@@ -7,7 +7,7 @@ from services.cart.schemas import CartDTO, AddToCartSchema
 from services.cart.service import UserGetCartUseCase
 from services.cart_item.schemas import CartItemDTO, CartItemUpdateSchema, CartItemCreateSchema
 from services.cart_item.service import CartItemService, CartItemNotFoundError, CartItemAlreadyExistsError
-from services.product.service import ProductNotFoundError
+from services.product.exceptions import ProductNotFoundError
 
 router = APIRouter()
 
@@ -117,4 +117,3 @@ async def delete_cart_item(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Cart Item not found"
         )
-
