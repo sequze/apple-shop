@@ -1,13 +1,14 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React, {useContext, useEffect} from 'react'
 import './App.css'
 import 'swiper/css';
 import {BrowserRouter, useNavigate} from "react-router-dom";
 import AppRouter from "./components/AppRouter.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
-import AuthService from "./components/api/AuthService.js";
 import {setupInterceptors} from "./components/api/setupInterceptors.js";
-import {AuthContext} from "./context/context.js";
+import {AuthContext} from "./context/AuthContext.jsx";
 import Loader from "./components/Loader.jsx";
+import {CategoriesProvider} from "./context/CategoriesContext.jsx";
+import {AuthProvider} from "./context/AuthContext.jsx";
 
 function AppContent() {
     const navigate = useNavigate();
@@ -35,50 +36,16 @@ function AppContent() {
 
 
 function App() {
-    const [isAuth, setIsAuth] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
-    const [isAdmin, setIsAdmin] = useState(false);
-
-    useEffect(() => {
-        const checkAuthStatus = async () => {
-            try {
-                const res = await AuthService.checkAuth();
-                if (res) {
-                    setIsAuth(true);
-
-                    const { data } = await AuthService.getCurrentUser();
-                    if (data.is_superuser) {
-                        setIsAdmin(true);
-                    } else {
-                        setIsAdmin(false);
-                    }
-                } else {
-                    setIsAuth(false);
-                    setIsAdmin(false);
-                }
-            } catch (e) {
-                setIsAuth(false);
-                setIsAdmin(false);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-        checkAuthStatus();
-    }, []);
 
 
     return (
-        <AuthContext.Provider value={{
-            isAuth,
-            setIsAuth,
-            isLoading,
-            isAdmin,
-            setIsAdmin
-        }}>
-            <BrowserRouter>
-                <AppContent />
-            </BrowserRouter>
-        </AuthContext.Provider>
+        <AuthProvider>
+            <CategoriesProvider>
+                <BrowserRouter>
+                    <AppContent />
+                </BrowserRouter>
+            </CategoriesProvider>
+        </AuthProvider>
     )
 }
 

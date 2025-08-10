@@ -4,7 +4,7 @@ import {publicRoutes, privateRoutes, categories} from "../router/routes.jsx";
 import Layout from "./layout/Layout.jsx";
 import SiteLogo from "../assets/logo.png";
 import {bigProducts} from "../router/bigProducts.js";
-import {AuthContext} from "../context/context.js";
+import {AuthContext} from "../context/AuthContext";
 
 
 const AppRouter = () => {

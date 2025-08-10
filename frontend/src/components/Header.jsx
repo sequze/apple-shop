@@ -4,7 +4,7 @@ import MyModal from "./ui/modal/MyModal.jsx";
 import Loader from "./Loader.jsx";
 import AboutContent from "./modals/AboutContent.jsx";
 import ContactContent from "./modals/ContactContent.jsx";
-import {AuthContext} from "../context/context.js";
+import {AuthContext} from "../context/AuthContext";
 
 const Header = ({logo}) => {
 

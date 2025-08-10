@@ -3,7 +3,7 @@ import MyInput from "../ui/input/MyInput.jsx";
 import MyWhiteButton from "../ui/whiteButton/MyWhiteButton.jsx";
 import {Link, useNavigate} from "react-router-dom";
 import AuthService from "../api/AuthService.js";
-import {AuthContext} from "../../context/context.js";
+import {AuthContext} from "../../context/AuthContext";
 
 const LoginForm = () => {
 

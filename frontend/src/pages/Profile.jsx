@@ -3,7 +3,7 @@ import AuthService from "../components/api/AuthService.js";
 import {Navigate, useNavigate} from "react-router-dom";
 import Loader from "../components/Loader.jsx";
 import ProfileContent from "../components/profile/ProfileContent.jsx";
-import {AuthContext} from "../context/context.js";
+import {AuthContext} from "../context/AuthContext";
 
 const Profile = () => {
 
