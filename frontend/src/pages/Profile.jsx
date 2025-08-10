@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import AuthService from "../components/api/AuthService.js";
-import {useNavigate} from "react-router-dom";
+import {Navigate, useNavigate} from "react-router-dom";
 import Loader from "../components/Loader.jsx";
 import ProfileContent from "../components/profile/ProfileContent.jsx";
 import {AuthContext} from "../context/context.js";
@@ -31,7 +31,13 @@ const Profile = () => {
 
     if (!isAuth) return <Navigate to="/login" replace />;
 
-    if (!user) return <Loader />
+    if (!user) return (
+        <div className="absolute top-0 left-0 w-full min-h-screen flex justify-center items-center bg-[#fff]">
+            <div className="w-[200px] h-[200px] flex justify-center">
+                <Loader />
+            </div>
+        </div>
+    )
 
     return (
         <ProfileContent user={user} logout={handleLogout}/>

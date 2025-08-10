@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import MyInput from "../ui/input/MyInput.jsx";
 import MyWhiteButton from "../ui/whiteButton/MyWhiteButton.jsx";
 import GreyButton from "../ui/greyButton/greyButton.jsx";
@@ -6,6 +6,7 @@ import AuthService from "../api/AuthService.js";
 import cameraImg from "../../assets/camera.png"
 import userImg from "../../assets/user_logo.PNG";
 import UsersService from "../api/UsersService.js";
+import Loader from "../Loader.jsx";
 
 const DataProfile = ({user, logout}) => {
     const [isChangeData, setIsChangeData] = useState(false);
@@ -16,6 +17,12 @@ const DataProfile = ({user, logout}) => {
     const [newPassword, setNewPassword] = useState("");
     const [error, setError] = useState("");
     const fileInput = useRef();
+    const [isLoading, setIsLoading] = useState(false);
+    const [localUser, setLocalUser] = useState(user);
+
+    useEffect(() => {
+        setLocalUser(user);
+    }, [user]);
 
 
     const handleUpdateData = (event) => {
@@ -84,10 +91,15 @@ const DataProfile = ({user, logout}) => {
         formData.append('file', file);
 
         try {
+            setIsLoading(true)
             await UsersService.uploadUserImage(formData);
+            const updateUserResponse = await AuthService.getCurrentUser();
+            setLocalUser(updateUserResponse.data);
             console.log("Фото успешно загружено");
         } catch (err) {
             console.error("Ошибка загрузки: ", err);
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -131,8 +143,13 @@ const DataProfile = ({user, logout}) => {
     } else {
         return (
             <div className="flex items-center gap-[50px] md:gap-[100px] mb-[80px]">
-                <div>
-                    <div className="relative bg-[#000] w-[100px] h-[100px] sm:w-[150px] md:w-[200px] sm:h-[150px] md:h-[200px] rounded-full overflow-hidden">
+                {isLoading
+                    ?
+                    <div className="w-[100px] h-[100px] sm:w-[150px] md:w-[200px] sm:h-[150px] md:h-[200px] flex items-center justify-center">
+                        <Loader />
+                    </div>
+                    :
+                    <div className="relative bg-[#D9D9D9] w-[100px] h-[100px] sm:w-[150px] md:w-[200px] sm:h-[150px] md:h-[200px] rounded-full overflow-hidden">
                         <input type="file"
                                accept="image/*"
                                className="w-full h-full absolute top-0 left-0"
@@ -143,17 +160,17 @@ const DataProfile = ({user, logout}) => {
                             className="transition-all duration-200 absolute top-0 left-0 w-full h-full opacity-[0] hover:opacity-[0.6] flex justify-center items-center bg-[#D9D9D9] cursor-pointer"
                             onClick={() => fileInput.current.click()}
                         >
-                                <img
-                                    className="w-2/3 h-2/3"
-                                    src={cameraImg}
-                                    alt="Поставить аватар"/>
+                            <img
+                                className="w-2/3 h-2/3"
+                                src={cameraImg}
+                                alt="Поставить аватар"/>
                         </div>
 
                         <img
                             className="w-full h-full object-cover"
-                            src={user.profile_image_url || userImg} alt=""/>
+                            src={localUser.profile_image_url || userImg} alt=""/>
                     </div>
-                </div>
+                }
                 <div>
                     <div className="montserrat-400 text-[28px] md:text-[36px] mb-[10px]">{user.full_name}</div>
                     <div

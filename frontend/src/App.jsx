@@ -17,7 +17,13 @@ function AppContent() {
         setupInterceptors(navigate);
     }, [navigate]);
 
-    if (isLoading) return <Loader />
+    if (isLoading) return (
+        <div className="absolute top-0 left-0 w-full min-h-screen flex justify-center items-center bg-[#fff]">
+            <div className="w-[200px] h-[200px] flex justify-center">
+                <Loader />
+            </div>
+        </div>
+    )
 
     return (
         <>
