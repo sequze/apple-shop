@@ -9,12 +9,12 @@ class OrderItemSchema(BaseModel):
     quantity: PositiveInt
     unit_price: PositiveFloat
     order_id: PositiveInt
-    product_id: PositiveInt
+    product_id: PositiveInt | None
 
 
 class OrderItemDTO(OrderItemSchema):
     id: PositiveInt
-    product: ProductDTO
+    product: ProductDTO | None
 
     class Config:
         from_attributes = True
