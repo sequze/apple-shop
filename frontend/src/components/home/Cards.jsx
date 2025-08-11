@@ -1,8 +1,10 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Link} from "react-router-dom";
+import {CategoriesContext} from "../../context/CategoriesContext.jsx";
 
-const Cards = ({categories}) => {
+const Cards = () => {
     const [activeIndex, setActiveIndex] = useState(0);
+    const {categories} = useContext(CategoriesContext);
 
     return (
         <div>

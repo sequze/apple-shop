@@ -4,8 +4,8 @@ import api from "./api.js";
 export class CategoriesService {
     static async getAllCategories(){
         try {
-            const response = api.get("/api/categories/");
-            console.log(response);
+            const { data } = await api.get("/api/categories/");
+            return data;
         } catch (err) {
             console.error(err);
         }

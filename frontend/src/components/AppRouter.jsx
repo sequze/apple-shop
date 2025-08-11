@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {Navigate, Route, Routes} from "react-router-dom";
-import {publicRoutes, privateRoutes, categories} from "../router/routes.jsx";
+import {publicRoutes, privateRoutes} from "../router/routes.jsx";
 import Layout from "./layout/Layout.jsx";
 import SiteLogo from "../assets/logo.png";
 import {bigProducts} from "../router/bigProducts.js";
@@ -34,7 +34,6 @@ const AppRouter = () => {
                         <Layout logo={SiteLogo}>
                             <Component
                                 products={bigProducts}
-                                categories={categories}
                                 logo={SiteLogo}
                             />
                         </Layout>
