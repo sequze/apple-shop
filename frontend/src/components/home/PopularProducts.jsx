@@ -1,10 +1,11 @@
 import React, {useEffect, useRef} from 'react';
 import {Swiper, SwiperSlide} from "swiper/react";
 import {Link} from "react-router-dom";
+import {bigProducts} from "../../mock/bigProducts.js";
 
-const PopularProducts = ({products}) => {
+const PopularProducts = () => {
 
-    const popularProducts = products.filter(product => product.views > 3000);
+    const popularProducts = bigProducts.filter(product => product.views > 3000);
     const cardRefs = useRef([]);
 
     useEffect(() => {

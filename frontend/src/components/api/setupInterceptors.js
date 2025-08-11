@@ -1,4 +1,4 @@
-import AuthService from "./AuthService.js";
+import AuthService from "./service/AuthService.js";
 import api from "./api";
 
 

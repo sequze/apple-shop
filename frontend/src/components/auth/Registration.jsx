@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import MyWhiteButton from "../ui/whiteButton/MyWhiteButton.jsx";
 import {Link, useNavigate} from "react-router-dom";
-import AuthService from "../api/AuthService.js";
+import AuthService from "../api/service/AuthService.js";
 import MyInput from "../ui/input/MyInput.jsx";
 
 const Registration = () => {

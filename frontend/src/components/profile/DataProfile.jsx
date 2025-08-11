@@ -2,10 +2,10 @@ import React, {useEffect, useRef, useState} from 'react';
 import MyInput from "../ui/input/MyInput.jsx";
 import MyWhiteButton from "../ui/whiteButton/MyWhiteButton.jsx";
 import GreyButton from "../ui/greyButton/greyButton.jsx";
-import AuthService from "../api/AuthService.js";
+import AuthService from "../api/service/AuthService.js";
 import cameraImg from "../../assets/camera.png"
 import userImg from "../../assets/user_logo.PNG";
-import UsersService from "../api/UsersService.js";
+import UsersService from "../api/service/UsersService.js";
 import Loader from "../Loader.jsx";
 
 const DataProfile = ({user, logout}) => {

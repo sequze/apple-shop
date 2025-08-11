@@ -3,15 +3,11 @@ import {Navigate, Route, Routes} from "react-router-dom";
 import {publicRoutes, privateRoutes} from "../router/routes.jsx";
 import Layout from "./layout/Layout.jsx";
 import SiteLogo from "../assets/logo.png";
-import {bigProducts} from "../router/bigProducts.js";
 import {AuthContext} from "../context/AuthContext";
 
 
 const AppRouter = () => {
-
     const {isAuth, isAdmin} = useContext(AuthContext);
-    console.log(isAdmin)
-
     const routes = isAuth ? privateRoutes : publicRoutes;
 
     return (
@@ -33,7 +29,6 @@ const AppRouter = () => {
                     element={
                         <Layout logo={SiteLogo}>
                             <Component
-                                products={bigProducts}
                                 logo={SiteLogo}
                             />
                         </Layout>

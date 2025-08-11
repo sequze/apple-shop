@@ -1,5 +1,5 @@
 import {createContext, useEffect, useState} from "react";
-import {CategoriesService} from "../components/api/CategoriesService.js";
+import {CategoriesService} from "../components/api/service/CategoriesService.js";
 import card1 from "../assets/categories/card-1.jpeg";
 import card2 from "../assets/categories/card-2.jpeg";
 import card3 from "../assets/categories/card-3.jpeg";

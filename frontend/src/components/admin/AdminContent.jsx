@@ -1,10 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import MyInput from "../ui/input/MyInput.jsx";
 import image from "../../assets/img.png";
 import GreyButton from "../ui/greyButton/greyButton.jsx";
-import Loader from "../Loader.jsx";
-import AuthService from "../api/AuthService.js";
-import {useNavigate} from "react-router-dom";
 
 const AdminContent = () => {
 

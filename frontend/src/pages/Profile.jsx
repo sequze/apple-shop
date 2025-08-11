@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import AuthService from "../components/api/AuthService.js";
+import AuthService from "../components/api/service/AuthService.js";
 import {Navigate, useNavigate} from "react-router-dom";
 import Loader from "../components/Loader.jsx";
 import ProfileContent from "../components/profile/ProfileContent.jsx";
