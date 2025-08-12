@@ -27,8 +27,12 @@ export default class UsersService {
     }
 
     static async getUserOrders(page= 0, size= 100) {
-        const {data} = await api.get(`/api/users/orders/?page=${page}&size=${size}`);
-        return data;
+        try {
+            const {data} = await api.get(`/api/users/orders/?page=${page}&size=${size}`);
+            return data;
+        } catch (err) {
+            console.error(err);
+        }
     }
 
 }

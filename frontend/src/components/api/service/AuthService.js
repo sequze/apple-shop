@@ -91,14 +91,5 @@ export default class AuthService {
             console.error(err);
         }
     }
-
-
-
-    static async quitAll() {
-        const response = await api.post("/api/auth/quit_all", {}, { withCredentials: true });
-        console.log("Все сессии очищены");
-        return null;
-    }
-
 }
 
