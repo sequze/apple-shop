@@ -6,6 +6,8 @@ const Cards = () => {
     const [activeIndex, setActiveIndex] = useState(0);
     const {categories} = useContext(CategoriesContext);
 
+    console.log(categories)
+
     return (
         <div>
             <div className="mx-auto max-w-[1500px] w-full py-[25px] sm:py-[100px]">
@@ -22,13 +24,13 @@ const Cards = () => {
                                         "card__active relative w-[500px] xl:w-[650px]"
                                         : "card relative w-[90px] 2xl:w-[130px]"
                                 }
-                                style={{backgroundImage: `url(${category.img})`, backgroundSize: "cover", backgroundPosition: "center"}}
+                                style={{backgroundImage: `url(${category.image_url})`, backgroundSize: "cover", backgroundPosition: "center"}}
                             >
                                 <div
                                     className="absolute inset-[0] rounded-[30px] bg-[linear-gradient(to_bottom,rgba(0,0,0,0.2),rgba(0,0,0,0),transparent)] transition-opacity duration-500"
                                 />
                                 <div className="relative z-10 p-4 text-[32px] text-[#fff] opacity-0 card-text">
-                                    {category.title}
+                                    {category.name}
                                 </div>
                         </div>
                         );
@@ -46,11 +48,11 @@ const Cards = () => {
                         <Link key={index} to={`/products/${category.type}`}>
                             <div
                                 className="relative w-[150px] h-[150px]  sm:w-[250px] sm:h-[250px] rounded-[30px] overflow-hidden bg-cover bg-center transition-transform duration-300 hover:scale-[1.03]"
-                                style={{ backgroundImage: `url(${category.img})` }}
+                                style={{ backgroundImage: `url(${category.image_url})` }}
                             >
                                 <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/50 rounded-[30px]" />
                                 <div className="relative z-10 p-4 text-[24px] text-white font-semibold">
-                                    {category.title}
+                                    {category.name}
                                 </div>
                             </div>
                         </Link>
