@@ -6,6 +6,7 @@ import cameraImg from "../../assets/camera.png";
 import categoryImgPlaceHolder from "../../assets/img.svg";
 import {CategoriesService} from "../api/service/CategoriesService.js";
 import {CategoriesContext} from "../../context/CategoriesContext.jsx";
+import AdminCategoryEditModal from "./AdminCategoryEditModal.jsx";
 
 const AdminCategory = ({setIsLoading}) => {
     const [isCreateCategory, setIsCreateCategory] = useState(false);
@@ -18,6 +19,8 @@ const AdminCategory = ({setIsLoading}) => {
     const [percentEndDate, setPercentEndDate] = useState("");
     const [description, setDescr] = useState("");
     const {categories, setCategories} = useContext(CategoriesContext);
+    const [visible, setVisible] = useState(false);
+    const [selectedCategory, setSelectedCategory] = useState(null);
     const fileInput = useRef();
 
     const handleCategory = (e) => {
@@ -83,7 +86,7 @@ const AdminCategory = ({setIsLoading}) => {
                 );
             }
 
-            setCategories(() => [...categories, category])
+            setCategories((prev) => [...prev, category])
         } catch (err) {
             console.error(err);
         } finally {
@@ -91,7 +94,19 @@ const AdminCategory = ({setIsLoading}) => {
         }
     }
 
+    const handleDelete = async (id) => {
+        try {
+            await CategoriesService.deleteCategory(id);
+            setCategories(prev => prev.filter(category => category.id !== id));
+        } catch (err) {
+            console.error(err)
+        }
+    }
 
+    const handleEdit = (category) => {
+        setSelectedCategory(category);
+        setVisible(true);
+    }
 
     return (
         <form>
@@ -215,18 +230,47 @@ const AdminCategory = ({setIsLoading}) => {
                 </div>
             )}
             <div className="inter-400 text-[18px] py-[20px]">Список всех категорий</div>
-            {categories.map(category => (
-                <div
-                    key={category.id}
-                    className="flex items-center gap-5 mb-3">
-                    <div>
-                        <img className="w-[150px]" src={category.image_url} alt={category.name}/>
+            <div className="flex flex-wrap justify-center gap-6">
+                {categories.map(category => (
+                    <div
+                        key={category.id}
+                        className="flex items-center gap-5 mb-3 border-2 p-4 rounded-2xl">
+                        <div>
+                            <img
+                                className="w-full sm:w-[120px] h-[120px] object-cover rounded-lg"
+                                src={category.image_url}
+                                alt={category.name}
+                            />
+                        </div>
+                        <div>
+                            <h3 className="text-[18px]">{category.name}</h3>
+                            <div className="flex gap-3 mt-3">
+                                <button
+                                    onClick={(event) => {
+                                        event.preventDefault();
+                                        handleEdit(category);
+                                    }}
+                                    className="px-3 py-1 rounded-full bg-blue-500 text-white text-sm hover:bg-blue-600"
+                                >
+                                    Редактировать
+                                </button>
+                                <button
+                                    onClick={(event) => {
+                                        event.preventDefault();
+                                        handleDelete(category.id);
+                                    }}
+                                    className="px-3 py-1 rounded-full bg-red-500 text-white text-sm hover:bg-red-600"
+                                >
+                                    Удалить
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <h3 className="text-[18px]">{category.name}</h3>
-                </div>
-            ))
+                ))}
 
-            }
+            </div>
+
+        <AdminCategoryEditModal category={selectedCategory} visible={visible} setVisible={setVisible}/>
         </form>
     );
 };

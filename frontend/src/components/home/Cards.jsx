@@ -6,8 +6,6 @@ const Cards = () => {
     const [activeIndex, setActiveIndex] = useState(0);
     const {categories} = useContext(CategoriesContext);
 
-    console.log(categories)
-
     return (
         <div>
             <div className="mx-auto max-w-[1500px] w-full py-[25px] sm:py-[100px]">
