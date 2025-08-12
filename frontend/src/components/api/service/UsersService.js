@@ -15,7 +15,7 @@ export default class UsersService {
             is_active: is_active.trim() || old_is_active
         });
 
-        console.log(resp);
+        return resp;
     }
 
     static async uploadUserImage(formData) {
@@ -25,4 +25,10 @@ export default class UsersService {
             }
         })
     }
+
+    static async getUserOrders(page= 0, size= 100) {
+        const {data} = await api.get(`/api/users/orders/?page=${page}&size=${size}`);
+        return data;
+    }
+
 }

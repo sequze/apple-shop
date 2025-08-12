@@ -22,7 +22,7 @@ const Cards = () => {
                                         "card__active relative w-[500px] xl:w-[650px]"
                                         : "card relative w-[90px] 2xl:w-[130px]"
                                 }
-                                style={{backgroundImage: `url(${category.img})`}}
+                                style={{backgroundImage: `url(${category.img})`, backgroundSize: "cover", backgroundPosition: "center"}}
                             >
                                 <div
                                     className="absolute inset-[0] rounded-[30px] bg-[linear-gradient(to_bottom,rgba(0,0,0,0.2),rgba(0,0,0,0),transparent)] transition-opacity duration-500"

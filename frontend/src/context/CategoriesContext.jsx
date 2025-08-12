@@ -2,9 +2,9 @@ import {createContext, useEffect, useState} from "react";
 import {CategoriesService} from "../components/api/service/CategoriesService.js";
 import card1 from "../assets/categories/card-1.jpeg";
 import card2 from "../assets/categories/card-2.jpeg";
-import card3 from "../assets/categories/card-3.jpeg";
+import card3 from "../assets/categories/card-3.jpg";
 import card4 from "../assets/categories/card-4.jpeg";
-import card5 from "../assets/categories/card-5.jpeg";
+import card5 from "../assets/categories/card-5.jpg";
 
 export const CategoriesContext = createContext(null);
 
