@@ -46,4 +46,13 @@ export class CategoriesService {
             console.error(err);
         }
     }
+
+    static async deleteCategory(id) {
+        try {
+            const { data } = await api.delete(`/api/categories/${id}`);
+            return data;
+        } catch (err) {
+            console.error(err);
+        }
+    }
 }
