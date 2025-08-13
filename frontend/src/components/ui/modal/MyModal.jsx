@@ -23,12 +23,12 @@ const MyModal = ({children, visible, setVisible, widthClass = "w-11/12 sm:w-3/4 
         <div
             role="dialog"
             aria-modal="true"
-            className={`transform fixed z-[200] bg-opacity-80 top-0 left-0 w-full h-full bg-[#000] flex flex-col items-center justify-center transition-opacity duration-300
+            className={`transform fixed z-[200] bg-opacity-80 top-0 left-0 w-full h-full bg-[#000] flex flex-col items-center justify-center transition-opacity duration-300 
             ${visible ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`
         } onClick={() => setVisible(false)}>
             <div className={
                 visible
-                    ? "max-h-[80vh] overflow-y-auto bg-[#fff] m-auto rounded-[15px] px-[50px] transition-colors duration-1000 py-[30px]" + widthClass
+                    ? "max-h-[80vh] overflow-y-auto bg-[#fff] m-auto rounded-[15px] px-[50px] transition-colors duration-1000 py-[30px] delay-150" + widthClass
                     : ""
             } onClick={(e) => e.stopPropagation()}>
                 <div>

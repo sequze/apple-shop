@@ -47,9 +47,29 @@ export class CategoriesService {
         }
     }
 
+    static async updateCategoryName(id, name) {
+        try {
+            const { data } = await api.patch(`/api/categories/${id}`, {
+                name
+            });
+            return data;
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
     static async deleteCategory(id) {
         try {
             const { data } = await api.delete(`/api/categories/${id}`);
+            return data;
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    static async deleteCategoryDiscount(categoryId, discountId) {
+        try {
+            const { data } = await api.patch(`/api/categories/${categoryId}/discount/${discountId}`);
             return data;
         } catch (err) {
             console.error(err);

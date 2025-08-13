@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import MyModal from "../ui/modal/MyModal.jsx";
 import cameraImg from "../../assets/camera.png";
 import categoryImgPlaceHolder from "../../assets/img.svg";
@@ -7,7 +7,7 @@ import Loader from "../Loader.jsx";
 import MyInput from "../ui/input/MyInput.jsx";
 import MyWhiteButton from "../ui/whiteButton/MyWhiteButton.jsx";
 
-const AdminCategoryEditModal = ({visible, category, setVisible}) => {
+const AdminCategoryEditModal = ({visible, category, setVisible, setIsLoadingContent, onUpdate}) => {
     const fileInput = useRef();
     const [isLoading, setIsLoading] = useState(false);
     const [name, setName] = useState(category?.name);
@@ -15,19 +15,53 @@ const AdminCategoryEditModal = ({visible, category, setVisible}) => {
     const [percentStartDate, setPercentStartDate] = useState("")
     const [percentEndDate, setPercentEndDate] = useState("")
     const [description, setDescr] = useState("");
+    const [imageUrl, setImageUrl] = useState(category?.image_url || categoryImgPlaceHolder);
+
+    useEffect(() => {
+        setName(category?.name);
+        setImageUrl(category?.image_url || categoryImgPlaceHolder);
+    }, [category, visible]);
 
     const handleFile = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        setImageUrl(URL.createObjectURL(file));
         setIsLoading(true);
         try {
-            const file = e.target.files[0];
-            if (!file) return;
             const formData = new FormData();
             formData.append('file', file);
             await CategoriesService.updateCategoryImage(category.id, formData);
+            await onUpdate()
         } catch (err) {
             console.error(err);
         } finally {
             setIsLoading(false);
+        }
+    }
+
+    const handleEdit = async (e) => {
+        e.preventDefault()
+        setIsLoadingContent(true);
+        try {
+            const category_id = category.id;
+            await CategoriesService.updateCategoryName(category_id, name);
+            await onUpdate()
+            //
+            // if (percent !== null && percent !== "") {
+            //     await CategoriesService.createCategoryDiscount(
+            //         category_id,
+            //         percent,
+            //         percentStartDate,
+            //         percentEndDate,
+            //         description,
+            //         true
+            //     );
+            // }
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setIsLoadingContent(false);
         }
     }
 
@@ -40,7 +74,7 @@ const AdminCategoryEditModal = ({visible, category, setVisible}) => {
                             <Loader/>
                         </div>
                         :
-                        <div className="relative bg-[#D9D9D9] w-[100px] h-[100px] sm:w-[150px] md:w-[300px] sm:h-[150px] md:h-[300px] overflow-hidden">
+                        <div className="relative bg-[#D9D9D9] w-[100px] h-[100px] sm:w-[150px] md:w-[300px] sm:h-[150px] md:h-[300px]">
                             <input type="file"
                                    accept="image/*"
                                    className="w-full h-full absolute top-0 left-0"
@@ -60,10 +94,10 @@ const AdminCategoryEditModal = ({visible, category, setVisible}) => {
 
                             <img
                                 className="w-full h-full object-cover"
-                                src={category?.image_url || categoryImgPlaceHolder} alt=""/>
+                                src={imageUrl} alt=""/>
                         </div>
                     }
-                    <div className="w-full">
+                    <div className="flex-1">
                         <label className="block mt-4 mb-2 text-sm font-medium">Название категории</label>
                         <MyInput
                             value={name}
@@ -116,7 +150,7 @@ const AdminCategoryEditModal = ({visible, category, setVisible}) => {
                             placeholder="Например: Летняя распродажа"
                         />
                         <div className="mt-[40px]">
-                            <MyWhiteButton>Отправить</MyWhiteButton>
+                            <MyWhiteButton onClick={handleEdit}>Отправить</MyWhiteButton>
                         </div>
                     </div>
                 </div>

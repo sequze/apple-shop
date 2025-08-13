@@ -10,7 +10,7 @@ const Cards = () => {
         <div>
             <div className="mx-auto max-w-[1500px] w-full py-[25px] sm:py-[100px]">
                 <h2 className="text-[24px] sm:text-[36px] inter-300 pl-10 2xl:pl-0">Категории</h2>
-                <div className="hidden lg:flex flex-wrap justify-around mt-[60px] ">
+                <div className={`hidden lg:flex mt-[60px]` + (categories.length > 6 ? " justify-between" : " justify-around")} >
                     {categories.map((category, index) => {
                         const isActive = index === activeIndex;
 

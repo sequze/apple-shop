@@ -29,6 +29,15 @@ const AdminCategory = ({setIsLoading}) => {
         setCategoryName("");
     }
 
+    const refreshCategories = async () => {
+        try {
+            const updated = await CategoriesService.getAllCategories();
+            setCategories(updated);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
     const handleCancel = (e) => {
         e.preventDefault();
         setIsCreateCategory(false);
@@ -270,7 +279,13 @@ const AdminCategory = ({setIsLoading}) => {
 
             </div>
 
-        <AdminCategoryEditModal category={selectedCategory} visible={visible} setVisible={setVisible}/>
+        <AdminCategoryEditModal
+            category={selectedCategory}
+            setIsLoadingContent={setIsLoading}
+            visible={visible}
+            setVisible={setVisible}
+            onUpdate={refreshCategories}
+        />
         </form>
     );
 };
