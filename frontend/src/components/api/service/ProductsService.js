@@ -19,4 +19,54 @@ export default class ProductsService {
         return data;
     }
 
+
+    static async createProducts(name, description, price, category_id) {
+        try {
+            const {data} = await api.post("/api/products/", {
+                name,
+                description,
+                price,
+                category_id
+            })
+
+            return data;
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    static async createProductColor(id, name, stock) {
+        try {
+            const {data} = await api.post(`/api/products/${id}/colors`, {
+                name,
+                stock
+            });
+
+            return data;
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    static async createProductDiscount(id, percent, start_date, end_date, description) {
+        try {
+            const {data} = await api.post(`/api/products/${id}/discount`, {
+                percent,
+                start_date,
+                end_date,
+                description,
+                is_active: true
+            });
+
+            return data;
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    static async createProductImage(formData, alt_text, is_main, color_id){
+
+    }
+
+
 }

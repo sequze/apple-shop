@@ -3,9 +3,20 @@ import MyInput from "../../ui/input/MyInput.jsx";
 import MyWhiteButton from "../../ui/whiteButton/MyWhiteButton.jsx";
 import GreyButton from "../../ui/greyButton/greyButton.jsx";
 
-const DiscountStep = () => {
+const DiscountStep = ({product, setProduct, setStep, handleCancel}) => {
+
+    const handleChange = (val, field) => {
+        return  setProduct(prev => ({
+            ...prev,
+            discount: {
+                ...prev?.discount,
+                [field]: val
+            }
+        }));
+    }
+
     return (
-        <div>
+        <div className="border-2 rounded-2xl p-7">
             <h3 className="inter-400 text-[18px] mb-[20px]">Скидка</h3>
             <label className="block mb-2 text-sm font-medium">Процент скидки</label>
             <MyInput
@@ -15,11 +26,11 @@ const DiscountStep = () => {
                 min={0}
                 max={100}
                 step={1}
-                value={percent}
+                value={product?.discount?.percent}
                 onChange={(e) => {
-                    const val = e.target.value;
+                    const val = Number(e.target.value);
                     if ((!isNaN(val) && val >= 0 && val <= 100) || val === "") {
-                        setPercent(val);
+                        handleChange(val, "percent")
                     }
                 }}
                 placeholder="Например: 15"
@@ -31,25 +42,25 @@ const DiscountStep = () => {
                         min={new Date().toISOString().split("T")[0]}
                         type="date"
                         className="border rounded px-3 py-2 w-full"
-                        value={percentStartDate}
-                        onChange={(e) => setPercentStartDate(e.target.value)}
+                        value={product?.discount?.startDate}
+                        onChange={(e) => handleChange(e.target.value, "startDate")}
                     />
                 </div>
                 <div>
                     <label className="block mb-2 text-sm font-medium">Дата окончания</label>
                     <input
-                        min={new Date().toISOString().split("T")[0]}
+                        min={product?.discount?.startDate || new Date().toISOString().split("T")[0]}
                         type="date"
                         className="border rounded px-3 py-2 w-full"
-                        value={percentEndDate}
-                        onChange={(e) => setPercentEndDate(e.target.value)}
+                        value={product?.discount?.endDate}
+                        onChange={(e) => handleChange(e.target.value, "endDate")}
                     />
                 </div>
             </div>
-            <label className="block mt-4 mb-2 text-sm font-medium">Описание скидки</label>
+            <label className="block mt-4 mb-4 text-sm font-medium">Описание скидки</label>
             <MyInput
-                value={percentDescription}
-                onChange={(e) => percentDescription(e.target.value)}
+                value={product?.discount?.description}
+                onChange={(e) => handleChange(e.target.value, "description")}
                 placeholder="Например: Летняя распродажа"
             />
 
@@ -57,7 +68,7 @@ const DiscountStep = () => {
                 <MyWhiteButton onClick={(e) => {
                     e.preventDefault();
                     setStep(4);
-                }}>Продолжить</MyWhiteButton>
+                }}>Создать продукт</MyWhiteButton>
                 <GreyButton onClick={handleCancel}>Отмена</GreyButton>
             </div>
         </div>

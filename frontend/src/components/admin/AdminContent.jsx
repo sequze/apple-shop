@@ -20,7 +20,7 @@ const AdminContent = () => {
             <div className="max-w-[1500px] w-full relative pt-[130px] pb-[100px] min-h-screen mx-[20px]">
                 <div className="bg-[#fff] rounded-[35px] shadow-md w-full px-[20px] pt-[30px] sm:p-[50px] mb-[30px]">
                     <AdminCategory setIsLoading={setIsLoading}/>
-                    <AdminProducts />
+                    <AdminProducts setIsLoading={setIsLoading}/>
                     <AdminOrders />
                 </div>
             </div>

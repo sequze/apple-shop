@@ -26,7 +26,7 @@ const ImageUploadStep = ({ product, setProduct, setStep, handleCancel }) => {
     const handleChange = (index, field, value) => {
         setProduct(prev => {
             const updatedColors = [...prev.colors];
-            updatedColors[index] = {...updatedColors, [field]: value};
+            updatedColors[index] = {...updatedColors[index], [field]: value};
             return { ...prev, colors: updatedColors };
         });
     }
@@ -69,7 +69,7 @@ const ImageUploadStep = ({ product, setProduct, setStep, handleCancel }) => {
                     />
 
                     <label className="block mt-4 mb-2 text-sm font-medium">Фото для цвета</label>
-                    <div className="relative w-[150px] h-[150px] overflow-hidden rounded-2xl">
+                    <div className="relative w-[150px] h-[150px] overflow-hidden rounded-2xl bg-[#D9D9D9] border-2">
                         <input
                             type="file"
                             accept="image/*"
@@ -84,7 +84,9 @@ const ImageUploadStep = ({ product, setProduct, setStep, handleCancel }) => {
                             className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-0 hover:bg-opacity-50 transition cursor-pointer"
                             onClick={() => fileInputs.current[index].click()}
                         >
-                            <img src={cameraImg} alt="upload" className="w-10 h-10"/>
+                            {!(color?.colorImage) && (
+                                <img src={cameraImg} alt="upload" className="w-10 h-10"/>
+                            )}
                         </div>
                         {color.colorImage && (
                             <img
