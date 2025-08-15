@@ -3,7 +3,7 @@ import MyInput from "../../ui/input/MyInput.jsx";
 import MyWhiteButton from "../../ui/whiteButton/MyWhiteButton.jsx";
 import GreyButton from "../../ui/greyButton/greyButton.jsx";
 
-const DiscountStep = ({product, setProduct, setStep, handleCancel}) => {
+const DiscountStep = ({product, setProduct, setStep, handleCancel, handleCreateProduct}) => {
 
     const handleChange = (val, field) => {
         return  setProduct(prev => ({
@@ -67,6 +67,7 @@ const DiscountStep = ({product, setProduct, setStep, handleCancel}) => {
             <div className="grid gap-3 mt-[20px]">
                 <MyWhiteButton onClick={(e) => {
                     e.preventDefault();
+                    handleCreateProduct()
                     setStep(4);
                 }}>Создать продукт</MyWhiteButton>
                 <GreyButton onClick={handleCancel}>Отмена</GreyButton>

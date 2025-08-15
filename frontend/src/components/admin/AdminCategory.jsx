@@ -6,7 +6,7 @@ import cameraImg from "../../assets/camera.png";
 import categoryImgPlaceHolder from "../../assets/img.svg";
 import {CategoriesService} from "../api/service/CategoriesService.js";
 import {CategoriesContext} from "../../context/CategoriesContext.jsx";
-import AdminCategoryEditModal from "./AdminCategoryEditModal.jsx";
+import AdminCategoryEditModal from "./category/AdminCategoryEditModal.jsx";
 
 const AdminCategory = ({setIsLoading}) => {
     const [isCreateCategory, setIsCreateCategory] = useState(false);

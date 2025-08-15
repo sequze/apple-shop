@@ -35,15 +35,15 @@ const ProductInfoStep = ({handleCancel, product, setProduct, setStep}) => {
                 placeholder="Например: 300$" />
             <label className="block mt-4 mb-2 text-sm font-medium">Назначте категорию</label>
             <select
-                required
                 name="category"
-                    value={product?.category}
-                    onChange={(event) =>
-                        setProduct(prev => ({ ...prev, category: event.target.value }))
-            }>
+                    value={product?.category?.id || ""}
+                    onChange={(event) => {
+                        const selected = categories.find(c => c.id ===  Number(event.target.value));
+                        setProduct(prev => ({...prev, category: selected }));
+            }}>
                 <option disabled value="">Продукт</option>
                 {categories.map((category) => (
-                    <option key={category.id} value={category.name}>{category.name}</option>
+                    <option key={category.id} value={category.id}>{category.name}</option>
                 ))}
             </select>
             <label className="block mt-4 mb-2 text-sm font-medium">Укажите кол-во цветов(от 1 до 5)</label>
@@ -62,9 +62,10 @@ const ProductInfoStep = ({handleCancel, product, setProduct, setStep}) => {
             </select>
 
             <div className="grid gap-3 mt-[20px]">
-                <MyWhiteButton onClick={() => {
+                <MyWhiteButton onClick={(e) => {
+                    e.preventDefault();
                     if (!product.name.trim() || !product.description.trim()
-                        || !product.price.trim() || product.category.trim() === "") {
+                        || !product.price.trim() || !product.category) {
                         alert("Заполните все поля");
                         return;
                     }

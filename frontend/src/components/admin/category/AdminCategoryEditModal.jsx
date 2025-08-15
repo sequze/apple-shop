@@ -1,11 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
-import MyModal from "../ui/modal/MyModal.jsx";
-import cameraImg from "../../assets/camera.png";
-import categoryImgPlaceHolder from "../../assets/img.svg";
-import {CategoriesService} from "../api/service/CategoriesService.js";
-import Loader from "../Loader.jsx";
-import MyInput from "../ui/input/MyInput.jsx";
-import MyWhiteButton from "../ui/whiteButton/MyWhiteButton.jsx";
+import MyModal from "../../ui/modal/MyModal.jsx";
+import cameraImg from "../../../assets/camera.png";
+import categoryImgPlaceHolder from "../../../assets/img.svg";
+import {CategoriesService} from "../../api/service/CategoriesService.js";
+import Loader from "../../Loader.jsx";
+import MyInput from "../../ui/input/MyInput.jsx";
+import MyWhiteButton from "../../ui/whiteButton/MyWhiteButton.jsx";
 
 const AdminCategoryEditModal = ({visible, category, setVisible, setIsLoadingContent, onUpdate}) => {
     const fileInput = useRef();

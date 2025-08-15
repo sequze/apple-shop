@@ -64,8 +64,31 @@ export default class ProductsService {
         }
     }
 
-    static async createProductImage(formData, alt_text, is_main, color_id){
+    static async createProductImage(file, alt_text, is_main, color_id){
+        try {
+            const formData = new FormData();
+            formData.append("file", file);
+            formData.append("alt_text", alt_text);
+            formData.append("is_main", is_main);
+            formData.append("color_id", color_id);
+            const {data} = await api.post("/api/product_images/", formData, {
+                headers: {
+                    'Content-Type': "multipart/form-data"
+                }
+            });
 
+            return data;
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    static async deleteProduct(id) {
+        try {
+            await api.delete(`/api/products/${id}`);
+        } catch (err) {
+            console.error(err);
+        }
     }
 
 
