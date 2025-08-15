@@ -19,6 +19,7 @@ const AdminProducts = ({setIsLoading}) => {
         category: "",
         colorsCount: 1,
         image: null,
+        colors: [],
         discount: {
             percent: 0,
             startDate: "",
@@ -34,6 +35,7 @@ const AdminProducts = ({setIsLoading}) => {
         category: "",
         colorsCount: 1,
         image: null,
+        colors: [],
         discount: {
             percent: 0,
             startDate: "",
@@ -139,6 +141,7 @@ const AdminProducts = ({setIsLoading}) => {
     const handleDeleteProduct = async (id) => {
         try {
             await ProductsService.deleteProduct(id);
+            fetchingPosts();
         } catch (err) {
             console.error(err);
         }
@@ -189,12 +192,17 @@ const AdminProducts = ({setIsLoading}) => {
                     <ul>
                         {productsList.map((prod) => (
                             <li key={prod.id} className="mb-3 border p-3 rounded-lg">
+                                <p>
+                                    {prod.colors?.[0]?.colorImage && (
+                                        <img src={prod.colors[0].colorImage} alt={prod.colors[0]?.colorName || "product"} />
+                                    )}
+                                </p>
                                 <p><strong>Название:</strong> {prod.name}</p>
                                 <p><strong>Описание:</strong> {prod.description}</p>
                                 <p><strong>Цена:</strong> {prod.price}$ </p>
                                 <p><strong>Категория:</strong> {prod.category?.name || "-"}</p>
 
-                                <div className="flex gap-2">
+                                <div className="flex gap-2 mt-4">
                                     <button
                                         onClick={() => handleEditProduct(prod)}
                                         className="px-3 py-1 bg-yellow-400 rounded text-white"
