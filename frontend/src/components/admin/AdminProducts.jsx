@@ -1,16 +1,17 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import GreyButton from "../ui/greyButton/greyButton.jsx";
 import ProductInfoStep from "./product/ProductInfoStep.jsx";
 import ImageUploadStep from "./product/ImageUploadStep.jsx";
 import DiscountStep from "./product/DiscountStep.jsx";
 import ProductsService from "../api/service/ProductsService.js";
+import {CategoriesContext} from "../../context/CategoriesContext.jsx";
+import {CategoriesService} from "../api/service/CategoriesService.js";
 
-const AdminProducts = ({setIsLoading}) => {
+const AdminProducts = ({withLoading}) => {
 
     const [step, setStep] = useState(0);
-
     const [productsList, setProductList] = useState([]);
-
+    const {categories, setCategories} = useContext(CategoriesContext);
 
     const [product, setProduct] = useState({
         name: "",
@@ -45,56 +46,38 @@ const AdminProducts = ({setIsLoading}) => {
     };
 
 
-    const fetchingPosts = async () => {
-        setIsLoading(true);
-        try {
-            const data = await ProductsService.getProducts();
-            setProductList(data);
-        } catch (err) {
-            console.error(err);
-        } finally {
-            setIsLoading(false);
-        }
+    useEffect(() => {
+        const fetchCategories = async () => {
+            const data = await CategoriesService.getAllCategories();
+            setCategories(data);
+        };
+        fetchCategories();
+    }, []);
+
+    const getCategoryName = (id) => {
+        const cat = categories.find(c => c.id === id);
+        return cat ? cat.name : "-";
     };
+
+    const fetchingPosts = useCallback(() => withLoading(async () => {
+        const data = await ProductsService.getProducts();
+        setProductList(data);
+    }), [withLoading]);
 
     useEffect(() => {
         fetchingPosts();
-    }, []);
+    }, [fetchingPosts]);
 
     const handleCancel = () => setProduct(initialProductState);
 
     const handleCreateProduct = async () => {
-        setIsLoading(true);
-
-        console.log({
-            name: product.name,
-            description: product.description,
-            price: product.price,
-            category_id: product?.category?.id
-        });
-
-
-        console.log(product?.colors)
-
-
-        try {
+        await withLoading(async () => {
             const productData = await ProductsService.createProducts(
                 product.name,
                 product.description,
                 product.price,
                 product.category.id
             );
-
-            console.log({
-                id:   productData?.id,
-                percent:   product?.discount?.percent,
-                start_date:   product?.discount?.startDate,
-                end_date:   product?.discount?.endDate,
-                description:   product?.discount?.description
-            })
-
-
-            console.log(productData);
 
             if (!productData) {
                 console.error("Не удалось создать продукт");
@@ -112,40 +95,38 @@ const AdminProducts = ({setIsLoading}) => {
             }
 
 
-            for (let i = 0; i < product?.colors.length; i++) {
-                const color = product?.colors[i];
-                const colorData = await ProductsService.createProductColor(
-                    productData?.id,
-                    color?.colorName,
-                    color?.colorQuantity
-                );
-
-                if (color?.colorImage) {
-                    await ProductsService.createProductImage(
-                        color?.colorImage,
-                        color?.colorName,
-                        i === 0,
-                        colorData.id
+            await Promise.all(
+                product.colors.map(async (color, i) => {
+                    const colorData = await ProductsService.createProductColor(
+                        productData.id,
+                        color.colorName,
+                        color.colorQuantity
                     );
-                }
-            }
 
+                    if (color.colorImage) {
+                        await ProductsService.createProductImage(
+                            color.colorImage,
+                            color.colorName,
+                            i === 0,
+                            colorData.id
+                        );
+                    }
+                })
+            );
+
+            setProduct(initialProductState);
+            setStep(0);
             console.log("Товар создан успешно!");
-        } catch (err) {
-            console.error(err);
-        } finally {
-            setIsLoading(false);
-        }
-    }
+        });
+    };
 
     const handleDeleteProduct = async (id) => {
-        try {
+        await withLoading(async () => {
             await ProductsService.deleteProduct(id);
-            fetchingPosts();
-        } catch (err) {
-            console.error(err);
-        }
-    }
+            const data = await ProductsService.getProducts();
+            setProductList(data);
+        });
+    };
 
     const handleEditProduct = async (prod) => {
 
@@ -185,37 +166,58 @@ const AdminProducts = ({setIsLoading}) => {
             </form>
 
             <div className="mt-10">
-                <h3 className="text-xl font-semibold mb-4">Список продуктов</h3>
+                <h3 className="text-xl font-semibold mb-6">Список продуктов</h3>
                 {productsList.length === 0 ? (
                     <p>Продукты не найдены</p>
                 ) : (
-                    <ul>
+                    <ul className="grid grid-cols-1 xl:grid-cols-2 gap-6">
                         {productsList.map((prod) => (
-                            <li key={prod.id} className="mb-3 border p-3 rounded-lg">
-                                <p>
-                                    {prod.colors?.[0]?.colorImage && (
-                                        <img src={prod.colors[0].colorImage} alt={prod.colors[0]?.colorName || "product"} />
-                                    )}
-                                </p>
-                                <p><strong>Название:</strong> {prod.name}</p>
-                                <p><strong>Описание:</strong> {prod.description}</p>
-                                <p><strong>Цена:</strong> {prod.price}$ </p>
-                                <p><strong>Категория:</strong> {prod.category?.name || "-"}</p>
+                            <li
+                                key={prod.id}
+                                className="justify-between mb-3 border p-3 rounded-lg flex items-center gap-7 w-full xl:w-fit"
+                            >
+                                <div className="flex items-center gap-7">
+                                    <div className="w-40 h-40 lg:w-60 lg:h-60 xl:w-48 xl:h-48 bg-gray-100 flex items-center justify-center rounded-lg overflow-hidden">
+                                        {prod.colors[0]?.images[0]?.url ? (
+                                            <img
+                                                src={prod.colors[0].images[0].url}
+                                                alt={prod.colors[0].images[0]?.alt_text || prod.colors[0]?.name || "product"}
+                                                className="w-full h-full object-cover"
+                                            />
+                                        ) : (
+                                            <span className="text-gray-400 text-sm">Нет фото</span>
+                                        )}
+                                    </div>
 
-                                <div className="flex gap-2 mt-4">
-                                    <button
-                                        onClick={() => handleEditProduct(prod)}
-                                        className="px-3 py-1 bg-yellow-400 rounded text-white"
-                                    >
-                                        Изменить
-                                    </button>
-                                    <button
-                                        onClick={() => handleDeleteProduct(prod.id)}
-                                        className="px-3 py-1 bg-red-500 rounded text-white"
-                                    >
-                                        Удалить
-                                    </button>
+
+                                    <div>
+                                        <p><strong>Название:</strong>{prod.name}</p>
+                                        <p><strong>Цена:</strong>{prod.price}$ </p>
+                                        <p><strong>Категория:</strong>{getCategoryName(prod.category_id) || "-"}</p>
+                                    </div>
                                 </div>
+
+
+                                <div>
+                                    <div className="flex gap-2 mt-4">
+                                        <button
+                                            onClick={() => handleEditProduct(prod)}
+                                            className="px-3 py-1 rounded-full bg-blue-500 text-white text-sm hover:bg-blue-600"
+                                        >
+                                            Редактировать
+                                        </button>
+                                        <button
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                handleDeleteProduct(prod.id)
+                                            }}
+                                            className="px-3 py-1 rounded-full bg-red-500 text-white text-sm hover:bg-red-600"
+                                        >
+                                            Удалить
+                                        </button>
+                                    </div>
+                                </div>
+
                             </li>
                         ))}
                     </ul>
