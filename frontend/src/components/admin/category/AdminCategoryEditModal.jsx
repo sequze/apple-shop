@@ -7,7 +7,7 @@ import Loader from "../../Loader.jsx";
 import MyInput from "../../ui/input/MyInput.jsx";
 import MyWhiteButton from "../../ui/whiteButton/MyWhiteButton.jsx";
 
-const AdminCategoryEditModal = ({visible, category, setVisible, setIsLoadingContent, onUpdate}) => {
+const AdminCategoryEditModal = ({visible, category, setVisible, onUpdate}) => {
     const fileInput = useRef();
     const [isLoading, setIsLoading] = useState(false);
     const [name, setName] = useState(category?.name);
@@ -32,7 +32,7 @@ const AdminCategoryEditModal = ({visible, category, setVisible, setIsLoadingCont
             const formData = new FormData();
             formData.append('file', file);
             await CategoriesService.updateCategoryImage(category.id, formData);
-            await onUpdate()
+            await onUpdate();
         } catch (err) {
             console.error(err);
         } finally {
@@ -42,27 +42,15 @@ const AdminCategoryEditModal = ({visible, category, setVisible, setIsLoadingCont
 
     const handleEdit = async (e) => {
         e.preventDefault()
-        setIsLoadingContent(true);
-        try {
-            const category_id = category.id;
-            await CategoriesService.updateCategoryName(category_id, name);
-            await onUpdate()
-            //
-            // if (percent !== null && percent !== "") {
-            //     await CategoriesService.createCategoryDiscount(
-            //         category_id,
-            //         percent,
-            //         percentStartDate,
-            //         percentEndDate,
-            //         description,
-            //         true
-            //     );
-            // }
-        } catch (err) {
-            console.error(err);
-        } finally {
-            setIsLoadingContent(false);
-        }
+        await withLoading(async () => {
+            try {
+                const category_id = category.id;
+                await CategoriesService.updateCategoryName(category_id, name);
+                await onUpdate()
+            } catch (err) {
+                console.error(err);
+            }
+        });
     }
 
     return (

@@ -1,6 +1,6 @@
 import React, {useRef} from 'react';
-import cameraImg from "../../assets/camera.png";
-import categoryImgPlaceHolder from "../../assets/img.svg";
+import cameraImg from "../../../assets/camera.png";
+import categoryImgPlaceHolder from "../../../assets/img.svg";
 import MyWhiteButton from "../../ui/whiteButton/MyWhiteButton.jsx";
 import GreyButton from "../../ui/greyButton/greyButton.jsx";
 

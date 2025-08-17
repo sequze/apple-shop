@@ -30,8 +30,10 @@ const AdminCategory = ({withLoading}) => {
 
     const refreshCategories = async () => {
         try {
-            const updated = await CategoriesService.getAllCategories();
-            setCategories(updated);
+            await withLoading(async () => {
+                const updated = await CategoriesService.getAllCategories();
+                setCategories(updated);
+            });
         } catch (err) {
             console.error(err);
         }
@@ -54,37 +56,38 @@ const AdminCategory = ({withLoading}) => {
 
     const handleCreateCategory = async (e) => {
         e.preventDefault()
-        setIsLoading(true);
-        try {
-            const category = await CategoriesService.createCategory(categoryName);
-            const category_id = category.id;
+        await withLoading(async () => {
+            try {
+                const category = await CategoriesService.createCategory(categoryName);
+                const category_id = category.id;
 
-            const formData = new FormData();
-            formData.append('file', categoryImageFile);
-            await CategoriesService.updateCategoryImage(category_id, formData);
-            if (percent !== null && percent !== "") {
-                await CategoriesService.createCategoryDiscount(
-                    category_id,
-                    percent,
-                    percentStartDate,
-                    percentEndDate,
-                    description,
-                    true
-                );
+                const formData = new FormData();
+                formData.append('file', categoryImageFile);
+                await CategoriesService.updateCategoryImage(category_id, formData);
+                if (percent !== null && percent !== "") {
+                    await CategoriesService.createCategoryDiscount(
+                        category_id,
+                        percent,
+                        percentStartDate,
+                        percentEndDate,
+                        description,
+                        true
+                    );
+                }
+
+                setCategories((prev) => [...prev, category])
+            } catch (err) {
+                console.error(err);
             }
-
-            setCategories((prev) => [...prev, category])
-        } catch (err) {
-            console.error(err);
-        } finally {
-            setIsLoading(false);
-        }
+        })
     }
 
     const handleDelete = async (id) => {
         try {
-            await CategoriesService.deleteCategory(id);
-            setCategories(prev => prev.filter(category => category.id !== id));
+            await withLoading(async () => {
+                await CategoriesService.deleteCategory(id);
+                setCategories(prev => prev.filter(category => category.id !== id));
+            });
         } catch (err) {
             console.error(err)
         }
@@ -152,7 +155,7 @@ const AdminCategory = ({withLoading}) => {
 
         <AdminCategoryEditModal
             category={selectedCategory}
-            setIsLoadingContent={withLoading}
+            withLoading={withLoading}
             visible={visible}
             setVisible={setVisible}
             onUpdate={refreshCategories}
