@@ -92,7 +92,30 @@ export default class ProductsService {
     }
 
     static async updateProduct(id, name, description, price, category_id) {
+        try {
+            await api.patch(`/api/products/${id}`, {
+                name,
+                description,
+                price,
+                category_id
+            })
+        } catch (err) {
+            console.error(err);
+        }
+    }
 
+    static async updateDiscount(discount_id, percent, start_date, end_date, description, is_active) {
+        try {
+            await api.patch(`/api/discounts/${discount_id}`, {
+                percent,
+                start_date,
+                end_date,
+                description,
+                is_active
+            })
+        } catch (err) {
+            console.error(err);
+        }
     }
 
 

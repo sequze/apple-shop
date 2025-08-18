@@ -77,8 +77,8 @@ const ProductEditModal = ({visible, setVisible, product, onSave}) => {
             );
 
             if (editedProduct.discount?.percent) {
-                await ProductsService.updateProductDiscount(
-                    editedProduct.id,
+                await ProductsService.updateDiscount(
+                    editedProduct.discount.id,
                     editedProduct.discount.percent,
                     new Date(editedProduct.discount.startDate).toISOString(),
                     new Date(editedProduct.discount.endDate).toISOString(),
@@ -107,7 +107,10 @@ const ProductEditModal = ({visible, setVisible, product, onSave}) => {
                 })
             );
 
-            onSave();
+            if (onSave) {
+                await onSave();
+            }
+
             setVisible(false);
         } catch (e) {
             console.error("Ошибка при обновлении продукта:", e);
@@ -216,12 +219,14 @@ const ProductEditModal = ({visible, setVisible, product, onSave}) => {
                 {/* Кнопки */}
                 <div className="flex justify-end gap-3 mt-6">
                     <button
+                        type="button"
                         onClick={() => setVisible(false)}
                         className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition"
                     >
                         Отмена
                     </button>
                     <button
+                        type="button"
                         onClick={handleSave}
                         className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
                     >

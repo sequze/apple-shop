@@ -177,7 +177,7 @@ const AdminProducts = ({withLoading}) => {
                 :
                 (
                     <div className="mt-10">
-                        <h3 className="text-xl font-semibold mb-6">Список продуктов</h3>
+                        <div className="inter-400 text-[18px] py-[20px]">Список всех продуктов</div>
                         {productsList.length === 0 ? (
                             <p>Продукты не найдены</p>
                         ) : (
@@ -202,9 +202,9 @@ const AdminProducts = ({withLoading}) => {
 
 
                                             <div>
-                                                <p><strong>Название:</strong>{prod.name}</p>
-                                                <p><strong>Цена:</strong>{prod.price}$ </p>
-                                                <p><strong>Категория:</strong>{getCategoryName(prod.category_id) || "-"}</p>
+                                                <p><strong>Название: </strong>{prod.name}</p>
+                                                <p><strong>Цена: </strong>{prod.price}$ </p>
+                                                <p><strong>Категория: </strong>{getCategoryName(prod.category_id) || "-"}</p>
                                             </div>
                                         </div>
 
