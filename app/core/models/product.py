@@ -15,6 +15,7 @@ if TYPE_CHECKING:
     from .category import Category
     from .product_color import ProductColor
     from .discount import Discount
+    from .product_characteristic import ProductCharacteristic
 
 class Product(CreatedAtMixin, IntIdPkMixin, Base):
     name: Mapped[str]
@@ -32,4 +33,10 @@ class Product(CreatedAtMixin, IntIdPkMixin, Base):
         secondary=product_discount_association_table,
         back_populates="products",
         lazy="selectin",
+    )
+    characteristics: Mapped[list["ProductCharacteristic"]]   = relationship(
+        back_populates="product",
+        lazy="selectin",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
     )
