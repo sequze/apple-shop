@@ -3,7 +3,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from core.repositories.uow import UnitOfWork
 from plugins.s3_storage.client import InvalidFileTypeError
-from plugins.s3_storage.utils import delete_file_from_storage, upload_file_to_storage
+from plugins.s3_storage.utils import delete_file_from_storage, upload_image
 from .repository import CategoryRepository
 from .schemas import CategoryCreateSchema, CategoryDTO, CategoryUpdateSchema
 from ..product.schemas import ProductDTO
@@ -63,16 +63,13 @@ class CategoryService:
             return [ProductDTO.model_validate(product) for product in category.products]
 
     async def update_image(self, category_id: int, file: UploadFile) -> str:
-        if not file.content_type.startswith("image/"):
-            raise InvalidFileTypeError
         async with self.uow as uow:
             category = await self.repository.get_by_id(uow.session, category_id)
             if category is None:
                     raise CategoryNotFoundError
             if category.image_url:
                 await delete_file_from_storage(category.image_url)
-            file_binary = await file.read()
-            file_path = await upload_file_to_storage(file_binary, file.filename)
+            file_path = await upload_image(file, file.filename)
             try:
                 category.image_url = file_path
                 await uow.commit()

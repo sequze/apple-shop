@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio.session import AsyncSession
 from core.models import ProductImage, ProductColor
 from core.repositories.uow import UnitOfWork
 from plugins.s3_storage.client import UploadingFileError, DeleteFileError, InvalidFileTypeError
-from plugins.s3_storage.utils import upload_file_to_storage, delete_file_from_storage
+from plugins.s3_storage.utils import upload_image, delete_file_from_storage
 from services.colors.service import ProductColorNotFoundError
 from services.product_image.repository import ProductImageRepository
 from services.product_image.schemas import ProductImageDTO, ProductImageCreate, \
@@ -48,9 +48,8 @@ class ProductImageService:
                 raise ProductColorNotFoundError
             if data.is_main:
                 await self.__validate_main_image(uow.session, color_id=data.color_id)
-            file_binary = await file.read()
             try:
-                file_path = await upload_file_to_storage(file_binary, file.filename)
+                file_path = await upload_image(file, file.filename)
             except UploadingFileError:
                 raise
             data_dict = {
