@@ -5,6 +5,7 @@ from datetime import datetime
 
 from services.colors.schemas import ProductColorDTO
 from services.discount.schemas import DiscountDTO
+from services.product_characteristics.schemas import ProductCharacteristicDTO
 
 
 class ProductBaseSchema(BaseModel):
@@ -31,6 +32,7 @@ class ProductDTO(ProductBaseSchema):
     colors: list[ProductColorDTO]
     created_at: datetime
     category_id: PositiveInt | None = None
+    characteristics: list[ProductCharacteristicDTO]
 
     class Config:
         from_attributes = True
