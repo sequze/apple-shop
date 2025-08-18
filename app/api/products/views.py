@@ -132,10 +132,9 @@ async def create_product_discount(
         data: DiscountCreateSchema,
         admin: AdminUserDep,
         use_case = Depends(create_product_discount_use_case),
-):
+) -> DiscountDTO:
     try:
-        await use_case.execute(data, product_id)
-        return {"status": "ok"}
+        return await use_case.execute(data, product_id)
     except ProductNotFoundError:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,

@@ -141,13 +141,14 @@ class CreateProductDiscountUseCase:
         self.discount_rep = discount_rep
         self.uow = uow
 
-    async def execute(self, data: DiscountCreateSchema, product_id) -> None:
+    async def execute(self, data: DiscountCreateSchema, product_id) -> DiscountDTO:
         async with self.uow as uow:
             product = await self.product_rep.get_by_id(uow.session, product_id)
             if product is None: raise ProductNotFoundError
             discount = await self.discount_rep.create(uow.session, data.model_dump())
             product.discounts.append(discount)
             await uow.commit()
+            return DiscountDTO.model_validate(discount)
 
 class CreateCategoryDiscountUseCase:
     def __init__(
@@ -160,7 +161,7 @@ class CreateCategoryDiscountUseCase:
         self.discount_rep = discount_rep
         self.uow = uow
 
-    async def execute(self, data: DiscountCreateSchema, category_id) -> None:
+    async def execute(self, data: DiscountCreateSchema, category_id) -> DiscountDTO:
         async with self.uow as uow:
             category = await self.category_rep.get_with_products(uow.session, category_id)
             if category is None: raise CategoryNotFoundError
@@ -168,6 +169,7 @@ class CreateCategoryDiscountUseCase:
             for product in category.products:
                 product.discounts.append(discount)
             await uow.commit()
+            return DiscountDTO.model_validate(discount)
 
 
 class DeleteDiscountFromCategoryUseCase:
