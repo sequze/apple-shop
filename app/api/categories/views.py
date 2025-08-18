@@ -56,7 +56,7 @@ async def create_category(
         data: CategoryCreateSchema,
         category_service: category_service_dep,
         admin: AdminUserDep,
-):
+) -> CategoryDTO:
     res = await category_service.create(data)
     return res
 
@@ -94,7 +94,7 @@ async def delete_category(
         )
 
 @router.post("/{category_id}/discount")
-async def create_product_discount(
+async def create_category_discount(
         category_id: int,
         data: DiscountCreateSchema,
         admin: AdminUserDep,
