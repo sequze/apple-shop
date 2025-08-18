@@ -1,10 +1,10 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, Form
 
 from api.dependencies import product_service, product_delete_use_case, get_products_use_case, AdminUserDep, \
-    product_color_service, create_product_discount_use_case, PaginationParams
-from plugins.s3_storage.client import DeleteFileError
+    product_color_service, create_product_discount_use_case, PaginationParams, product_characteristic_service
+from plugins.s3_storage.client import DeleteFileError, UploadingFileError, InvalidFileTypeError
 from services.category.service import CategoryNotFoundError
 from services.colors.schemas import ProductColorCreateSchema, ProductColorDTO, ProductColorBaseSchema
 from services.colors.service import ProductColorService
@@ -13,12 +13,15 @@ from services.discount.service import AddDiscountToProductUseCase, DiscountNotFo
 from services.product.schemas import ProductDTO, ProductCreateSchema, ProductUpdateSchema
 from services.product.service import ProductService, ProductDeleteUseCase
 from services.product.exceptions import ProductNotFoundError
+from services.product_characteristics.schemas import ProductCharacteristicDTO, ProductCharacteristicCreate, \
+    ProductCharacteristicUpdate
+from services.product_characteristics.service import ProductCharacteristicService, CharacteristicNotFoundError
 
 router = APIRouter()
 
 product_service_dep = Annotated[ProductService, Depends(product_service)]
 
-
+ProductCharacteristicServiceDep = Annotated[ProductCharacteristicService, Depends(product_characteristic_service)]
 @router.get("/")
 async def get_all_products(
         pagination: PaginationParams,
@@ -129,10 +132,9 @@ async def create_product_discount(
         data: DiscountCreateSchema,
         admin: AdminUserDep,
         use_case = Depends(create_product_discount_use_case),
-):
+) -> DiscountDTO:
     try:
-        await use_case.execute(data, product_id)
-        return {"status": "ok"}
+        return await use_case.execute(data, product_id)
     except ProductNotFoundError:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -158,4 +160,89 @@ async def delete_product_discount(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Discount not found",
+        )
+
+@router.post("/{product_id}/characteristics/")
+async def create_product_characteristic(
+        product_id: int,
+        service: ProductCharacteristicServiceDep,
+        admin: AdminUserDep,
+        file: UploadFile | None = None,
+        name: str | None = Form(default=None),
+        value: str | None = Form(default=None),
+) -> ProductCharacteristicDTO:
+    try:
+        data = ProductCharacteristicCreate(
+            name=name,
+            value=value,
+        )
+        return await service.create(file, data, product_id)
+    except ProductNotFoundError:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Product not found",
+        )
+    except UploadingFileError:
+        raise HTTPException(
+            503,
+            detail="Uploading file error"
+        )
+    except InvalidFileTypeError:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Only image files are allowed",
+        )
+
+@router.patch("/{product_id}/characteristics/{characteristic_id}")
+async def update_product_characteristic(
+        product_id: int,
+        characteristic_id: int,
+        service: ProductCharacteristicServiceDep,
+        admin: AdminUserDep,
+        name: str | None = Form(default=None),
+        value: str | None = Form(default=None),
+        file: UploadFile | None = None,
+) -> ProductCharacteristicDTO:
+    try:
+        data = ProductCharacteristicUpdate(name=name, value=value)
+        return await service.update(file, data, product_id, characteristic_id)
+    except CharacteristicNotFoundError:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Characteristic not found",
+        )
+    except UploadingFileError:
+        raise HTTPException(
+            503,
+            detail="Uploading file error"
+        )
+    except DeleteFileError:
+        raise HTTPException(
+            503,
+            detail="Delete file error"
+        )
+    except InvalidFileTypeError:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Only image files are allowed",
+        )
+
+@router.delete("/{product_id}/characteristics/{characteristic_id}")
+async def delete_product_characteristic(
+        product_id: int,
+        characteristic_id: int,
+        service: ProductCharacteristicServiceDep,
+        admin: AdminUserDep,
+) -> ProductCharacteristicDTO:
+    try:
+        return await service.delete(characteristic_id,product_id)
+    except CharacteristicNotFoundError:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Characteristic not found",
+        )
+    except DeleteFileError:
+        raise HTTPException(
+            503,
+            detail="Delete file error"
         )

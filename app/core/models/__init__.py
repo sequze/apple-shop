@@ -14,6 +14,7 @@ __all__ = [
     "ProductImage",
     "db_helper",
     "RefreshSession",
+    "ProductCharacteristic",
 ]
 
 from .refresh_session import RefreshSession
@@ -28,3 +29,4 @@ from .product_image import ProductImage
 from .db_helper import db_helper
 from .user import User
 from .product_color import ProductColor
+from .product_characteristic import ProductCharacteristic

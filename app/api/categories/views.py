@@ -9,7 +9,7 @@ from services.category.schemas import CategoryDTO, CategoryCreateSchema, Categor
 from services.category.service import CategoryService, CategoryNotFoundError
 from api.dependencies import category_service, AdminUserDep, create_category_discount_use_case, \
     delete_discount_from_category_use_case
-from services.discount.schemas import DiscountCreateSchema
+from services.discount.schemas import DiscountCreateSchema, DiscountDTO
 from services.product.schemas import ProductDTO
 
 router = APIRouter()
@@ -56,7 +56,7 @@ async def create_category(
         data: CategoryCreateSchema,
         category_service: category_service_dep,
         admin: AdminUserDep,
-):
+) -> CategoryDTO:
     res = await category_service.create(data)
     return res
 
@@ -94,15 +94,14 @@ async def delete_category(
         )
 
 @router.post("/{category_id}/discount")
-async def create_product_discount(
+async def create_category_discount(
         category_id: int,
         data: DiscountCreateSchema,
         admin: AdminUserDep,
         use_case = Depends(create_category_discount_use_case),
-):
+) -> DiscountDTO:
     try:
-        await use_case.execute(data, category_id)
-        return {"status": "ok"}
+        return await use_case.execute(data, category_id)
     except CategoryNotFoundError:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,

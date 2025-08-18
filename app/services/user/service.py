@@ -7,7 +7,7 @@ from core.repositories.uow import UnitOfWork
 from .repository import UserRepository
 from core.auth.utils import get_password_hash
 from services.order.schemas import OrderDTO
-from plugins.s3_storage.utils import upload_file_to_storage, delete_file_from_storage
+from plugins.s3_storage.utils import upload_image, delete_file_from_storage
 
 class UserNotFoundError(Exception):
     """User not found"""
@@ -89,6 +89,9 @@ class UserService:
             user = await self.repository.get_by_id(session, id)
             if user is None:
                 raise UserNotFoundError
+            if user.profile_image_url:
+                await delete_file_from_storage(user.profile_image_url)
+                user.profile_image_url = None
             await self.repository.delete(session, user)
             await session.commit()
             return UserDTO.model_validate(user)
@@ -118,8 +121,7 @@ class UserService:
                     raise UserNotFoundError
             if user.profile_image_url:
                 await delete_file_from_storage(user.profile_image_url)
-            file_binary = await file.read()
-            file_path = await upload_file_to_storage(file_binary, file.filename)
+            file_path = await upload_image(file, file.filename)
             try:
                 user.profile_image_url = file_path
                 await uow.session.commit()

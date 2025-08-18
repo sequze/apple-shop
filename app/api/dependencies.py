@@ -18,6 +18,8 @@ from services.order.service import OrderService, DeleteOrderUseCase, CreateOrder
 from services.order_item.repository import OrderItemRepository
 from services.product.repository import ProductRepository
 from services.product.service import ProductService, ProductDeleteUseCase, GetProductsUseCase
+from services.product_characteristics.repository import ProductCharacteristicRepository
+from services.product_characteristics.service import ProductCharacteristicService
 from services.product_image.repository import ProductImageRepository
 from services.product_image.service import ProductImageService
 from services.user import UserDTO
@@ -111,8 +113,12 @@ def create_category_discount_use_case() -> CreateCategoryDiscountUseCase:
 
 def delete_discount_from_category_use_case() -> DeleteDiscountFromCategoryUseCase:
     return DeleteDiscountFromCategoryUseCase(unit_of_work(), CategoryRepository())
-# auth dependencies
 
+def product_characteristic_service() -> ProductCharacteristicService:
+    return ProductCharacteristicService(ProductCharacteristicRepository(), unit_of_work())
+
+
+# auth dependencies
 
 http_bearer = HTTPBearer()
 
