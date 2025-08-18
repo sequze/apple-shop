@@ -3,7 +3,7 @@ import MyInput from "../../ui/input/MyInput.jsx";
 import MyWhiteButton from "../../ui/whiteButton/MyWhiteButton.jsx";
 import GreyButton from "../../ui/greyButton/greyButton.jsx";
 
-const DiscountStep = ({handleCancel, handleCreateCategory, setDescription, percent, setPercent, percentStartDate, percentEndDate, setPercentEndDate, setPercentStartDate}) => {
+const DiscountStep = ({handleCancel, handleCreateCategory, setDescription, percent, setPercent, percentStartDate, percentEndDate, setPercentEndDate, setPercentStartDate, description}) => {
     return (
         <div>
             <h3 className="inter-400 text-[18px] mb-[20px]">Скидка</h3>

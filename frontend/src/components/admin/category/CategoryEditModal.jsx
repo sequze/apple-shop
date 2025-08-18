@@ -7,14 +7,14 @@ import Loader from "../../Loader.jsx";
 import MyInput from "../../ui/input/MyInput.jsx";
 import MyWhiteButton from "../../ui/whiteButton/MyWhiteButton.jsx";
 
-const AdminCategoryEditModal = ({visible, category, setVisible, onUpdate}) => {
+const CategoryEditModal = ({visible, category, setVisible, onUpdate}) => {
     const fileInput = useRef();
     const [isLoading, setIsLoading] = useState(false);
     const [name, setName] = useState(category?.name);
     const [percent, setPercent] = useState("");
     const [percentStartDate, setPercentStartDate] = useState("")
     const [percentEndDate, setPercentEndDate] = useState("")
-    const [description, setDescr] = useState("");
+    const [description, setDescription] = useState("");
     const [imageUrl, setImageUrl] = useState(category?.image_url || categoryImgPlaceHolder);
 
     useEffect(() => {
@@ -134,7 +134,7 @@ const AdminCategoryEditModal = ({visible, category, setVisible, onUpdate}) => {
                         <label className="block mt-4 mb-2 text-sm font-medium">Описание скидки</label>
                         <MyInput
                             value={description}
-                            onChange={(e) => setDescr(e.target.value)}
+                            onChange={(e) => setDescription(e.target.value)}
                             placeholder="Например: Летняя распродажа"
                         />
                         <div className="mt-[40px]">
@@ -147,4 +147,4 @@ const AdminCategoryEditModal = ({visible, category, setVisible, onUpdate}) => {
     );
 };
 
-export default AdminCategoryEditModal;
+export default CategoryEditModal;

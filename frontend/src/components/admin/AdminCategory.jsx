@@ -2,10 +2,10 @@ import React, {useContext, useState} from 'react';
 import GreyButton from "../ui/greyButton/greyButton.jsx";
 import {CategoriesService} from "../api/service/CategoriesService.js";
 import {CategoriesContext} from "../../context/CategoriesContext.jsx";
-import AdminCategoryEditModal from "./category/AdminCategoryEditModal.jsx";
+import CategoryEditModal from "./category/CategoryEditModal.jsx";
 import NameStep from "./category/NameStep.jsx";
 import ImgStep from "./category/ImgStep.jsx";
-import DiscountStep from "./product/DiscountStep.jsx";
+import DiscountStep from "./category/DiscountStep.jsx";
 import ListCategories from "./category/ListCategories.jsx";
 
 const AdminCategory = ({withLoading}) => {
@@ -153,7 +153,7 @@ const AdminCategory = ({withLoading}) => {
                 handleDelete={handleDelete}
             />
 
-        <AdminCategoryEditModal
+        <CategoryEditModal
             category={selectedCategory}
             withLoading={withLoading}
             visible={visible}

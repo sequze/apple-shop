@@ -91,5 +91,9 @@ export default class ProductsService {
         }
     }
 
+    static async updateProduct(id, name, description, price, category_id) {
+
+    }
+
 
 }

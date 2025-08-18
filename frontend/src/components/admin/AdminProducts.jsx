@@ -5,15 +5,17 @@ import ImageUploadStep from "./product/ImageUploadStep.jsx";
 import DiscountStep from "./product/DiscountStep.jsx";
 import ProductsService from "../api/service/ProductsService.js";
 import {CategoriesContext} from "../../context/CategoriesContext.jsx";
-import {CategoriesService} from "../api/service/CategoriesService.js";
 import Loader from "../Loader.jsx";
+import ProductEditModal from "./product/ProductEditModal.jsx";
 
 const AdminProducts = ({withLoading}) => {
 
     const [step, setStep] = useState(0);
     const [productsList, setProductList] = useState([]);
-    const {categories, setCategories} = useContext(CategoriesContext);
+    const {categories} = useContext(CategoriesContext);
     const [isLoading, setIsLoading] = useState(false);
+    const [visible, setVisible] = useState(false);
+    const [selectProd, setSelectProd] = useState(null);
 
     const [product, setProduct] = useState({
         name: "",
@@ -56,13 +58,8 @@ const AdminProducts = ({withLoading}) => {
     useEffect(() => {
         const loadData = (async () => {
             setIsLoading(true);
-
             try {
-                const [categoriesData, productsData] = await Promise.all([
-                    CategoriesService.getAllCategories(),
-                    ProductsService.getProducts()
-                ]);
-                setCategories(categoriesData);
+                const productsData = await ProductsService.getProducts();
                 setProductList(productsData);
             } catch (error) {
                 console.error('Failed to load data:', error);
@@ -135,7 +132,8 @@ const AdminProducts = ({withLoading}) => {
     };
 
     const handleEditProduct = async (prod) => {
-
+        setSelectProd(prod);
+        setVisible(true);
     }
 
     return (
@@ -183,14 +181,14 @@ const AdminProducts = ({withLoading}) => {
                         {productsList.length === 0 ? (
                             <p>Продукты не найдены</p>
                         ) : (
-                            <ul className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                            <ul className="grid grid-cols-1 xl:grid-cols-2 xl:gap-3 2xl:gap-6">
                                 {productsList.map((prod) => (
                                     <li
                                         key={prod.id}
-                                        className="justify-between mb-3 border p-3 rounded-lg flex items-center gap-7 w-full xl:w-fit"
+                                        className="justify-between mb-3 border p-3 rounded-lg flex items-center gap-7 w-full"
                                     >
-                                        <div className="flex items-center gap-7">
-                                            <div className="w-40 h-40 lg:w-60 lg:h-60 xl:w-48 xl:h-48 bg-gray-100 flex items-center justify-center rounded-lg overflow-hidden">
+                                        <div className="flex items-center">
+                                            <div className="w-40 h-40  bg-gray-100 flex items-center justify-center rounded-lg overflow-hidden mr-3 xl:mr-7">
                                                 {prod.colors[0]?.images[0]?.url ? (
                                                     <img
                                                         src={prod.colors[0].images[0].url}
@@ -212,7 +210,7 @@ const AdminProducts = ({withLoading}) => {
 
 
                                         <div>
-                                            <div className="flex gap-2 mt-4">
+                                            <div className="flex gap-2 mt-4 flex-row xl:flex-col 2xl:flex-row">
                                                 <button
                                                     onClick={() => handleEditProduct(prod)}
                                                     className="px-3 py-1 rounded-full bg-blue-500 text-white text-sm hover:bg-blue-600"
@@ -235,6 +233,16 @@ const AdminProducts = ({withLoading}) => {
                                 ))}
                             </ul>
                         )}
+                        <ProductEditModal
+                            visible={visible}
+                            setVisible={setVisible}
+                            product={selectProd}
+                            onSave={async () => {
+                                const data = await ProductsService.getProducts();
+                                setProductList(data);
+                            }}
+                        />
+
                     </div>
                 )}
         </div>
