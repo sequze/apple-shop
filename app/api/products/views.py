@@ -116,8 +116,7 @@ async def create_product_color(
     try:
         return await service.create(
             ProductColorCreateSchema(
-                name=data.name,
-                stock=data.stock,
+                **data.model_dump(),
                 product_id=product_id,
             ))
     except ProductNotFoundError:

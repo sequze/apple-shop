@@ -8,6 +8,7 @@ from services.product_image.schemas import ProductImageDTO
 class ProductColorBaseSchema(BaseModel):
     name: str
     stock: NonNegativeInt
+    color_code: str
 
 class ProductColorCreateSchema(ProductColorBaseSchema):
     product_id: PositiveInt
@@ -15,6 +16,7 @@ class ProductColorCreateSchema(ProductColorBaseSchema):
 class ProductColorUpdateSchema(BaseModel):
     name: str | None = None
     stock: NonNegativeInt | None = None
+    color_code: str | None = None
 
 class ProductColorDTO(ProductColorBaseSchema):
     id: PositiveInt
