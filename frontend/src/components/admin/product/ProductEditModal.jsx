@@ -90,7 +90,6 @@ const ProductEditModal = ({visible, setVisible, product, onSave}) => {
                 editedProduct.colors.map(async (color, i) => {
                     await ProductsService.updateProductColor(
                         color.id,
-                        editedProduct.id,
                         color.colorName,
                         color.colorQuantity,
                         color.colorCode

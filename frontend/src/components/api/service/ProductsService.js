@@ -118,5 +118,18 @@ export default class ProductsService {
         }
     }
 
+    static async updateProductColor(color_id, name, stock) {
+        try {
+            const { data } = await api.patch(`/api/product_colors/${color_id}`, {
+                name,
+                stock,
+            });
+            return data;
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+
 
 }

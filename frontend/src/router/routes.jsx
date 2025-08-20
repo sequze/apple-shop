@@ -12,15 +12,15 @@ export const publicRoutes = [
     { path: "/", component: Home },
     { path: "/register", component: Register },
     { path: "/login", component: Login },
-    { path: "/products/:type", component: Products },
-    { path: "/products/:type/:id", component: Product },
+    { path: "/products/:categoryId", component: Products },
+    { path: "/products/:categoryId/:id", component: Product },
 ];
 
 
 export const privateRoutes = [
     { path: "/", component: Home },
-    { path: "/products/:type", component: Products },
-    { path: "/products/:type/:id", component: Product },
+    { path: "/products/:categoryId", component: Products },
+    { path: "/products/:categoryId/:id", component: Product },
     { path: "/bucket", component: Bucket },
     { path: "/order", component: Order },
     { path: "/profile", component: Profile },
