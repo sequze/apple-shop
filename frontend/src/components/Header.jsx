@@ -39,7 +39,7 @@ const Header = ({logo}) => {
 
     return (
         <header className={`${isBurgerOpen ? "h-full bg-transparent" : ""}
-                fixed w-full bg-[#fff] z-[100] shadow flex flex-col items-center px-4 sm:px-10 lg:px-[60px]`}>
+                fixed w-full bg-[#fff] z-40 shadow flex flex-col items-center px-4 sm:px-10 lg:px-[60px]`}>
             <div className={`${isBurgerOpen ? "pointer-events-auto" : "-translate-y-[80%] opacity-0 pointer-events-none"} h-[100vh] absolute w-full bg-[#fff] transition-transform duration-300`} />
             {isAuth === null ? (
                     <div className="absolute top-0 left-0 w-full min-h-screen flex justify-center items-center bg-[#fff]">

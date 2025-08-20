@@ -11,9 +11,6 @@ const Products = () => {
 
     const {categories} = useContext(CategoriesContext);
     const currentCategory = categories.find(category => category.id === numericId);
-    console.log("categories:", categories);
-    console.log("numericId:", numericId);
-    console.log("categoryId:", categoryId);
 
 
     const [products, setProducts] = useState(null);
@@ -23,8 +20,12 @@ const Products = () => {
         setIsLoading(true);
         const getProducts = async () => {
             try {
-                const productsData = await ProductsService.getProducts(numericId);
-                setProducts(productsData);
+                const data = await ProductsService.getProducts();
+                console.log(data)
+                // const productsData = await ProductsService.getProducts(numericId);
+                // console.log(productsData)
+                // setProducts(productsData);
+                setProducts(data);
             } catch (err) {
                 console.log(err);
             } finally {
