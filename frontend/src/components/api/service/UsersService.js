@@ -17,15 +17,13 @@ export default class UsersService {
             .then(res => res.data)
             .catch(err => console.error(err));
 
-        const resp = await api.patch(`/api/users/${id}`, {
+        return await api.patch(`/api/users/${id}`, {
             email: email.trim() || old_email,
             full_name: full_name.trim() || old_full_name,
             is_verified: is_verified.trim() || old_is_verified,
             is_superuser: is_superuser.trim() || old_is_superuser,
             is_active: is_active.trim() || old_is_active
         });
-
-        return resp;
     }
 
     static async uploadUserImage(formData) {
