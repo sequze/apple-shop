@@ -3,6 +3,7 @@ import AdminCategory from "./AdminCategory.jsx";
 import AdminProducts from "./AdminProducts.jsx";
 import AdminOrders from "./AdminOrders.jsx";
 import Loader from "../Loader.jsx";
+import AdminUsersList from "./AdminUsersList.jsx";
 
 const AdminContent = () => {
     const [loadingCount, setLoadingCount] = useState(0);
@@ -40,6 +41,7 @@ const AdminContent = () => {
                     <AdminCategory withLoading={withLoading}/>
                     <AdminProducts withLoading={withLoading}/>
                     <AdminOrders />
+                    <AdminUsersList />
                 </div>
             </div>
         </div>

@@ -73,7 +73,10 @@ const ProductInfoStep = ({handleCancel, product, setProduct, setStep}) => {
                 }}>
                     Продолжить
                 </MyWhiteButton>
-                <GreyButton onClick={handleCancel}>Отмена</GreyButton>
+                <GreyButton onClick={(e) => {
+                    e.preventDefault();
+                    handleCancel()
+                }}>Отмена</GreyButton>
             </div>
         </div>
     );

@@ -113,7 +113,10 @@ const ImageUploadStep = ({ product, setProduct, setStep, handleCancel }) => {
                 >
                     Продолжить
                 </MyWhiteButton>
-                <GreyButton type="button" onClick={handleCancel}>Отмена</GreyButton>
+                <GreyButton onClick={(e) => {
+                    e.preventDefault();
+                    handleCancel()
+                }}>Отмена</GreyButton>
             </div>
         </div>
     );
