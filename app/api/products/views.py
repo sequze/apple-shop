@@ -2,7 +2,7 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, Form
 
-from api.dependencies import product_service, product_delete_use_case, get_products_use_case, AdminUserDep, \
+from api.dependencies import product_service, product_delete_use_case, AdminUserDep, \
     product_color_service, create_product_discount_use_case, PaginationParams, product_characteristic_service
 from plugins.s3_storage.client import DeleteFileError, UploadingFileError, InvalidFileTypeError
 from services.category.service import CategoryNotFoundError
@@ -24,26 +24,23 @@ product_service_dep = Annotated[ProductService, Depends(product_service)]
 ProductCharacteristicServiceDep = Annotated[ProductCharacteristicService, Depends(product_characteristic_service)]
 @router.get("/")
 async def get_all_products(
+        service: product_service_dep,
         pagination: PaginationParams,
-        category: str | None = None,
+        category: int | None = None,
         min_price: int | None = None,
         max_price: int | None = None,
         order_by: str | None = None,
         in_stock: bool | None = None,
-        get_products=Depends(get_products_use_case),
 ) -> list[ProductDTO]:
-    try:
-        return await get_products.execute(
-            pagination.get("page"),
-            pagination.get("size"),
-            category,
-            min_price,
-            max_price,
-            order_by,
-            in_stock,
-        )
-    except CategoryNotFoundError:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Category not found")
+    return await service.get_all(
+        pagination.get("page"),
+        pagination.get("size"),
+        category,
+        min_price,
+        max_price,
+        order_by,
+        in_stock,
+    )
 
 
 @router.get("/{product_id}")
