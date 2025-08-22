@@ -9,7 +9,7 @@ from services.category.service import CategoryNotFoundError
 from services.colors.schemas import ProductColorCreateSchema, ProductColorDTO, ProductColorBaseSchema
 from services.colors.service import ProductColorService
 from services.discount.schemas import DiscountCreateSchema, DiscountDTO
-from services.discount.service import AddDiscountToProductUseCase, DiscountNotFoundError
+from services.discount.service import DiscountNotFoundError
 from services.product.schemas import ProductDTO, ProductCreateSchema, ProductUpdateSchema
 from services.product.service import ProductService, ProductDeleteUseCase
 from services.product.exceptions import ProductNotFoundError

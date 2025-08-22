@@ -86,3 +86,11 @@ class CategoryService:
                 await delete_file_from_storage(category.image_url)
                 category.image_url = None
                 await uow.commit()
+
+    async def get_range(self, category_id: int) -> dict[str, int]:
+        async with self.uow as uow:
+            range = await self.repository.get_range(uow.session, category_id)
+            return {
+                'min': range[0],
+                'max': range[1],
+            }
