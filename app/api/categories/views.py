@@ -1,7 +1,7 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Path, HTTPException, status, Depends, UploadFile
-from pydantic import PositiveInt
+from pydantic import PositiveInt, BaseModel
 from pygments.lexers import data
 
 from plugins.s3_storage.client import UploadingFileError, DeleteFileError, InvalidFileTypeError
@@ -156,3 +156,19 @@ async def delete_category_image(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
             detail="Error while deleting image",
         )
+
+
+class SRanges(BaseModel):
+    min: int
+    max: int
+
+@router.get("/{category_id}/price-range")
+async def get_category_price_range(
+        category_id: PositiveInt,
+        service: category_service_dep,
+) -> SRanges:
+    res = await service.get_range(category_id)
+    return SRanges(
+        min=res["min"],
+        max=res["max"],
+    )

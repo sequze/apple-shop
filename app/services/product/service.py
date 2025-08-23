@@ -74,6 +74,31 @@ class ProductService:
         if not removed:
             raise DiscountNotFoundError
 
+    async def get_all(
+            self,
+            page: int | None = None,
+            size: int | None = None,
+            category_id: int | None = None,
+            min_price: int | None = None,
+            max_price: int | None = None,
+            order_by: str | None = None,
+            in_stock: bool | None = None,
+            ) -> list[ProductDTO]:
+        async with self.uow as uow:
+            products = await self.repository.get_all(
+                uow.session,
+                category_id,
+                min_price,
+                max_price,
+                order_by,
+                in_stock,
+            )
+            if page is not None and size is not None:
+                offset_min = page * size
+                offset_max = (page + 1) * size
+                products = products[offset_min:offset_max]
+            return [ProductDTO.model_validate(product) for product in products]
+
 
 class ProductDeleteUseCase:
     def __init__(
@@ -101,34 +126,3 @@ class ProductDeleteUseCase:
             await self.product_repository.delete(session, product)
             await uow.commit()
             return dto
-
-
-class GetProductsUseCase:
-    def __init__(self,
-                 product_repository: ProductRepository,
-                 category_repository: CategoryRepository,
-                 uow: UnitOfWork):
-        self.product_repository = product_repository
-        self.category_repository = category_repository
-        self.uow = uow
-    async def execute(self,
-            page: int | None = None,
-            size: int | None = None,
-            category: str | None = None,
-            min_price: int | None = None,
-            max_price: int | None = None,
-            order_by: str | None = None,
-            in_stock: bool | None = None,
-    ) -> list[ProductDTO]:
-        async with self.uow as uow:
-            category_id = None
-            if category:
-                category_obj = await self.category_repository.get_by_filters(uow.session, {'name': category})
-                if category_obj is None: raise CategoryNotFoundError
-                category_id = category_obj.id
-            products = await self.product_repository.get_all(uow.session, category_id, min_price, max_price, order_by, in_stock)
-            if page is not None and size is not None:
-                offset_min = page * size
-                offset_max = (page + 1) * size
-                products = products[offset_min:offset_max]
-            return [ProductDTO.model_validate(product) for product in products]
