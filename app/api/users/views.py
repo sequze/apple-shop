@@ -1,12 +1,14 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Path, HTTPException, status, Depends, UploadFile
+from fastapi import APIRouter, Path, HTTPException, status, Depends, UploadFile, Response
 
+from core.config import settings
 from plugins.s3_storage.client import DeleteFileError, UploadingFileError, InvalidFileTypeError
+from services.auth.service import AuthService
 from services.order.schemas import OrderDTO
-from services.user.schemas import UserDTO, UserCreateSchema, UserUpdateSchema
+from services.user.schemas import UserDTO, UserCreateSchema, UserUpdateSchema, EditProfileSchema
 from services.user.service import UserService, UserNotFoundError, EmailAlreadyExists
-from api.dependencies import users_service, CurrentUserDep, AdminUserDep, PaginationParams
+from api.dependencies import users_service, CurrentUserDep, AdminUserDep, PaginationParams, auth_service
 
 router = APIRouter()
 
@@ -133,3 +135,27 @@ async def delete_user(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="User not found"
         )
+
+@router.put("/edit")
+async def edit_profile(
+        data: EditProfileSchema,
+        user_service: user_service_dep,
+        user: CurrentUserDep,
+        response: Response,
+        auth: AuthService = Depends(auth_service),
+) -> UserDTO:
+    res = await user_service.update_user(
+        UserUpdateSchema(
+            full_name=data.full_name,
+            email=data.email,
+        ),
+        user.id
+    )
+    token = await auth.create_token(user.id)
+    response.set_cookie(
+        'refresh_token',
+        token.refresh_token,
+        max_age=settings.auth_jwt.refresh_token_expire_days * 60 * 24 * 60,
+        httponly=True,
+    )
+    return res

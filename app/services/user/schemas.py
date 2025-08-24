@@ -22,6 +22,9 @@ class UserDTO(UserBaseSchema):
 class UserCreateSchema(UserBaseSchema):
     password: str
 
+class EditProfileSchema(BaseModel):
+    email: EmailStr
+    full_name: str
 
 class UserUpdateSchema(BaseModel):
     email: EmailStr | None = None
