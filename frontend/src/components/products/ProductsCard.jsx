@@ -7,10 +7,7 @@ const ProductsCard = ({ products }) => {
             {products.map(product => (
                 <Link
                     key={product.description}
-                    to={`./${product.description
-                        .toLowerCase()
-                        .replace(/[^a-z0-9]+/g, "-")
-                        .replace(/(^-|-$)+/g, "")}`}
+                    to={`./${product.id}`}
                     className="h-full"
                 >
                     <div className="flex flex-col h-full bg-white rounded-[20px] p-[20px] sm:p-[25px] gap-[12px] transition-transform transform hover:-translate-y-1">

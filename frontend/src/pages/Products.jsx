@@ -20,12 +20,9 @@ const Products = () => {
         setIsLoading(true);
         const getProducts = async () => {
             try {
-                const data = await ProductsService.getProducts();
-                console.log(data)
-                // const productsData = await ProductsService.getProducts(numericId);
-                // console.log(productsData)
-                // setProducts(productsData);
-                setProducts(data);
+                const productsData = await ProductsService.getProducts(numericId);
+                console.log(productsData)
+                setProducts(productsData);
             } catch (err) {
                 console.log(err);
             } finally {

@@ -19,6 +19,15 @@ export default class ProductsService {
         return data;
     }
 
+    static async getProduct(id) {
+        try {
+            const { data } = await api.get(`/api/products/${id}`);
+            return data;
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
 
     static async createProducts(name, description, price, category_id) {
         try {
