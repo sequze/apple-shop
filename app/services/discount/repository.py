@@ -1,13 +1,31 @@
 from sqlalchemy.ext.asyncio.session import AsyncSession
-from sqlalchemy.inspection import inspect
-from sqlalchemy import insert
-from datetime import timezone
+from sqlalchemy import insert, select, and_
+from datetime import timezone, datetime
 from core.models import Discount
 from core.repositories.base_repository import SQlAlchemyRepository
 
 
 class DiscountRepository(SQlAlchemyRepository):
     model = Discount
+    session: AsyncSession
+    async def get_all(self, session: AsyncSession):
+        return await session.scalars(
+            select(Discount)
+            .where(
+                and_(
+                    Discount.end_date > datetime.now(),
+                    Discount.is_active == True,
+                )))
+    async def get_by_filters(
+            self,
+            session: AsyncSession,
+            filters: dict,
+            one: bool = True):
+        stmt = select(Discount).filter_by(**filters, is_active=True).where(Discount.end_date < datetime.now())
+        res = await session.execute(stmt)
+        if one:
+            return res.scalar_one_or_none()
+        return res.scalars().all()
 
     async def create(self, session: AsyncSession, data: dict) -> Discount:
         data["start_date"] = data["start_date"].astimezone(timezone.utc).replace(tzinfo=None)
