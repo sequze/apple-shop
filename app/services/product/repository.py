@@ -35,5 +35,7 @@ class ProductRepository(SQlAlchemyRepository):
             if column:
                 if desc: column = column.desc()
                 stmt = stmt.order_by(column)
+        elif order_by is None:
+            stmt = stmt.order_by(Product.views)
         res =  await session.scalars(stmt)
         return [i for i in res]
