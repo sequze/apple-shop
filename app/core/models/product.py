@@ -1,7 +1,7 @@
 from decimal import Decimal
 from typing import TYPE_CHECKING
 
-from sqlalchemy import Numeric, ForeignKey
+from sqlalchemy import Numeric, ForeignKey, text
 from sqlalchemy.orm import mapped_column, Mapped, relationship
 from datetime import datetime, timezone
 
@@ -22,6 +22,7 @@ class Product(CreatedAtMixin, IntIdPkMixin, Base):
     description: Mapped[str] = mapped_column(nullable=True)
     price: Mapped[Decimal] = mapped_column(Numeric(10, 2))
     category_id: Mapped[int] = mapped_column(ForeignKey("categories.id", ondelete="SET NULL"), nullable=True)
+    views: Mapped[int] = mapped_column(default=0, server_default=text("0"))
     colors: Mapped[list["ProductColor"]] = relationship(
         back_populates="product",
         lazy="selectin",

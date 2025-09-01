@@ -59,6 +59,8 @@ class ProductService:
         async with self.uow as uow:
             product = await self.repository.get_by_id(uow.session, id)
             if product is None: raise ProductNotFoundError
+            product.views += 1
+            await uow.commit()
             return ProductDTO.model_validate(product)
 
     async def remove_discount(self, product_id, discount_id) -> None:
