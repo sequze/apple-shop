@@ -20,13 +20,11 @@ class InvalidTimeIntervalError(Exception):
 
 
 class DiscountService:
-
+    repository = DiscountRepository
     def __init__(
             self,
-            repository: DiscountRepository,
             uow: UnitOfWork,
     ):
-        self.repository = repository
         self.uow = uow
 
     async def __find_by_id(self, session: AsyncSession, id: int) -> Discount:

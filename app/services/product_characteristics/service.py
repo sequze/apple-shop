@@ -16,10 +16,9 @@ class CharacteristicNotFoundError(Exception):
 
 
 class ProductCharacteristicService:
+    repository = ProductCharacteristicRepository
     def __init__(self,
-                 repository: ProductCharacteristicRepository,
                  uow: UnitOfWork):
-        self.repository = repository
         self.uow = uow
 
     async def __get_by_id(self, session: AsyncSession, id: int, product_id: int) -> ProductCharacteristic:

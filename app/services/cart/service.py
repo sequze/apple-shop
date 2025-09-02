@@ -1,14 +1,13 @@
 from core.repositories.uow import UnitOfWork
 from .schemas import CartDTO
-from services.cart_item.schemas import CartItemDTO
 from services.cart_item.service import get_cart_item_dto
 from services.user import UserRepository, UserDTO
 from services.user.service import UserNotFoundError
 
 
 class UserGetCartUseCase:
-    def __init__(self, user_repository: UserRepository, uow: UnitOfWork):
-        self.user_repository = user_repository
+    user_repository = UserRepository
+    def __init__(self, uow: UnitOfWork):
         self.uow = uow
     async def execute(
             self,

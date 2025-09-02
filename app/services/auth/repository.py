@@ -7,6 +7,7 @@ from core.repositories.base_repository import SQlAlchemyRepository
 class AuthRepository(SQlAlchemyRepository):
     model = RefreshSession
 
-    async def delete_multi(self, session: AsyncSession, **filters):
+    @classmethod
+    async def delete_multi(cls, session: AsyncSession, **filters):
         stmt = delete(RefreshSession).filter_by(**filters)
         await session.execute(stmt)

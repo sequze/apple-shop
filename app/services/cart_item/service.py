@@ -37,12 +37,10 @@ def get_cart_item_dto(item: CartItem) -> CartItemDTO:
 
 
 class CartItemService:
-
+    repository = CartItemRepository
     def __init__(
             self,
-            repository: CartItemRepository,
             uow: UnitOfWork):
-        self.repository = repository
         self.uow = uow
 
     async def __find_by_id(self, session: AsyncSession, id: int) -> CartItem:

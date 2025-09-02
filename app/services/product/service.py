@@ -30,12 +30,11 @@ def get_product_discount(product: Product):
 
 
 class ProductService:
+    repository = ProductRepository
     def __init__(
             self,
-            repository: ProductRepository,
             uow: UnitOfWork,
     ):
-        self.repository = repository
         self.uow = uow
 
     async def create(self, data: ProductCreateSchema) -> ProductDTO:

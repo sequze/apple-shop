@@ -15,12 +15,11 @@ class CategoryNotFoundError(Exception):
 
 
 class CategoryService:
+    repository = CategoryRepository
     def __init__(
             self,
-            repository: CategoryRepository,
             uow: UnitOfWork,
     ):
-        self.repository = repository
         self.uow = uow
 
     async def create(self, data: CategoryCreateSchema) -> CategoryDTO:

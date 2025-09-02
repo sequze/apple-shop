@@ -5,46 +5,52 @@ from sqlalchemy import insert, select, delete, inspect
 class SQlAlchemyRepository:
     model = None
 
-    async def create(self, session: AsyncSession, data: dict):
-        mapper = inspect(self.model)
+    @classmethod
+    async def create(cls, session: AsyncSession, data: dict):
+        mapper = inspect(cls.model)
         data_to_create = {}
         for key, value in data.items():
             if key in mapper.columns:
                 data_to_create[key] = value
-        stmt = insert(self.model).values(**data_to_create).returning(self.model)
+        stmt = insert(cls.model).values(**data_to_create).returning(cls.model)
         result = await session.execute(stmt)
         return result.scalar()
 
-    async def get_all(self, session: AsyncSession):
-        res = await session.scalars(select(self.model))
+    @classmethod
+    async def get_all(cls, session: AsyncSession):
+        res = await session.scalars(select(cls.model))
         return [user for user in res]
 
-    async def get_by_filters(self, session: AsyncSession, filters: dict, one: bool = True):
-        stmt = select(self.model).filter_by(**filters)
+    @classmethod
+    async def get_by_filters(cls, session: AsyncSession, filters: dict, one: bool = True):
+        stmt = select(cls.model).filter_by(**filters)
         res = await session.execute(stmt)
         if one:
             return res.scalar_one_or_none()
         return res.scalars().all()
 
-    async def delete_by_id(self, session: AsyncSession, entity_id: int):
+    @classmethod
+    async def delete_by_id(cls, session: AsyncSession, entity_id: int):
         res = await session.execute(
-            delete(self.model)
-            .where(self.model.id == entity_id).returning(self.model))
+            delete(cls.model)
+            .where(cls.model.id == entity_id).returning(cls.model))
         return res.scalar()
 
-    async def delete(self, session: AsyncSession, entity):
+    @classmethod
+    async def delete(cls, session: AsyncSession, entity):
         await session.delete(entity)
 
-
+    @classmethod
     async def update(
-            self,
+            cls,
             session: AsyncSession,
             data: dict,
             object_to_update):
-        mapper = inspect(self.model)
+        mapper = inspect(cls.model)
         for key, value in data.items():
             if key in mapper.attrs:
                 setattr(object_to_update, key, value)
 
-    async def get_by_id(self, session: AsyncSession, id: int):
-        return await session.get(self.model, id)
+    @classmethod
+    async def get_by_id(cls, session: AsyncSession, id: int):
+        return await session.get(cls.model, id)

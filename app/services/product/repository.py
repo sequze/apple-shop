@@ -9,7 +9,8 @@ from core.repositories.base_repository import SQlAlchemyRepository
 class ProductRepository(SQlAlchemyRepository):
     model = Product
 
-    async def get_all(self,
+    @classmethod
+    async def get_all(cls,
                       session: AsyncSession,
                       category_id: int | None = None,
                       min_price: int | None = None,

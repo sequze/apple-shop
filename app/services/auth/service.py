@@ -34,14 +34,12 @@ class InvalidPasswordError(Exception):
 
 
 class AuthService:
+    user_repository = UserRepository
+    auth_repository = AuthRepository
     def __init__(
             self,
-            user_repository: UserRepository,
-            auth_repository: AuthRepository,
             uow: UnitOfWork,
     ):
-        self.auth_repository = auth_repository
-        self.user_repository = user_repository
         self.uow = uow
 
     def __create_token(

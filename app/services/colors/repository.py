@@ -7,7 +7,9 @@ from core.repositories.base_repository import SQlAlchemyRepository
 
 class ProductColorRepository(SQlAlchemyRepository):
     model = ProductColor
-    async def get_by_product_id(self, session: AsyncSession, product_id: int) -> list[ProductColor]:
+
+    @classmethod
+    async def get_by_product_id(cls, session: AsyncSession, product_id: int) -> list[ProductColor]:
         stmt = select(ProductColor).where(ProductColor.product_id == product_id)
         result = await session.scalars(stmt)
         return list(result)

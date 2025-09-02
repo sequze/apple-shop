@@ -9,14 +9,15 @@ import asyncio
 class CategoryRepository(SQlAlchemyRepository):
     model = Category
 
-
-    async def get_with_products(self, session: AsyncSession, id: int) -> Category:
+    @classmethod
+    async def get_with_products(cls, session: AsyncSession, id: int) -> Category:
         res = await session.scalar(select(Category)
                                    .where(Category.id == id)
                                    .options(selectinload(Category.products)))
         return res
 
-    async def get_range(self, session: AsyncSession, id: int):
+    @classmethod
+    async def get_range(cls, session: AsyncSession, id: int):
         result = await session.execute(
             select(
                 func.min(Product.price).label("min_price"),
