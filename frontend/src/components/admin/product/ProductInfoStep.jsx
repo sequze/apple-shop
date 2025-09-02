@@ -61,6 +61,21 @@ const ProductInfoStep = ({handleCancel, product, setProduct, setStep}) => {
                 <option value="5">5</option>
             </select>
 
+            <label className="block mt-4 mb-2 text-sm font-medium">Укажите кол-во характеристик(от 1 до 5)</label>
+            <select
+                required
+                name="characteristic"
+                value={product?.characteristicsCount}
+                onChange={(event) =>
+                    setProduct(prev => ({ ...prev, characteristicsCount: event.target.value }))
+                }>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+
             <div className="grid gap-3 mt-[20px]">
                 <MyWhiteButton onClick={(e) => {
                     e.preventDefault();

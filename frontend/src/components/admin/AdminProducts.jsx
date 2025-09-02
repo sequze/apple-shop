@@ -7,6 +7,7 @@ import ProductsService from "../api/service/ProductsService.js";
 import {CategoriesContext} from "../../context/CategoriesContext.jsx";
 import Loader from "../Loader.jsx";
 import ProductEditModal from "./product/ProductEditModal.jsx";
+import CharacteristicsStep from "./product/CharacteristicsStep.jsx";
 
 const AdminProducts = ({withLoading}) => {
 
@@ -25,6 +26,8 @@ const AdminProducts = ({withLoading}) => {
         colorsCount: 1,
         image: null,
         colors: [],
+        characteristicsCount: 1,
+        characteristics: [],
         discount: {
             percent: 0,
             startDate: "",
@@ -39,8 +42,10 @@ const AdminProducts = ({withLoading}) => {
         price: "",
         category: "",
         colorsCount: 1,
+        characteristicsCount: 1,
         image: null,
         colors: [],
+        characteristics: [],
         discount: {
             percent: 0,
             startDate: "",
@@ -48,6 +53,7 @@ const AdminProducts = ({withLoading}) => {
             description: ""
         }
     };
+
 
 
     const getCategoryName = (id) => {
@@ -103,8 +109,10 @@ const AdminProducts = ({withLoading}) => {
                     const colorData = await ProductsService.createProductColor(
                         productData.id,
                         color.colorName,
-                        color.colorQuantity
+                        color.colorQuantity,
+                        color.colorCode
                     );
+
 
                     if (color.colorImage) {
                         await ProductsService.createProductImage(
@@ -116,6 +124,19 @@ const AdminProducts = ({withLoading}) => {
                     }
                 })
             );
+
+            if (product?.characteristics?.length > 0) {
+                await Promise.all(
+                    product.characteristics.map(async (char) => {
+                        await ProductsService.createProductCharacteristic(
+                            productData.id,
+                            char.image,
+                            char.name,
+                            char.value
+                        );
+                    })
+                );
+            }
 
             setProduct(initialProductState);
             setStep(0);
@@ -158,12 +179,31 @@ const AdminProducts = ({withLoading}) => {
                             <ProductInfoStep handleCancel={handleCancel} setStep={setStep} product={product} setProduct={setProduct}/>
                         )}
                         {step === 2 && (
-                            <ImageUploadStep product={product} setProduct={setProduct} setStep={setStep} handleCancel={handleCancel}/>
-                        )
-                        }
-                        {step === 3 && (
-                            <DiscountStep handleCreateProduct={handleCreateProduct} product={product} setProduct={setProduct} setStep={setStep} handleCancel={handleCancel}/>
+                            <CharacteristicsStep
+                                product={product}
+                                setProduct={setProduct}
+                                setStep={setStep}
+                                handleCancel={handleCancel}
+                            />
                         )}
+                        {step === 3 && (
+                            <ImageUploadStep
+                                product={product}
+                                setProduct={setProduct}
+                                setStep={setStep}
+                                handleCancel={handleCancel}
+                            />
+                        )}
+                        {step === 4 && (
+                            <DiscountStep
+                                handleCreateProduct={handleCreateProduct}
+                                product={product}
+                                setProduct={setProduct}
+                                setStep={setStep}
+                                handleCancel={handleCancel}
+                            />
+                        )}
+
 
                     </div>
                 </div>

@@ -44,14 +44,35 @@ export default class ProductsService {
         }
     }
 
-    static async createProductColor(id, name, stock) {
+    static async createProductColor(id, name, stock, colorCode) {
         try {
             const {data} = await api.post(`/api/products/${id}/colors`, {
                 name,
-                stock
+                stock,
+                color_code: colorCode
             });
 
             return data;
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    static async createProductCharacteristic(productId, file, name, value) {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("name", name);
+        formData.append("value", value)
+
+        try {
+            const { resp } = await api.post(`/api/products/${productId}/characteristics/`, formData, {
+                headers: {
+                    'Content-Type': "multipart/form-data"
+                }
+            });
+
+            return resp;
+
         } catch (err) {
             console.error(err);
         }
@@ -127,18 +148,16 @@ export default class ProductsService {
         }
     }
 
-    static async updateProductColor(color_id, name, stock) {
+    static async updateProductColor(color_id, name, stock, color_code) {
         try {
             const { data } = await api.patch(`/api/product_colors/${color_id}`, {
                 name,
                 stock,
+                color_code
             });
             return data;
         } catch (err) {
             console.error(err);
         }
     }
-
-
-
 }
