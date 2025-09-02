@@ -15,7 +15,6 @@ class ProductColor(Base, IntIdPkMixin):
     name: Mapped[str]
     stock: Mapped[int]
     color_code: Mapped[str]
-
     product: Mapped["Product"] = relationship(back_populates="colors")
     images: Mapped[list["ProductImage"]] = relationship(
         back_populates="color",
