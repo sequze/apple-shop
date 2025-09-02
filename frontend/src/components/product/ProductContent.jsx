@@ -27,11 +27,11 @@ const ProductContent = ({ product }) => {
             origin: { y: 0.7 }
         });
 
-
-
-
-        console.log(purchasedProduct)
-        console.log("Добавлен в корзину:", product.name);
+        try {
+            CartService.addToCart(product.id, 1);
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     return (
