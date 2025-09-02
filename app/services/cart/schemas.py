@@ -13,3 +13,4 @@ class CartDTO(BaseModel):
 class AddToCartSchema(BaseModel):
     product_id: PositiveInt
     quantity: PositiveInt
+    color_id: PositiveInt
