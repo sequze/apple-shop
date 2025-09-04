@@ -1,19 +1,18 @@
+from sqlalchemy import NullPool
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
+
 from core.config import settings
+
 
 class DatabaseHelper:
     def __init__(
-            self,
-            url: str,
-            echo: bool,
-            pool_size: int = 5,
-            max_overflow: int = 10,
+        self,
+        url: str,
+        params: dict,
     ):
         self.engine = create_async_engine(
             url=url,
-            echo=echo,
-            pool_size=pool_size,
-            max_overflow = max_overflow,
+            **params,
         )
 
         self.session_factory = async_sessionmaker(
@@ -31,9 +30,19 @@ class DatabaseHelper:
             yield session
 
 
+if settings.mode == "TEST":
+    db_url = settings.test_db.url
+    params = {"poolclass": NullPool}
+elif settings.mode == "PROD" or settings.mode == "DEV":
+    db_url = settings.db.url
+    params = {
+        "echo": settings.db.echo,
+        "pool_size": settings.db.pool_size,
+        "max_overflow": settings.db.max_overflow,
+    }
+else:
+    raise ValueError(f"Invalid mode {settings.mode}")
 db_helper = DatabaseHelper(
-    url=str(settings.db.url),
-    echo=settings.db.echo,
-    pool_size=settings.db.pool_size,
-    max_overflow=settings.db.max_overflow,
+    url=str(db_url),
+    params=params,
 )

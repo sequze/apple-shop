@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Literal
 
 from pydantic_settings import BaseSettings
 from pydantic import BaseModel, Extra
@@ -66,10 +67,12 @@ class Settings(BaseSettings):
         env_nested_delimiter="__",  # разделитель
         env_prefix="FASTAPI__",
     )
+    mode: Literal["DEV", "TEST", "PROD"]
     run: RunConfig = RunConfig()
     api_prefix: ApiPrefix = ApiPrefix()
     auth_jwt: AuthJWTConfig = AuthJWTConfig()
     db: DatabaseConfig
+    test_db: DatabaseConfig
     s3: ObjectStorageConfig
 
 
