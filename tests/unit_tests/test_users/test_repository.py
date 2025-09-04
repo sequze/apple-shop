@@ -13,8 +13,7 @@ import pytest
 )
 async def test_find_user_by_id(id, email, exists):
     async with db_helper.session_factory() as session:
-        repository = UserRepository()
-        user = await repository.get_by_id(session, id)
+        user = await UserRepository.get_by_id(session, id)
 
         if exists:
             assert user
