@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Screen Size",
+    "value": "6.5 inches",
+    "image_url": null,
+    "product_id": 1
+  },
+  {
+    "name": "Battery",
+    "value": "5000 mAh",
+    "image_url": null,
+    "product_id": 1
+  },
+  {
+    "name": "Pages",
+    "value": "350",
+    "image_url": null,
+    "product_id": 3
+  }
+]
