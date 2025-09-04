@@ -21,8 +21,8 @@ class MainImageAlreadyExistsError(Exception):
 
 
 class ProductImageService:
-    def __init__(self, repository: ProductImageRepository, uow: UnitOfWork):
-        self.repository = repository
+    repository = ProductImageRepository
+    def __init__(self, uow: UnitOfWork):
         self.uow = uow
 
     async def __find_by_id(self, session: AsyncSession, id: int) -> ProductImage:

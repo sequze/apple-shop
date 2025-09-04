@@ -19,12 +19,11 @@ class StatusNotAllowed(Exception):
 
 
 class OrderService:
+    repository = OrderRepository
     def __init__(
             self,
-            repository: OrderRepository,
             uow: UnitOfWork,
     ):
-        self.repository = repository
         self.uow = uow
 
     async def __find_by_id(self, session: AsyncSession, id: int) -> Order:

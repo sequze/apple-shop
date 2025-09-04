@@ -68,7 +68,7 @@ const DiscountStep = ({product, setProduct, setStep, handleCancel, handleCreateP
                 <MyWhiteButton onClick={(e) => {
                     e.preventDefault();
                     handleCreateProduct()
-                    setStep(4);
+                    setStep(0);
                 }}>Создать продукт</MyWhiteButton>
                 <GreyButton onClick={(e) => {
                     e.preventDefault();

@@ -108,7 +108,7 @@ const ImageUploadStep = ({ product, setProduct, setStep, handleCancel }) => {
                             alert("Заполните все поля для каждого цвета");
                             return;
                         }
-                        setStep(3);
+                        setStep(4);
                     }}
                 >
                     Продолжить

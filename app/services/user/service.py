@@ -19,12 +19,11 @@ class EmailAlreadyExists(Exception):
 
 
 class UserService:
+    repository = UserRepository
     def __init__(
             self,
-            repository: UserRepository,
             uow: UnitOfWork,
     ):
-        self.repository = repository
         self.uow = uow
 
     async def get_by_email(self, email: str):

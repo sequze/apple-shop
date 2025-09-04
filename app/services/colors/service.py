@@ -19,8 +19,8 @@ class ProductColorNotFoundError(Exception):
     """ProductColor not found"""
 
 class ProductColorService:
-    def __init__(self, repository: ProductColorRepository, uow: UnitOfWork):
-        self.repository = repository
+    repository = ProductColorRepository
+    def __init__(self, uow: UnitOfWork):
         self.uow = uow
 
     async def create(self, data: ProductColorCreateSchema) -> ProductColorDTO:

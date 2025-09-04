@@ -82,8 +82,6 @@ const Header = ({logo}) => {
                                 )}
                             </div>
 
-
-
                             <nav>
                                 <button
                                     className={`${isBurgerOpen ? "top-0 translate-y-1/2 -translate-x-1/2" : "top-1/2 -translate-y-1/2"} absolute right-0 lg:hidden space-y-2 p-2`}

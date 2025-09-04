@@ -13,14 +13,14 @@ export const publicRoutes = [
     { path: "/register", component: Register },
     { path: "/login", component: Login },
     { path: "/products/:categoryId", component: Products },
-    { path: "/products/:categoryId/:id", component: Product },
+    { path: "/products/:categoryId/:productId", component: Product },
 ];
 
 
 export const privateRoutes = [
     { path: "/", component: Home },
     { path: "/products/:categoryId", component: Products },
-    { path: "/products/:categoryId/:id", component: Product },
+    { path: "/products/:categoryId/:productId", component: Product },
     { path: "/bucket", component: Bucket },
     { path: "/order", component: Order },
     { path: "/profile", component: Profile },

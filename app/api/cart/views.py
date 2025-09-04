@@ -7,6 +7,7 @@ from services.cart.schemas import CartDTO, AddToCartSchema
 from services.cart.service import UserGetCartUseCase
 from services.cart_item.schemas import CartItemDTO, CartItemUpdateSchema, CartItemCreateSchema
 from services.cart_item.service import CartItemService, CartItemNotFoundError, CartItemAlreadyExistsError
+from services.colors.service import ProductColorNotFoundError
 from services.product.exceptions import ProductNotFoundError
 
 router = APIRouter()
@@ -33,6 +34,7 @@ async def add_to_cart(
                 quantity=data.quantity,
                 user_id=user.id,
                 product_id=data.product_id,
+                color_id=data.color_id,
             )
         )
     except CartItemAlreadyExistsError:
@@ -44,6 +46,11 @@ async def add_to_cart(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Product not found",
+        )
+    except ProductColorNotFoundError:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Product color not found",
         )
 @router.get("/")
 async def get_all_cart_items(

@@ -8,7 +8,9 @@ from core.repositories.base_repository import SQlAlchemyRepository
 class DiscountRepository(SQlAlchemyRepository):
     model = Discount
     session: AsyncSession
-    async def get_all(self, session: AsyncSession):
+
+    @classmethod
+    async def get_all(cls, session: AsyncSession):
         return await session.scalars(
             select(Discount)
             .where(
@@ -16,8 +18,9 @@ class DiscountRepository(SQlAlchemyRepository):
                     Discount.end_date > datetime.now(),
                     Discount.is_active == True,
                 )))
+    @classmethod
     async def get_by_filters(
-            self,
+            cls,
             session: AsyncSession,
             filters: dict,
             one: bool = True):
@@ -27,7 +30,8 @@ class DiscountRepository(SQlAlchemyRepository):
             return res.scalar_one_or_none()
         return res.scalars().all()
 
-    async def create(self, session: AsyncSession, data: dict) -> Discount:
+    @classmethod
+    async def create(cls, session: AsyncSession, data: dict) -> Discount:
         data["start_date"] = data["start_date"].astimezone(timezone.utc).replace(tzinfo=None)
         data["end_date"] = data["end_date"].astimezone(timezone.utc).replace(tzinfo=None)
         stmt = insert(Discount).values(**data).returning(Discount)
