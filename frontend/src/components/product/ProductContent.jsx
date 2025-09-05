@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, {useContext, useState} from 'react';
 import MyActiveButton from "../ui/activeButton/MyActiveButton.jsx";
 import confetti from "canvas-confetti";
+import CartService from "../api/service/CartService.js";
+import {CartContext} from "../../context/CartContext.jsx";
 
 const ProductContent = ({ product }) => {
     const [activeColor, setActiveColor] = useState(0);
@@ -12,12 +14,14 @@ const ProductContent = ({ product }) => {
     const mainImage = currentColor?.images?.find(img => img.is_main) || currentColor?.images?.[0];
     const activeDiscount = product.discounts?.find(d => d.is_active);
     const [purchasedProduct, setPurchasedProduct] = useState(false);
+    const { cartItems, setCartItems } = useContext(CartContext);
+
 
     const finalPrice = activeDiscount
         ? (parseFloat(product.price) * (1 - activeDiscount.percent / 100)).toFixed(2)
         : product.price;
 
-    const handleAddProduct = () => {
+    const handleAddProduct = async () => {
         setPurchasedProduct(true);
 
         confetti({
@@ -27,16 +31,20 @@ const ProductContent = ({ product }) => {
             origin: { y: 0.7 }
         });
 
+        setCartItems([...cartItems, {...product, color_id}])
+
         try {
-            CartService.addToCart(product.id, 1);
+            const colorId = product?.colors?.[activeColor]?.id || null;
+            const data = await CartService.addToCart(product.id, 1, colorId);
         } catch (err) {
             console.log(err);
+            setPurchasedProduct(false);
         }
     };
 
     return (
         <div className="bg-[#D9D9D9] min-h-screen pt-[50px]">
-            <div className="flex justify-center max-w-[1500px] relative py-[50px] sm:py-[100px] m-auto">
+            <div className="flex justify-center max-w-[1500px] relative py-[50px] sm:py-[50px] m-auto">
                 <div className="relative flex flex-col sm:flex-row bg-[#fff] rounded-[40px] p-[50px] w-full sm:w-fit justify-around mx-[20px] gap-[40px]">
 
                     {/* Фото */}
@@ -123,9 +131,10 @@ const ProductContent = ({ product }) => {
                                                 />
                                             )}
                                             <span className="text-[14px]">
-                        <span className="font-medium">{char.name}:</span>{" "}
-                                                {char.value}
-                      </span>
+                                                <span className="font-medium">{char.name}:</span>
+                                                    {" "}
+                                                    {char.value}
+                                            </span>
                                         </div>
                                     ))}
                                 </div>
@@ -136,20 +145,20 @@ const ProductContent = ({ product }) => {
                             <div className="flex flex-col">
                                 {activeDiscount ? (
                                     <>
-                    <span className="text-[22px] font-bold text-blue-600">
-                      {finalPrice} ₽
-                    </span>
+                                        <span className="text-[22px] font-bold text-blue-600">
+                                          {finalPrice} ₽
+                                        </span>
                                         <span className="text-sm text-gray-500 line-through">
-                      {product.price} ₽
-                    </span>
+                                          {product.price} ₽
+                                        </span>
                                         <span className="text-sm text-green-600">
-                      Скидка {activeDiscount.percent}%
-                    </span>
+                                          Скидка {activeDiscount.percent}%
+                                        </span>
                                     </>
                                 ) : (
                                     <span className="text-[22px] font-bold">
-                    {product.price} ₽
-                  </span>
+                                        {product.price} ₽
+                                      </span>
                                 )}
                             </div>
                             <MyActiveButton

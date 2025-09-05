@@ -5,15 +5,16 @@ import Loader from "./Loader.jsx";
 import AboutContent from "./modals/AboutContent.jsx";
 import ContactContent from "./modals/ContactContent.jsx";
 import {AuthContext} from "../context/AuthContext";
+import {CartContext} from "../context/CartContext.jsx";
 
 const Header = ({logo}) => {
 
     const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
     const [isContactModalOpen, setIsContactModalOpen] = useState(false);
     const {isAuth} = useContext(AuthContext);
+    const {cartItems} = useContext(CartContext);
     const [isBurgerOpen, setIsBurgerOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
-
 
     useEffect(() => {
         if (isBurgerOpen) {
@@ -35,7 +36,7 @@ const Header = ({logo}) => {
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, []);
 
-    const menuLink = "opacity-[0.6] cursor-pointer transition delay-250 duration-200 ease-in-out hover:opacity-[1]";
+    const menuLink = "relative opacity-[0.6] cursor-pointer transition delay-250 duration-200 ease-in-out hover:opacity-[1]";
     const burgerLine = "block w-10 h-1 bg-black rounded-full  transition-all duration-200";
 
     return (
@@ -111,8 +112,14 @@ const Header = ({logo}) => {
                                     </li>
                                     {isAuth ? (
                                         <>
-                                            <li className={menuLink}>
-                                                <Link to="/bucket" onClick={() => setIsBurgerOpen(false)}>Корзина</Link>
+                                            <li className="relative">
+                                                <Link  className={menuLink} to="/bucket" onClick={() => setIsBurgerOpen(false)}>Корзина</Link>
+                                                {cartItems?.length && (
+                                                    <div className="absolute top-[-10px] right-[-15px]
+                                                     bg-red-500 text-white px-2 py-.5 rounded-full">
+                                                        {cartItems?.length > 99 ?  "99+" : cartItems?.length}
+                                                    </div>
+                                                )}
                                             </li>
                                             <li className={menuLink}>
                                                 <Link to="/profile" onClick={() => setIsBurgerOpen(false)}>Профиль</Link>
