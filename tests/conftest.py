@@ -45,6 +45,7 @@ async def prepare_database():
 
     # get mock models by open_mock_json()
     async with db_helper.session_factory() as session:
+        add_cart_items = insert(CartItem).values(cart_items)
         add_categories = insert(Category).values(categories)
         add_products = insert(Product).values(products)
         add_users = insert(User).values(users)
@@ -56,6 +57,7 @@ async def prepare_database():
         await session.execute(add_products)
         await session.execute(add_users)
         await session.execute(add_colors)
+        await session.execute(add_cart_items)
         await session.execute(add_orders)
         await session.execute(add_order_items)
 
