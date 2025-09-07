@@ -16,11 +16,13 @@ if TYPE_CHECKING:
 class CartItem(IntIdPkMixin, Base):
     quantity: Mapped[int]
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"))
-    product_id: Mapped[int] = mapped_column(ForeignKey("products.id", ondelete="CASCADE"))
-    color_id: Mapped[int] = mapped_column(ForeignKey("productcolors.id", ondelete="SET NULL"), nullable=True)
+    product_id: Mapped[int] = mapped_column(
+        ForeignKey("products.id", ondelete="CASCADE")
+    )
+    color_id: Mapped[int] = mapped_column(
+        ForeignKey("productcolors.id", ondelete="SET NULL"), nullable=True
+    )
     user: Mapped["User"] = relationship(back_populates="cart_items")
     product: Mapped["Product"] = relationship(lazy="selectin", passive_deletes=True)
     color: Mapped["ProductColor"] = relationship(lazy="selectin", passive_deletes=True)
-    __table_args__ = (
-        UniqueConstraint("user_id", "product_id"),
-    )
+    __table_args__ = (UniqueConstraint("user_id", "color_id"),)
