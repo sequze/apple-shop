@@ -43,6 +43,22 @@ const BucketContent = () => {
         }
     };
 
+    const getImageForCartItem = (cartItem) => {
+        const color = cartItem?.product?.colors?.find(
+            (c) => Number(c.id) === Number(cartItem?.color_id)
+        );
+
+        if (!color) return null;
+
+        // сначала ищем main
+        const mainImage = color.images?.find((img) => img.is_main);
+        if (mainImage) return mainImage.url;
+
+        // если main нет — берём первую
+        return color.images?.[0]?.url || null;
+    };
+
+
     if (isLoading) {
         return (
             <div className="w-full md:w-3/4">
@@ -88,15 +104,12 @@ const BucketContent = () => {
 
                                 <div className="w-[150px]">
                                     <img
-                                        src={
-                                            cartItem?.product?.colors
-                                                ?.find(c => Number(c.id) === Number(cartItem?.color_id))
-                                                ?.images?.find(img => img.is_main)?.url
-                                        }
+                                        src={getImageForCartItem(cartItem) || "/images/placeholder.png"}
                                         alt={cartItem?.product?.name}
                                         className="w-full h-full object-cover rounded-[10px]"
                                     />
                                 </div>
+
                                 <div className="inter-300 text-[22px]">
                                     {cartItem?.product?.name}
                                     {cartItem?.color_name && (
