@@ -9,6 +9,7 @@ import {AuthContext} from "./context/AuthContext.jsx";
 import Loader from "./components/Loader.jsx";
 import {CategoriesProvider} from "./context/CategoriesContext.jsx";
 import {AuthProvider} from "./context/AuthContext.jsx";
+import {CartProvider} from "./context/CartContext.jsx";
 
 function AppContent() {
     const navigate = useNavigate();
@@ -36,14 +37,14 @@ function AppContent() {
 
 
 function App() {
-
-
     return (
         <AuthProvider>
             <CategoriesProvider>
-                <BrowserRouter>
-                    <AppContent />
-                </BrowserRouter>
+                <CartProvider>
+                    <BrowserRouter>
+                        <AppContent />
+                    </BrowserRouter>
+                </CartProvider>
             </CategoriesProvider>
         </AuthProvider>
     )
