@@ -1,12 +1,16 @@
-// BucketContent.jsx
 import React, { useContext } from 'react';
 import { CartContext } from "../../context/CartContext.jsx";
 import BucketMenu from "./BucketMenu.jsx";
-import checkbox from "../../assets/checkbox.svg";
 import CartService from "../api/service/CartService.js";
+import CustomCheckbox from "../ui/customCheckbox/CustomCheckbox.jsx";
 
-const BucketContent = () => {
+const BucketContent = ({toggleSelect, selectedIds, deleteSelected, selectAll}) => {
     const { cartItems, refreshCart, isLoading } = useContext(CartContext);
+    const isAllSelected =
+        Array.isArray(cartItems) &&
+        cartItems.length > 0 &&
+        selectedIds.length === cartItems.length;
+
 
     console.log("Текущая корзина:", cartItems);
 
@@ -50,11 +54,9 @@ const BucketContent = () => {
 
         if (!color) return null;
 
-        // сначала ищем main
         const mainImage = color.images?.find((img) => img.is_main);
         if (mainImage) return mainImage.url;
 
-        // если main нет — берём первую
         return color.images?.[0]?.url || null;
     };
 
@@ -62,7 +64,11 @@ const BucketContent = () => {
     if (isLoading) {
         return (
             <div className="w-full md:w-3/4">
-                <BucketMenu />
+                <BucketMenu
+                    isAllSelected={isAllSelected}
+                    onSelectAll={selectAll}
+                    handleDeleteSelected={selectedIds.length ? deleteSelected : () => {}}
+                />
                 <div className="bg-[#fff] rounded-[15px] shadow-md w-full p-[25px] text-center">
                     Загрузка корзины...
                 </div>
@@ -73,7 +79,11 @@ const BucketContent = () => {
     if (!cartItems || cartItems.length === 0) {
         return (
             <div className="w-full md:w-3/4">
-                <BucketMenu />
+                <BucketMenu
+                    isAllSelected={isAllSelected}
+                    onSelectAll={selectAll}
+                    handleDeleteSelected={selectedIds.length ? deleteSelected : () => {}}
+                />
                 <div className="bg-[#fff] rounded-[15px] shadow-md w-full p-[25px] text-center">
                     Корзина пуста
                 </div>
@@ -83,7 +93,11 @@ const BucketContent = () => {
 
     return (
         <div className="w-full md:w-3/4">
-            <BucketMenu />
+            <BucketMenu
+                isAllSelected={isAllSelected}
+                onSelectAll={selectAll}
+                handleDeleteSelected={selectedIds.length ? deleteSelected : () => {}}
+            />
             <div className="bg-[#fff] rounded-[15px] shadow-md w-full p-[10px] sm:p-[25px] lg:px-[50px]">
                 {cartItems.map(cartItem => (
                     <div
@@ -92,15 +106,10 @@ const BucketContent = () => {
                     >
                         <div className="flex flex-col xl:flex-row items-start xl:items-center w-full justify-between">
                             <div className="flex items-center gap-[10px] lg:gap-[30px] xl:gap-[50px]">
-                                <label className="relative flex items-center cursor-pointer">
-                                    <input type="checkbox" className="peer hidden" />
-                                    <span className="w-5 h-5 rounded border border-gray-400 peer-checked:bg-black relative">
-                                        <span
-                                            className="hidden peer-checked:block absolute inset-0 bg-no-repeat bg-center"
-                                            style={{ backgroundImage: `url(${checkbox})` }}
-                                        />
-                                    </span>
-                                </label>
+                                <CustomCheckbox
+                                    checked={selectedIds.includes(cartItem.id)}
+                                    onChange={() => toggleSelect(cartItem.id)}
+                                />
 
                                 <div className="w-[150px]">
                                     <img
