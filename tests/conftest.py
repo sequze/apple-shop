@@ -86,7 +86,8 @@ async def authenticated_ac():
         transport=ASGITransport(app=fastapi_app), base_url="http://test"
     ) as ac:
         response = await ac.post(
-            "/auth/login", json={"email": "admin@example.com", "password": "test"}
+            "/api/auth/login", json={"email": "admin@example.com", "password": "test"}
         )
+        assert response.status_code == 200
         ac.headers["Authorization"] = f"Bearer {response.json()['access_token']}"
         yield ac

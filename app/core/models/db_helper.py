@@ -32,7 +32,7 @@ class DatabaseHelper:
 
 if settings.mode == "TEST":
     db_url = settings.test_db.url
-    params = {"poolclass": NullPool}
+    params = {"poolclass": NullPool, "echo": False}
 elif settings.mode == "PROD" or settings.mode == "DEV":
     db_url = settings.db.url
     params = {

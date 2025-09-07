@@ -1,7 +1,7 @@
 [
   {
     "email": "john.doe@example.com",
-    "password_hash": "$2b$12$6RKfX8yRmw/mdXTOhXc2Te8M5avPwb8gGxrp/TvUuBgDGV0SxUkjC",
+    "password_hash": "$2b$12$FG/dcqv6KVr6gMRnQ8wW..75RrGoxPx9lYh/Z/oKXQE2nWraxZZYO",
     "full_name": "John Doe",
     "is_active": true,
     "is_verified": true,
@@ -11,7 +11,7 @@
   },
   {
     "email": "jane.smith@example.com",
-    "password_hash": "$2b$12$6RKfX8yRmw/mdXTOhXc2Te8M5avPwb8gGxrp/TvUuBgDGV0SxUkjC",
+    "password_hash": "$2b$12$FG/dcqv6KVr6gMRnQ8wW..75RrGoxPx9lYh/Z/oKXQE2nWraxZZYO",
     "full_name": "Jane Smith",
     "is_active": true,
     "is_verified": false,
@@ -21,7 +21,7 @@
   },
   {
     "email": "admin@example.com",
-    "password_hash": "$2b$12$6RKfX8yRmw/mdXTOhXc2Te8M5avPwb8gGxrp/TvUuBgDGV0SxUkjC",
+    "password_hash": "$2b$12$FG/dcqv6KVr6gMRnQ8wW..75RrGoxPx9lYh/Z/oKXQE2nWraxZZYO",
     "full_name": "Super Admin",
     "is_active": true,
     "is_verified": true,

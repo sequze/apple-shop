@@ -1,0 +1,59 @@
+[
+  {
+    "mock": {
+      "first_name": "",
+      "last_name": "",
+      "phone_number": "",
+      "email": "test@test.com",
+      "city": "",
+      "address_line": "",
+      "region": "",
+      "payment_method": "card",
+      "items": [
+        {
+          "quantity": 3,
+          "product_id": 3
+        }
+      ]
+    },
+    "status": true
+  },
+  {
+    "mock": {
+      "first_name": "",
+      "last_name": "",
+      "phone_number": "",
+      "email": "test@test.com",
+      "city": "",
+      "address_line": "",
+      "region": "",
+      "payment_method": "card",
+      "items": [
+        {
+          "quantity": 3,
+          "product_id": 4
+        }
+      ]
+    },
+    "status": false
+  },
+  {
+    "mock": {
+      "first_name": "",
+      "last_name": "",
+      "phone_number": "",
+      "email": "test@test.com",
+      "city": "",
+      "address_line": "",
+      "region": "",
+      "payment_method": "cash",
+      "items": [
+        {
+          "quantity": 3,
+          "product_id": 1
+        }
+      ]
+    },
+    "status": true
+  }
+]

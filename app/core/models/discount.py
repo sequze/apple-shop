@@ -7,12 +7,13 @@ from datetime import datetime, timezone
 from .base import Base
 from .mixins import IntIdPkMixin
 from .product_discount_association_table import product_discount_association_table
+
 if TYPE_CHECKING:
     from .product import Product
 
 
 class Discount(IntIdPkMixin, Base):
-    percent: Mapped[Decimal] = mapped_column(Numeric(5,2))
+    percent: Mapped[Decimal] = mapped_column(Numeric(5, 2))
     start_date: Mapped[datetime]
     end_date: Mapped[datetime]
     description: Mapped[str] = mapped_column(nullable=True)
@@ -22,5 +23,5 @@ class Discount(IntIdPkMixin, Base):
         back_populates="discounts",
     )
     __table_args__ = (
-        CheckConstraint('percent > 0 AND percent <= 100', name='percent_range'),
+        CheckConstraint("percent > 0 AND percent <= 100", name="percent_range"),
     )

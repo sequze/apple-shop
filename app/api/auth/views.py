@@ -103,7 +103,6 @@ async def change_password(
         service: auth_service_dep,
         data: ChangePasswordSchema,
         user: CurrentUserDep,
-
 ):
     try:
         await service.change_password(user.email, data.old_password, data.new_password)
