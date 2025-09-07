@@ -114,10 +114,9 @@ const Header = ({logo}) => {
                                         <>
                                             <li className="relative">
                                                 <Link  className={menuLink} to="/bucket" onClick={() => setIsBurgerOpen(false)}>Корзина</Link>
-                                                {cartItems?.length && (
-                                                    <div className="absolute top-[-10px] right-[-15px]
-                                                     bg-red-500 text-white px-2 py-.5 rounded-full">
-                                                        {cartItems?.length > 99 ?  "99+" : cartItems?.length}
+                                                {cartItems?.length > 0 && (
+                                                    <div className="absolute top-[-10px] right-[-15px] bg-red-500 text-white px-2 py-.5 rounded-full">
+                                                        {cartItems?.length > 99 ? "99+" : cartItems?.length}
                                                     </div>
                                                 )}
                                             </li>
