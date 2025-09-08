@@ -3,7 +3,11 @@ from sqlalchemy.ext.asyncio.session import AsyncSession
 from core.models import CartItem, Product
 from core.repositories.uow import UnitOfWork
 from services.cart_item.repository import CartItemRepository
-from services.cart_item.schemas import CartItemDTO, CartItemCreateSchema, CartItemUpdateSchema
+from services.cart_item.schemas import (
+    CartItemDTO,
+    CartItemCreateSchema,
+    CartItemUpdateSchema,
+)
 from services.colors.service import ProductColorNotFoundError
 from services.product.schemas import ProductDTO
 from services.product.service import get_product_discount
@@ -16,7 +20,6 @@ class CartItemNotFoundError(Exception):
 
 class CartItemAlreadyExistsError(Exception):
     pass
-
 
 
 def get_cart_item_dto(item: CartItem) -> CartItemDTO:
@@ -38,9 +41,8 @@ def get_cart_item_dto(item: CartItem) -> CartItemDTO:
 
 class CartItemService:
     repository = CartItemRepository
-    def __init__(
-            self,
-            uow: UnitOfWork):
+
+    def __init__(self, uow: UnitOfWork):
         self.uow = uow
 
     async def __find_by_id(self, session: AsyncSession, id: int) -> CartItem:
@@ -49,18 +51,19 @@ class CartItemService:
             raise CartItemNotFoundError
         return cart_item
 
-
     async def _validate_by_product_and_user(
-            self,
-            session: AsyncSession,
-            user_id: int,
-            product_id: int
+        self, session: AsyncSession, user_id: int, color_id: int
     ) -> None:
-        cart_item = await self.repository.get_by_user_and_product(session, user_id, product_id)
-        if cart_item: raise CartItemAlreadyExistsError
+        cart_item = await self.repository.get_by_user_and_color(
+            session, user_id, color_id
+        )
+        if cart_item:
+            raise CartItemAlreadyExistsError
 
-    async def _validate_on_create(self, session: AsyncSession, data: CartItemCreateSchema):
-        await self._validate_by_product_and_user(session, data.user_id, data.product_id)
+    async def _validate_on_create(
+        self, session: AsyncSession, data: CartItemCreateSchema
+    ):
+        await self._validate_by_product_and_user(session, data.user_id, data.color_id)
         product = await session.get(Product, data.product_id)
         if not product:
             raise ProductNotFoundError
@@ -81,13 +84,16 @@ class CartItemService:
             await uow.commit()
             return get_cart_item_dto(cart_item)
 
-    async def update(self, data: CartItemUpdateSchema, id: int, user_id: int) -> CartItemDTO:
+    async def update(
+        self, data: CartItemUpdateSchema, id: int, user_id: int
+    ) -> CartItemDTO:
         async with self.uow as uow:
             cart_item = await self.__find_by_id(uow.session, id)
             if cart_item.user_id != user_id:
                 raise CartItemNotFoundError
-            await self.repository.update(uow.session, data.model_dump(exclude_unset=True),
-                                                             cart_item)
+            await self.repository.update(
+                uow.session, data.model_dump(exclude_unset=True), cart_item
+            )
             await uow.commit()
             await uow.session.refresh(cart_item)
             return get_cart_item_dto(cart_item)
