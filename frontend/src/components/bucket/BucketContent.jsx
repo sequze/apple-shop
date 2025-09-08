@@ -12,8 +12,6 @@ const BucketContent = ({toggleSelect, selectedIds, deleteSelected, selectAll}) =
         selectedIds.length === cartItems.length;
 
 
-    console.log("Текущая корзина:", cartItems);
-
     const downCountCart = async (cartItem) => {
         try {
             const newQuantity = cartItem.quantity - 1;
@@ -139,7 +137,7 @@ const BucketContent = ({toggleSelect, selectedIds, deleteSelected, selectAll}) =
                                             {cartItem?.product?.price} ₽
                                         </span>
                                         <span className="text-sm text-green-600">
-                                            Скидка {cartItem?.discount}%
+                                            Скидка {cartItem?.discount} ₽
                                         </span>
                                     </>
                                 ) : (

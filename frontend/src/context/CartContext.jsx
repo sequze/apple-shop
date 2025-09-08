@@ -1,7 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import CartService from "../components/api/service/CartService.js";
 
-// CartContext.jsx
 export const CartContext = createContext({
     cartItems: [],
     setCartItems: () => {},
@@ -9,7 +8,6 @@ export const CartContext = createContext({
     refreshCart: () => {} // Добавляем функцию обновления
 });
 
-// CartContext.jsx
 export const CartProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);

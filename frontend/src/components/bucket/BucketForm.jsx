@@ -44,7 +44,9 @@ const BucketForm = () => {
                         deleteSelected={deleteSelected}
                         selectAll={selectAll}
                     />
-                    <SidebarBucket />
+                    <SidebarBucket
+                        selectedIds={selectedIds}
+                    />
                 </div>
             </div>
         </div>
