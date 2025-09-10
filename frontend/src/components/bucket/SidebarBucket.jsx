@@ -11,7 +11,12 @@ const SidebarBucket = ({selectedIds}) => {
         const selectedItems = cartItems.filter(item => selectedIds.includes(item.id));
 
         const totalPrice = selectedItems.reduce((sum, item) => sum + (item.product?.price || 0) * item.quantity, 0);
-        const totalDiscount = selectedItems.reduce((sum, item) => sum + (item.discount ? (item.product?.price * item.quantity - (item.price_with_discount || 0)) : 0), 0);
+        const totalDiscount = selectedItems.reduce((sum, item) => {
+            if (!item.discount) return sum;
+            const original = item.product?.price || 0;
+            const discounted = item.price_with_discount || 0;
+            return sum + (original - discounted) * item.quantity;
+        }, 0);
         const finishPrice = totalPrice - totalDiscount;
 
         return { totalPrice, totalDiscount, finishPrice };
@@ -33,10 +38,17 @@ const SidebarBucket = ({selectedIds}) => {
                 <div className="inter-400">{finishPrice} ₽</div>
             </div>
             <div className="flex justify-end">
-                <Link to={"/order"}>
-                    <MyActiveButton>Buy</MyActiveButton>
-                </Link>
+                {totalPrice > 0 ? (
+                    <Link to={"/order"}>
+                        <MyActiveButton>Buy</MyActiveButton>
+                    </Link>
+                ) : (
+                    <MyActiveButton disabled className="opacity-50 cursor-not-allowed hover:opacity-50 cursor-default">
+                        Buy
+                    </MyActiveButton>
+                )}
             </div>
+
         </div>
     );
 };

@@ -5,12 +5,13 @@ export const CartContext = createContext({
     cartItems: [],
     setCartItems: () => {},
     isLoading: false,
-    refreshCart: () => {} // Добавляем функцию обновления
+    refreshCart: () => {}
 });
 
 export const CartProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [selectedIds, setSelectedIds] = useState([]);
 
     const refreshCart = async () => {
         try {
@@ -34,7 +35,9 @@ export const CartProvider = ({ children }) => {
             cartItems,
             setCartItems,
             isLoading,
-            refreshCart
+            refreshCart,
+            selectedIds,
+            setSelectedIds
         }}>
             {children}
         </CartContext.Provider>

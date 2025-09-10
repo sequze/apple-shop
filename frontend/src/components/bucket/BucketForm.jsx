@@ -6,9 +6,7 @@ import CartService from "../api/service/CartService.js";
 
 const BucketForm = () => {
 
-    const [selectedIds, setSelectedIds] = useState([]);
-
-    const { cartItems, refreshCart } = useContext(CartContext);
+    const { cartItems, refreshCart, selectedIds, setSelectedIds } = useContext(CartContext);
 
     const toggleSelect = (id) => {
         setSelectedIds((prev) =>
