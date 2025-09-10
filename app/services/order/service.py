@@ -1,3 +1,5 @@
+from mmap import ACCESS_READ
+
 from sqlalchemy.ext.asyncio.session import AsyncSession
 
 from core.models import Order, Product
@@ -8,6 +10,7 @@ from services.order.schemas import OrderDTO, OrderCreateSchema, OrderUpdateSchem
 from services.order_item.repository import OrderItemRepository
 from services.product.service import get_product_discount
 from services.product.exceptions import ProductNotFoundError
+from services.user import UserDTO
 
 
 class OrderNotFoundError(Exception):
@@ -18,11 +21,16 @@ class StatusNotAllowed(Exception):
     pass
 
 
+class ActionNotAllowed(Exception):
+    pass
+
+
 class OrderService:
     repository = OrderRepository
+
     def __init__(
-            self,
-            uow: UnitOfWork,
+        self,
+        uow: UnitOfWork,
     ):
         self.uow = uow
 
@@ -32,23 +40,32 @@ class OrderService:
             raise OrderNotFoundError
         return order
 
-    async def get_by_id(self, id: int) -> OrderDTO:
-        async with self.uow as uow:
-            order = await self.repository.get_by_id(uow.session, id)
-            return OrderDTO.model_validate(order)
-
-    async def update(self, data: OrderUpdateSchema, id: int) -> OrderDTO:
+    async def get_by_id(self, id: int, user: UserDTO) -> OrderDTO:
         async with self.uow as uow:
             order = await self.__find_by_id(uow.session, id)
-            await self.repository.update(uow.session, data.model_dump(exclude_unset=True), order)
+            if not (order.user_id == user.id or user.is_superuser):
+                raise ActionNotAllowed
+            return OrderDTO.model_validate(order)
+
+    async def update(self, data: OrderUpdateSchema, id: int, user: UserDTO) -> OrderDTO:
+        async with self.uow as uow:
+            order = await self.__find_by_id(uow.session, id)
+            if not (
+                (order.status in ("paid", "pending") and order.user_id == user.id)
+                or user.is_superuser
+            ):
+                raise ActionNotAllowed
+            await self.repository.update(
+                uow.session, data.model_dump(exclude_unset=True), order
+            )
             await uow.commit()
             await uow.session.refresh(order)
             return OrderDTO.model_validate(order)
 
     async def get_all(
-            self,
-            page: int | None = None,
-            size: int | None = None,
+        self,
+        page: int | None = None,
+        size: int | None = None,
     ) -> list[OrderDTO]:
         async with self.uow as uow:
             orders = await self.repository.get_all(uow.session)
@@ -68,16 +85,27 @@ class OrderService:
                 return OrderDTO.model_validate(order)
             raise StatusNotAllowed
 
+    async def cancel_order(self, order_id: int, user: UserDTO):
+        async with self.uow as uow:
+            order = await self.__find_by_id(uow.session, order_id)
+            if not (
+                (order.status in ("paid", "pending") and order.user_id == user.id)
+                or user.is_superuser
+            ):
+                raise ActionNotAllowed
+            order.status = OrderStatus.cancelled
+            await uow.commit()
+            await uow.session.refresh(order)
+            return OrderDTO.model_validate(order)
+
 
 class DeleteOrderUseCase:
     def __init__(
-            self,
-            order_repository: OrderRepository,
-            order_item_repository: OrderItemRepository,
-            uow: UnitOfWork,
+        self,
+        uow: UnitOfWork,
     ):
-        self.order_repository = order_repository
-        self.order_item_repository = order_item_repository
+        self.order_repository = OrderRepository
+        self.order_item_repository = OrderItemRepository
         self.uow = uow
 
     async def execute(self, id: int):
@@ -94,13 +122,11 @@ class DeleteOrderUseCase:
 
 class CreateOrderUseCase:
     def __init__(
-            self,
-            order_repository: OrderRepository,
-            order_item_repository: OrderItemRepository,
-            uow: UnitOfWork,
+        self,
+        uow: UnitOfWork,
     ):
-        self.order_repository = order_repository
-        self.order_item_repository = order_item_repository
+        self.order_repository = OrderRepository
+        self.order_item_repository = OrderItemRepository
         self.uow = uow
 
     async def execute(self, data: OrderCreateSchema, user_id: int) -> OrderDTO:
@@ -113,7 +139,8 @@ class CreateOrderUseCase:
             order = await self.order_repository.create(session, data_to_create)
             for product in data.items:
                 product_db = await session.get(Product, product.product_id)
-                if not product_db: raise ProductNotFoundError(product.product_id)
+                if not product_db:
+                    raise ProductNotFoundError(product.product_id)
                 product_discount = get_product_discount(product_db)
                 total_amount += product_discount.price_with_discount * product.quantity
                 await self.order_item_repository.create(
@@ -123,7 +150,7 @@ class CreateOrderUseCase:
                         "unit_price": product_discount.price_with_discount,
                         "order_id": order.id,
                         "product_id": product.product_id,
-                }
+                    },
                 )
             order.total_amount = total_amount
             await session.commit()

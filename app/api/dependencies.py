@@ -4,6 +4,7 @@ from fastapi import Depends, HTTPException, status, Request, Query
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from jwt import InvalidTokenError
 
+from api.exceptions import NotAllowed
 from core.auth.utils import decode_jwt
 from core.models import db_helper
 from core.repositories.uow import UnitOfWork
@@ -196,10 +197,7 @@ async def get_current_superuser(
     user: UserDTO = Depends(get_current_active_user),
 ) -> UserDTO:
     if not user.is_superuser:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="User not a superuser",
-        )
+        raise NotAllowed
     return user
 
 
