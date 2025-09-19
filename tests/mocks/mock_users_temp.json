@@ -1,0 +1,32 @@
+[
+  {
+    "email": "john.doe@example.com",
+    "password_hash": "$2b$12$FG/dcqv6KVr6gMRnQ8wW..75RrGoxPx9lYh/Z/oKXQE2nWraxZZYO",
+    "full_name": "John Doe",
+    "is_active": true,
+    "is_verified": true,
+    "is_superuser": false,
+    "profile_image_url": "https://example.com/profiles/john.png",
+    "created_at": "2025-09-01T12:00:00"
+  },
+  {
+    "email": "jane.smith@example.com",
+    "password_hash": "$2b$12$FG/dcqv6KVr6gMRnQ8wW..75RrGoxPx9lYh/Z/oKXQE2nWraxZZYO",
+    "full_name": "Jane Smith",
+    "is_active": true,
+    "is_verified": false,
+    "is_superuser": false,
+    "profile_image_url": null,
+    "created_at": "2025-09-02T09:30:00"
+  },
+  {
+    "email": "admin@example.com",
+    "password_hash": "$2b$12$FG/dcqv6KVr6gMRnQ8wW..75RrGoxPx9lYh/Z/oKXQE2nWraxZZYO",
+    "full_name": "Super Admin",
+    "is_active": true,
+    "is_verified": true,
+    "is_superuser": true,
+    "profile_image_url": null,
+    "created_at": "2025-09-03T15:00:00"
+  }
+]
