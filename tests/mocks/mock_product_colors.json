@@ -1,0 +1,20 @@
+[
+  {
+    "product_id": 1,
+    "name": "Black",
+    "stock": 25,
+    "color_code": "#000000"
+  },
+  {
+    "product_id": 1,
+    "name": "Silver",
+    "stock": 15,
+    "color_code": "#C0C0C0"
+  },
+  {
+    "product_id": 2,
+    "name": "Red",
+    "stock": 10,
+    "color_code": "#FF0000"
+  }
+]

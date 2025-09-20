@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Apple Iphone 13",
+    "description": "128GB storage",
+    "price": 57999,
+    "category_id": 3,
+    "views": 1520,
+    "created_at": "2025-08-20T10:00:00"
+  },
+  {
+    "name": "Apple Macbook M4",
+    "description": "256 gb",
+    "price": 84199.99,
+    "category_id": 1,
+    "views": 480,
+    "created_at": "2025-08-25T11:15:00"
+  },
+  {
+    "name": "Airpods pro",
+    "description": "best headphones",
+    "price": 12999.99,
+    "category_id": 2,
+    "views": 85,
+    "created_at": "2025-08-28T14:20:00"
+  }
+]

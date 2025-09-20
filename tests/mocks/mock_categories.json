@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Macbook",
+    "image_url": "https://example.com/categories/macbook.png"
+  },
+  {
+    "name": "Airpods",
+    "image_url": "https://example.com/categories/airpods.png"
+  },
+  {
+    "name": "Iphone",
+    "image_url": null
+  }
+]

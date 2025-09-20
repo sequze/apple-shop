@@ -39,7 +39,7 @@ class ProductDTO(ProductBaseSchema):
 
 
 class ProductPriceInfo(BaseModel):
-    total_price: NonNegativeInt
-    discount_sum: NonNegativeInt
-    price_with_discount: NonNegativeInt
+    total_price: Decimal
+    discount_sum: Decimal
+    price_with_discount: Decimal
     discount_description: str | None = None
